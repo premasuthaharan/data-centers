@@ -3,7 +3,7 @@ import Map from "./components/Map";
 import DataCenterCard from "./components/DataCenterCard";
 import "./App.css";
 
-const API = "http://localhost:8000";
+const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export default function App() {
   const [datacenters, setDatacenters] = useState([]);

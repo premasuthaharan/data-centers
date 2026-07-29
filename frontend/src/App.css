@@ -11,6 +11,17 @@
   inset: 0;
 }
 
+.map-container--error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(10, 10, 20);
+  color: #9ca3af;
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 20px;
+}
+
 /* ── Top-left title overlay ── */
 .map-overlay-title {
   position: absolute;
