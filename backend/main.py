@@ -1,3 +1,4 @@
+import os
 import urllib.request
 import json
 from fastapi import FastAPI, HTTPException, Query
@@ -6,9 +7,17 @@ from logic import all_datacenters_with_impact, nearest_datacenters
 
 app = FastAPI(title="Data Centers API")
 
+DEFAULT_ALLOWED_ORIGINS = ["http://localhost:5173", "http://localhost:3000"]
+allowed_origins_env = os.environ.get("ALLOWED_ORIGINS")
+allow_origins = (
+    [origin.strip() for origin in allowed_origins_env.split(",") if origin.strip()]
+    if allowed_origins_env
+    else DEFAULT_ALLOWED_ORIGINS
+)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_origins=allow_origins,
     allow_methods=["GET"],
     allow_headers=["*"],
 )
