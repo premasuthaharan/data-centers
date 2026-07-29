@@ -61,6 +61,11 @@ export default function App() {
             {label}
           </div>
         ))}
+        <div className="legend-divider" />
+        <div className="legend-item">
+          <span className="legend-dot" style={{ background: "#475569", opacity: 0.55 }} />
+          Announced (capacity not yet public)
+        </div>
       </div>
 
       {/* Slide-in detail panel */}
