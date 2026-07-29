@@ -7,6 +7,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export default function App() {
   const [datacenters, setDatacenters] = useState([]);
+  const [generatedAt, setGeneratedAt] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,7 +15,10 @@ export default function App() {
   useEffect(() => {
     fetch(`${API}/api/datacenters`)
       .then((r) => r.json())
-      .then(setDatacenters)
+      .then((data) => {
+        setDatacenters(data.data_centers);
+        setGeneratedAt(data.generated_at);
+      })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   }, []);
@@ -45,6 +49,16 @@ export default function App() {
             ? `Error: ${error}`
             : `${datacenters.length} data centers · Click any to explore its impact`}
         </p>
+        {generatedAt && (
+          <p className="app-freshness">
+            Data as of{" "}
+            {new Date(generatedAt).toLocaleDateString(undefined, {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
+        )}
       </div>
 
       {/* Legend overlay */}

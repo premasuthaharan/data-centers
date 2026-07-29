@@ -4,14 +4,22 @@ from pathlib import Path
 
 _DATA_PATH = Path(__file__).parent / "data" / "datacenters.json"
 _datacenters: list[dict] | None = None
+_generated_at: str | None = None
 
 
 def load_datacenters() -> list[dict]:
-    global _datacenters
+    global _datacenters, _generated_at
     if _datacenters is None:
         with open(_DATA_PATH) as f:
-            _datacenters = json.load(f)
+            raw = json.load(f)
+        _generated_at = raw["generated_at"]
+        _datacenters = raw["data_centers"]
     return _datacenters
+
+
+def get_dataset_metadata() -> dict:
+    load_datacenters()
+    return {"generated_at": _generated_at}
 
 
 def haversine_km(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
@@ -32,7 +40,11 @@ def impact_radius_km(power_mw: float | None) -> float:
 
 def compute_impact(dc: dict) -> dict:
     power_mw = dc.get("power_mw") or 0
+    # 450 gCO2/kWh default: conservative internal heuristic, higher than the
+    # actual US grid average; see SOURCES.md ("Default carbon intensity")
     carbon = dc.get("carbon_intensity_gco2_per_kwh") or 450
+    # 25% default: approximates the actual 2024 US renewable generation
+    # share; see SOURCES.md ("Default renewable percentage")
     renewable_pct = dc.get("renewable_pct") or 25
 
     annual_kwh = power_mw * 1_000 * 8_760  # MW → kWh/yr
@@ -43,11 +55,11 @@ def compute_impact(dc: dict) -> dict:
     elec_price_lift_pct = round(min(math.log1p(power_mw) * 1.2, 15), 1) if power_mw else 0
 
     # --- Water stress (million gallons/day) ---
-    # Typical cooling: 1.8L per kWh for air-cooled, up to 7L for evaporative towers.
-    # We use a blended 3L/kWh estimate → convert to MGD
+    # Blended water intensity estimate; see SOURCES.md ("Water intensity")
     water_liters_per_kwh = 3.0
     water_mgd = round((annual_kwh * water_liters_per_kwh) / (3_785_411 * 365), 2)
-    # Severity label anchored to US EPA baseline thresholds
+    # Severity thresholds are an internal heuristic, not an EPA standard;
+    # see SOURCES.md ("Water severity thresholds")
     if water_mgd < 1:
         water_severity = "low"
     elif water_mgd < 5:
@@ -59,12 +71,14 @@ def compute_impact(dc: dict) -> dict:
 
     # --- Carbon / air quality ---
     annual_co2_tonnes = round((annual_kwh * carbon) / 1_000_000)
+    # 4.6 t CO2/car/year: EPA typical passenger vehicle figure; see SOURCES.md
     cars_equivalent = round(annual_co2_tonnes / 4.6)
 
     # --- Land use / heat island ---
-    # Rough floor area: 10 kW/m² IT density → MW * 100 m² per MW
+    # Rough floor area estimate (internal heuristic); see SOURCES.md ("IT density")
     footprint_m2 = round(power_mw * 100) if power_mw else 0
-    # Waste heat (MW thermal) = IT load * (PUE - 1), approximate PUE 1.3
+    # Waste heat (MW thermal) = IT load * (PUE - 1); PUE 1.3 is an internal
+    # heuristic, more optimistic than industry-average PUE — see SOURCES.md
     waste_heat_mw = round(power_mw * 0.3, 1) if power_mw else 0
 
     return {
@@ -74,7 +88,10 @@ def compute_impact(dc: dict) -> dict:
         "electricity": {
             "annual_kwh": round(annual_kwh),
             "price_lift_pct": elec_price_lift_pct,
+            # 10,500 kWh/home/year: EIA average US household consumption; see SOURCES.md
             "homes_powered": round(annual_kwh / 10_500),
+            # $0.06/kWh: internal heuristic approximating a bulk/industrial
+            # rate, well below EIA's ~$0.165/kWh residential average; see SOURCES.md
             "annual_cost_millions_usd": round((annual_kwh * 0.06) / 1_000_000, 1),
         },
         # Water

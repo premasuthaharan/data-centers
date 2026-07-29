@@ -50,6 +50,12 @@
   line-height: 1.5;
 }
 
+.app-freshness {
+  font-size: 11px;
+  color: #475569;
+  margin-top: 6px;
+}
+
 /* ── Legend overlay ── */
 .map-legend {
   position: absolute;

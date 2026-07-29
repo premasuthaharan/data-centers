@@ -3,7 +3,7 @@ import urllib.request
 import json
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from logic import all_datacenters_with_impact, nearest_datacenters
+from logic import all_datacenters_with_impact, nearest_datacenters, get_dataset_metadata
 
 app = FastAPI(title="Data Centers API")
 
@@ -35,7 +35,10 @@ def geolocate_ip(ip: str) -> dict:
 
 @app.get("/api/datacenters")
 def get_all():
-    return all_datacenters_with_impact()
+    return {
+        "generated_at": get_dataset_metadata()["generated_at"],
+        "data_centers": all_datacenters_with_impact(),
+    }
 
 
 @app.get("/api/locate")
