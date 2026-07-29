@@ -23,7 +23,10 @@ def haversine_km(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
     return R * 2 * math.asin(math.sqrt(a))
 
 
-# Impact radius in km: sqrt(MW) * 5 so 100MW→50km, 1000MW→158km, capped at 300km
+# Impact radius in km: sqrt(MW) * 5 so 100MW→50km, 1000MW→158km, capped at 300km.
+# Facilities with no published power_mw ("announced" status) get a flat 20km
+# placeholder — enough to show the site exists on the map without implying a
+# measured footprint.
 def impact_radius_km(power_mw: float | None) -> float:
     if not power_mw:
         return 20.0
@@ -70,6 +73,7 @@ def compute_impact(dc: dict) -> dict:
     return {
         # Map geometry
         "radius_km": impact_radius_km(power_mw),
+        "data_status": dc.get("data_status", "confirmed" if power_mw else "announced"),
         # Electricity
         "electricity": {
             "annual_kwh": round(annual_kwh),

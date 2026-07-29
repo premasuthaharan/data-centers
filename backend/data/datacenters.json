@@ -10,7 +10,8 @@
     "power_mw": 1092.0,
     "cost_usd_billions": 34.861708140000005,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "microsoft-fairwater-wisconsin",
@@ -23,7 +24,8 @@
     "power_mw": 555.0,
     "cost_usd_billions": 17.71,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "meta-prometheus",
@@ -36,7 +38,8 @@
     "power_mw": 531.0,
     "cost_usd_billions": 15.64,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "qts-richmond",
@@ -49,7 +52,8 @@
     "power_mw": 854.0,
     "cost_usd_billions": 32.72,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "microsoft-fairwater-atlanta",
@@ -62,7 +66,8 @@
     "power_mw": 433.0,
     "cost_usd_billions": 11.86,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "colossus-2",
@@ -75,7 +80,8 @@
     "power_mw": 302.0,
     "cost_usd_billions": 8.899895272,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "colossus-1",
@@ -88,7 +94,8 @@
     "power_mw": 425.38,
     "cost_usd_billions": 11.43,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "openai-stargate-abilene",
@@ -101,7 +108,8 @@
     "power_mw": 295.0,
     "cost_usd_billions": 8.07,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "google-columbus",
@@ -114,7 +122,8 @@
     "power_mw": 364.0,
     "cost_usd_billions": 11.61,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "amazon-madison-mega-site",
@@ -127,7 +136,8 @@
     "power_mw": 341.0,
     "cost_usd_billions": 10.894283791,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "google-new-albany",
@@ -140,7 +150,8 @@
     "power_mw": 407.0,
     "cost_usd_billions": 13.01,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "microsoft-goodyear",
@@ -153,7 +164,8 @@
     "power_mw": 263.0,
     "cost_usd_billions": 7.9,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "meta-temple",
@@ -166,7 +178,8 @@
     "power_mw": 198.0,
     "cost_usd_billions": 5.83,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "google-omaha",
@@ -179,7 +192,8 @@
     "power_mw": 284.0,
     "cost_usd_billions": 9.07,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "alibaba-zhangbei",
@@ -192,7 +206,8 @@
     "power_mw": 203.0,
     "cost_usd_billions": 6.483082454,
     "carbon_intensity_gco2_per_kwh": 530,
-    "renewable_pct": 29
+    "renewable_pct": 29,
+    "data_status": "confirmed"
   },
   {
     "id": "coreweave-denton-tx",
@@ -205,7 +220,8 @@
     "power_mw": 183.4,
     "cost_usd_billions": 2.9400000000000004,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "microsoft-project-osmium",
@@ -218,7 +234,8 @@
     "power_mw": 228.0,
     "cost_usd_billions": 8.73,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "google-council-bluffs--east-",
@@ -231,7 +248,8 @@
     "power_mw": 190.0,
     "cost_usd_billions": 6.050000000000001,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "google-storey-county",
@@ -244,7 +262,8 @@
     "power_mw": 214.0,
     "cost_usd_billions": 6.17,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "oracle-batam",
@@ -257,7 +276,8 @@
     "power_mw": 94.0,
     "cost_usd_billions": 2.75,
     "carbon_intensity_gco2_per_kwh": 450,
-    "renewable_pct": 25
+    "renewable_pct": 25,
+    "data_status": "confirmed"
   },
   {
     "id": "fluidstack-lake-mariner",
@@ -270,7 +290,8 @@
     "power_mw": 68.0,
     "cost_usd_billions": 2.2199999999999998,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "stack-infrastructure-nva02",
@@ -283,7 +304,8 @@
     "power_mw": 118.0,
     "cost_usd_billions": 5.17,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "stream-phoenix",
@@ -296,7 +318,8 @@
     "power_mw": 77.0,
     "cost_usd_billions": 3.36,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "vantage-tx1",
@@ -309,7 +332,8 @@
     "power_mw": 44.8,
     "cost_usd_billions": 1.22,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "start-campus-sines-data-campus",
@@ -322,7 +346,8 @@
     "power_mw": 40.0,
     "cost_usd_billions": 1.27,
     "carbon_intensity_gco2_per_kwh": 450,
-    "renewable_pct": 25
+    "renewable_pct": 25,
+    "data_status": "confirmed"
   },
   {
     "id": "google-pryor--north-",
@@ -335,7 +360,8 @@
     "power_mw": 65.0,
     "cost_usd_billions": 2.070330583,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "confirmed"
   },
   {
     "id": "meta-hyperion",
@@ -348,7 +374,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   },
   {
     "id": "goodnight",
@@ -361,7 +388,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   },
   {
     "id": "amazon-ridgeland",
@@ -374,7 +402,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   },
   {
     "id": "openai-stargate-uae",
@@ -387,7 +416,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 450,
-    "renewable_pct": 25
+    "renewable_pct": 25,
+    "data_status": "announced"
   },
   {
     "id": "coreweave-helios",
@@ -400,7 +430,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   },
   {
     "id": "google-cedar-rapids",
@@ -413,7 +444,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   },
   {
     "id": "qts-cedar-rapids",
@@ -426,7 +458,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   },
   {
     "id": "openai-stargate-shackelford",
@@ -439,7 +472,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   },
   {
     "id": "google-fort-wayne",
@@ -452,7 +486,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   },
   {
     "id": "crusoe-abilene-expansion",
@@ -465,7 +500,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   },
   {
     "id": "openai-stargate-lordstown",
@@ -478,7 +514,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   },
   {
     "id": "openai-stargate-new-mexico",
@@ -491,7 +528,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   },
   {
     "id": "openai-stargate-wisconsin",
@@ -504,7 +542,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   },
   {
     "id": "openai-stargate-michigan",
@@ -517,7 +556,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   },
   {
     "id": "openai-stargate-milam",
@@ -530,7 +570,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   },
   {
     "id": "meta-kuna",
@@ -543,7 +584,8 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   },
   {
     "id": "google-kansas-city-east",
@@ -556,6 +598,7 @@
     "power_mw": 0.0,
     "cost_usd_billions": 0.0,
     "carbon_intensity_gco2_per_kwh": 380,
-    "renewable_pct": 22
+    "renewable_pct": 22,
+    "data_status": "announced"
   }
 ]
