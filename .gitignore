@@ -1,1 +1,38 @@
+# OS
 .DS_Store
+
+# Claude Code local settings
+.claude/
+
+# --- backend (Python) ---
+backend/__pycache__/
+backend/*.pyc
+backend/.venv/
+
+# --- frontend (Node/Vite) ---
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+frontend/logs
+frontend/*.log
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+frontend/lerna-debug.log*
+
+# Environment variables (contain secrets, e.g. Mapbox token — never commit)
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+# Editor
+frontend/.vscode/*
+!frontend/.vscode/extensions.json
+frontend/.idea
+frontend/*.suo
+frontend/*.ntvs*
+frontend/*.njsproj
+frontend/*.sln
+frontend/*.sw?
