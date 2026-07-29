@@ -4,14 +4,22 @@ from pathlib import Path
 
 _DATA_PATH = Path(__file__).parent / "data" / "datacenters.json"
 _datacenters: list[dict] | None = None
+_generated_at: str | None = None
 
 
 def load_datacenters() -> list[dict]:
-    global _datacenters
+    global _datacenters, _generated_at
     if _datacenters is None:
         with open(_DATA_PATH) as f:
-            _datacenters = json.load(f)
+            raw = json.load(f)
+        _generated_at = raw["generated_at"]
+        _datacenters = raw["data_centers"]
     return _datacenters
+
+
+def get_dataset_metadata() -> dict:
+    load_datacenters()
+    return {"generated_at": _generated_at}
 
 
 def haversine_km(lat1: float, lng1: float, lat2: float, lng2: float) -> float:

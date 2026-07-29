@@ -10,6 +10,7 @@ import time
 import io
 import urllib.request
 import urllib.parse
+from datetime import datetime, timezone
 
 EPOCH_CSV_URL = "https://epoch.ai/data/data_centers/data_centers.csv"
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
@@ -164,8 +165,12 @@ def main():
         })
 
     out_path = "data/datacenters.json"
+    output = {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "data_centers": results,
+    }
     with open(out_path, "w") as f:
-        json.dump(results, f, indent=2)
+        json.dump(output, f, indent=2)
     print(f"\nDone. Saved {len(results)} data centers to {out_path}")
 
 
