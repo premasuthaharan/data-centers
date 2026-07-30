@@ -41,6 +41,15 @@ def impact_radius_km(power_mw: float | None) -> float:
     return round(min(math.sqrt(power_mw) * 5, 300), 1)
 
 
+# power_mw (Epoch AI's "Current power") is IT/critical load, not total
+# facility draw. UTILIZATION_FACTOR and PUE convert it into actual annual
+# facility energy consumption; see SOURCES.md ("Utilization factor" and
+# "Power Usage Effectiveness (PUE)"). PUE is shared with waste_heat_mw below
+# so the two figures stay consistent with each other.
+UTILIZATION_FACTOR = 0.8
+PUE = 1.3
+
+
 def compute_impact(dc: dict) -> dict:
     power_mw = dc.get("power_mw") or 0
     # 450 gCO2/kWh default: conservative internal heuristic, higher than the
@@ -50,7 +59,9 @@ def compute_impact(dc: dict) -> dict:
     # share; see SOURCES.md ("Default renewable percentage")
     renewable_pct = dc.get("renewable_pct") or 25
 
-    annual_kwh = power_mw * 1_000 * 8_760  # MW → kWh/yr
+    # annual_kwh = IT load * utilization * PUE * hours/year, i.e. total
+    # facility draw (IT + cooling/overhead), not just nameplate IT capacity.
+    annual_kwh = power_mw * UTILIZATION_FACTOR * PUE * 1_000 * 8_760  # MW → kWh/yr
 
     # --- Electricity price pressure ---
     # Large DCs can consume 1-5% of a regional grid; we model a price lift
@@ -82,9 +93,10 @@ def compute_impact(dc: dict) -> dict:
     # --- Land use / heat island ---
     # Rough floor area estimate (internal heuristic); see SOURCES.md ("IT density")
     footprint_m2 = round(power_mw * 100) if power_mw else 0
-    # Waste heat (MW thermal) = IT load * (PUE - 1); PUE 1.3 is an internal
-    # heuristic, more optimistic than industry-average PUE — see SOURCES.md
-    waste_heat_mw = round(power_mw * 0.3, 1) if power_mw else 0
+    # Waste heat (MW thermal) = IT load * (PUE - 1); PUE is an internal
+    # heuristic, more optimistic than industry-average PUE — see SOURCES.md.
+    # Shares the PUE constant above with annual_kwh so the two stay consistent.
+    waste_heat_mw = round(power_mw * (PUE - 1), 1) if power_mw else 0
 
     return {
         # Map geometry

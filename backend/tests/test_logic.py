@@ -3,6 +3,8 @@ import math
 import pytest
 
 from logic import (
+    PUE,
+    UTILIZATION_FACTOR,
     all_datacenters_with_impact,
     compute_impact,
     get_dataset_metadata,
@@ -64,18 +66,45 @@ class TestComputeImpact:
 
         assert result["radius_km"] == 50.0
         assert result["data_status"] == "confirmed"
-        assert result["electricity"]["annual_kwh"] == 876_000_000
+        assert result["electricity"]["annual_kwh"] == 911_040_000
         assert result["electricity"]["price_lift_pct"] == 5.5
-        assert result["electricity"]["homes_powered"] == 83429
-        assert result["electricity"]["annual_cost_millions_usd"] == 72.7
-        assert result["water"]["daily_withdrawal_mgd"] == 1.46
+        assert result["electricity"]["homes_powered"] == 86766
+        assert result["electricity"]["annual_cost_millions_usd"] == 75.6
+        assert result["water"]["daily_withdrawal_mgd"] == 1.52
         assert result["water"]["severity"] == "moderate"
-        assert result["carbon"]["annual_co2_tonnes"] == 332880
-        assert result["carbon"]["cars_equivalent"] == 72365
+        assert result["carbon"]["annual_co2_tonnes"] == 346195
+        assert result["carbon"]["cars_equivalent"] == 75260
         assert result["carbon"]["renewable_pct"] == 22
         assert result["carbon"]["intensity_gco2_per_kwh"] == 380
         assert result["land"]["footprint_m2"] == 10000
         assert result["land"]["waste_heat_mw"] == 30.0
+
+    def test_annual_kwh_applies_utilization_and_pue_to_nameplate_power(self):
+        # annual_kwh must equal IT load * utilization * PUE * hours/year, not
+        # nameplate power_mw run at 100% continuously.
+        dc = {"power_mw": 100.0}
+        result = compute_impact(dc)
+        expected = 100.0 * UTILIZATION_FACTOR * PUE * 1_000 * 8_760
+        assert result["electricity"]["annual_kwh"] == round(expected)
+
+    def test_waste_heat_and_annual_kwh_share_the_same_pue(self):
+        # waste_heat_mw and the PUE portion of annual_kwh must derive from
+        # the same PUE constant so the two figures stay internally coherent.
+        power_mw = 200.0
+        result = compute_impact({"power_mw": power_mw})
+
+        assert result["land"]["waste_heat_mw"] == round(power_mw * (PUE - 1), 1)
+        implied_pue = result["electricity"]["annual_kwh"] / (
+            power_mw * UTILIZATION_FACTOR * 1_000 * 8_760
+        )
+        assert implied_pue == pytest.approx(PUE, rel=1e-6)
+
+    def test_footprint_and_radius_are_not_derated_by_utilization(self):
+        # Physical footprint and grid-share radius model nameplate/physical
+        # size, not energy draw, so they must NOT be scaled by utilization.
+        result = compute_impact({"power_mw": 100.0})
+        assert result["land"]["footprint_m2"] == 10000
+        assert result["radius_km"] == 50.0
 
     def test_missing_electricity_price_and_water_use_global_defaults(self):
         # Records that predate this change (no per-country rates) must fall
@@ -87,8 +116,8 @@ class TestComputeImpact:
         }
         result = compute_impact(dc)
 
-        assert result["electricity"]["annual_cost_millions_usd"] == 52.6
-        assert result["water"]["daily_withdrawal_mgd"] == 1.9
+        assert result["electricity"]["annual_cost_millions_usd"] == 54.7
+        assert result["water"]["daily_withdrawal_mgd"] == 1.98
 
     def test_different_countries_produce_different_water_and_cost(self):
         # Same power_mw, different per-country rates, must diverge —
@@ -146,9 +175,9 @@ class TestComputeImpact:
         "power_mw,expected_severity",
         [
             (0.001, "low"),       # tiny draw, well under 1 MGD
-            (100, "moderate"),    # 1.9 MGD
-            (300, "high"),        # ~5.7 MGD
-            (1000, "critical"),   # ~19 MGD
+            (100, "moderate"),    # 1.98 MGD
+            (300, "high"),        # ~5.9 MGD
+            (1000, "critical"),   # ~19.8 MGD
         ],
     )
     def test_water_severity_thresholds(self, power_mw, expected_severity):
@@ -157,13 +186,13 @@ class TestComputeImpact:
 
     def test_water_severity_boundary_just_under_1_mgd(self):
         # Find a power_mw that lands just under the 1 MGD boundary.
-        dc = {"power_mw": 52.0}
+        dc = {"power_mw": 50.0}
         result = compute_impact(dc)
         assert result["water"]["daily_withdrawal_mgd"] < 1
         assert result["water"]["severity"] == "low"
 
     def test_water_severity_boundary_at_5_mgd(self):
-        dc = {"power_mw": 263.0}
+        dc = {"power_mw": 253.0}
         result = compute_impact(dc)
         assert result["water"]["daily_withdrawal_mgd"] == pytest.approx(5.0, abs=0.1)
 
