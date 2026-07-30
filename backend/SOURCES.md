@@ -7,16 +7,36 @@ internal heuristic rather than implied to be industry fact.
 
 ---
 
+### Utilization factor = 80% of nameplate power
+- **Used in:** `annual_kwh = power_mw * UTILIZATION_FACTOR * PUE * 1_000 * 8_760` (`logic.py`)
+- **Status:** Internal heuristic, not externally sourced.
+- **Context:** `power_mw` (Epoch AI's "Current power") is nameplate IT
+  capacity; real facilities don't draw 100% of nameplate continuously.
+  70-90% is a commonly cited range for average utilization in data center
+  capacity planning; 80% is the midpoint, chosen as a single representative
+  planning estimate rather than a measured fleet average. This is applied
+  uniformly across all facilities — it does not model per-facility or
+  per-workload variation (e.g. AI training clusters may run closer to
+  continuous full load than typical enterprise deployments).
+
 ### PUE (Power Usage Effectiveness) = 1.3
-- **Used in:** `waste_heat_mw = power_mw * (1.3 - 1)` (`logic.py:68`, coded as `power_mw * 0.3`)
+- **Used in:**
+  - `annual_kwh = power_mw * UTILIZATION_FACTOR * PUE * 1_000 * 8_760` (`logic.py`) —
+    total facility draw (IT load + cooling/other overhead), not just IT load.
+  - `waste_heat_mw = power_mw * (PUE - 1)` (`logic.py`)
+  - Both read from the single `PUE` constant in `logic.py` so the electricity
+    total and the waste-heat estimate stay consistent with each other; prior
+    to this, `annual_kwh` ignored PUE entirely (treating `power_mw` as if it
+    were already total facility draw) while `waste_heat_mw` assumed it was
+    IT-only load — the two were internally contradictory.
 - **Status:** Internal heuristic, not externally sourced.
 - **Context:** The most recent industry-wide figure is the
   [Uptime Institute Global Data Center Survey 2024](https://uptimeinstitute.com/uptime_assets/7425ec68d479c5d78a743df94a79b114ed9f9c73f13b6460949d2b8e73373209-GA-2024-07-uptime-institute-global-data-center-survey-results-2024.pdf),
   which reports an average PUE of **1.56** (1.47 when capacity-weighted
   toward larger, newer facilities). Our 1.3 is more optimistic than the
   reported average — it approximates a modern, efficient facility rather
-  than a typical one. Treat `waste_heat_mw` as a best-case estimate, not a
-  fleet average.
+  than a typical one. Treat `waste_heat_mw` and the PUE-inflated portion of
+  `annual_kwh` as best-case estimates, not a fleet average.
 
 ### IT density = 10 kW/m² (`footprint_m2 = power_mw * 100`)
 - **Used in:** `footprint_m2` (`logic.py:66`)
@@ -144,6 +164,7 @@ internal heuristic rather than implied to be industry fact.
 
 Every numeric constant referenced in `compute_impact()` is covered above:
 
+- [x] 80% utilization factor
 - [x] PUE 1.3
 - [x] 10 kW/m² IT density
 - [x] 3.0 L/kWh blended water estimate (global default)
