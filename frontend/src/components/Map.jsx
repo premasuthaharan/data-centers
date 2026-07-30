@@ -2,7 +2,8 @@ import { useEffect, useRef, useCallback } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
+mapboxgl.accessToken = MAPBOX_TOKEN;
 
 const OPERATOR_COLORS = {
   Amazon:    "#FF9900",
@@ -82,6 +83,8 @@ export default function Map({ datacenters, selectedId, onSelectDatacenter }) {
   }, []);
 
   useEffect(() => {
+    if (!MAPBOX_TOKEN) return;
+
     map.current = new mapboxgl.Map({
       container: mapRef.current,
       style: "mapbox://styles/mapbox/dark-v11",
@@ -251,6 +254,14 @@ export default function Map({ datacenters, selectedId, onSelectDatacenter }) {
       }
     }
   }, [selectedId, datacenters]);
+
+  if (!MAPBOX_TOKEN) {
+    return (
+      <div className="map-container map-container--error">
+        Mapbox token missing — see .env.example
+      </div>
+    );
+  }
 
   return <div ref={mapRef} className="map-container" />;
 }
