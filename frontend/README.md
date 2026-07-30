@@ -1,16 +1,42 @@
-# React + Vite
+# Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite app that renders the data center dataset on a Mapbox GL map
+and shows per-facility impact details on click. All impact calculation
+happens on the backend — this app only fetches and displays it.
 
-Currently, two official plugins are available:
+## Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```
+npm install
+cp .env.example .env
+```
 
-## React Compiler
+Then fill in `.env`:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- `VITE_MAPBOX_TOKEN` — **required**, or the map will not render. Get a
+  free token from
+  [account.mapbox.com/access-tokens](https://account.mapbox.com/access-tokens/).
+- `VITE_API_URL` — base URL of the backend API. Defaults to
+  `http://localhost:8000` if unset, which matches the backend's default
+  `uvicorn` port.
 
-## Expanding the ESLint configuration
+## Running locally
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Start the backend first (see [`../backend/README.md`](../backend/README.md)),
+then:
+
+```
+npm run dev
+```
+
+Serves on `http://localhost:5173` by default. The backend's
+`ALLOWED_ORIGINS` CORS config already allows this origin out of the box.
+
+## Other scripts
+
+```
+npm run build     # production build (outputs to dist/)
+npm run preview   # preview the production build locally
+npm run lint      # eslint
+npm test          # vitest
+```
