@@ -14,7 +14,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 35.836372,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "microsoft-fairwater-atlanta",
@@ -29,7 +31,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 24.092952,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "meta-prometheus",
@@ -44,7 +48,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 23.903541999999998,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "anthropic-amazon-new-carlisle",
@@ -59,7 +65,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 34.47262,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "openai-stargate-abilene",
@@ -74,7 +82,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 15.948322,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "microsoft-fairwater-wisconsin",
@@ -89,7 +99,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 13.978458,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-columbus",
@@ -104,7 +116,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 11.478245999999999,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-new-albany",
@@ -119,7 +133,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 12.841998,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-council-bluffs--east-",
@@ -134,7 +150,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 8.978034,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-lincoln",
@@ -149,7 +167,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 5.341361999999999,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-bristow",
@@ -164,7 +184,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 10.569078000000001,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "dayone-nusajaya",
@@ -179,7 +201,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 9.09168,
       "carbon_intensity_gco2_per_kwh": 450,
-      "renewable_pct": 25
+      "renewable_pct": 25,
+      "electricity_price_usd_per_kwh": 0.055,
+      "water_liters_per_kwh": 3.0
     },
     {
       "id": "colossus-1",
@@ -194,7 +218,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 12.87988,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-omaha",
@@ -209,7 +235,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 8.978034,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "coreweave-denton-tx",
@@ -224,7 +252,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 9.925084,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "qts-richmond-1",
@@ -239,7 +269,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 9.015915999999999,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "meta-rosemount",
@@ -254,7 +286,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 6.742996,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "amazon-madison-mega-site",
@@ -269,7 +303,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 10.758488,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "microsoft-goodyear",
@@ -284,7 +320,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 7.652164000000001,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "meta-jeffersonville",
@@ -299,7 +337,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 6.742996,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-the-dalles",
@@ -314,7 +354,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 5.8338280000000005,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-midlothian",
@@ -329,7 +371,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 3.901846,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "qts-richmond-2",
@@ -344,7 +388,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 6.818759999999999,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "qts-richmond-3",
@@ -359,7 +405,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 5.455007999999999,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "meta-montgomery",
@@ -374,7 +422,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 5.795946,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "meta-kuna",
@@ -389,7 +439,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 5.758064,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "meta-temple",
@@ -404,7 +456,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 5.758064,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "meta-cheyenne",
@@ -419,7 +473,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 5.758064,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "amazon-ridgeland",
@@ -434,7 +490,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 8.637096,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "meta-aiken",
@@ -449,7 +507,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 5.379244,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "coreweave-helios",
@@ -464,7 +524,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 5.000424000000001,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-arcola",
@@ -479,7 +541,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 2.9169140000000002,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "microsoft-project-osmium",
@@ -494,7 +558,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 7.19758,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-storey-county",
@@ -509,7 +575,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 6.0990020000000005,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "meta-eagle-mountain",
@@ -524,7 +592,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 5.038306,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "fluidstack-lake-mariner",
@@ -539,7 +609,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 3.7882,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-lancaster",
@@ -554,7 +626,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 5.189834,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-mesa",
@@ -569,7 +643,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 3.4093799999999996,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-waltham-cross",
@@ -584,7 +660,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 3.3336159999999997,
       "carbon_intensity_gco2_per_kwh": 210,
-      "renewable_pct": 42
+      "renewable_pct": 42,
+      "electricity_price_usd_per_kwh": 0.171,
+      "water_liters_per_kwh": 1.5
     },
     {
       "id": "huawei-horinger",
@@ -599,7 +677,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 9.159867600000002,
       "carbon_intensity_gco2_per_kwh": 530,
-      "renewable_pct": 29
+      "renewable_pct": 29,
+      "electricity_price_usd_per_kwh": 0.08,
+      "water_liters_per_kwh": 2.5
     },
     {
       "id": "vnet-bayin-ulanqab",
@@ -614,7 +694,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 8.371922,
       "carbon_intensity_gco2_per_kwh": 530,
-      "renewable_pct": 29
+      "renewable_pct": 29,
+      "electricity_price_usd_per_kwh": 0.08,
+      "water_liters_per_kwh": 2.5
     },
     {
       "id": "google-red-oak",
@@ -629,7 +711,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 2.9169140000000002,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "meta-gallatin",
@@ -644,7 +728,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 3.2957339999999995,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "meta-los-lunas",
@@ -659,7 +745,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 3.2957339999999995,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "coreweave-ellendale-nd",
@@ -674,7 +762,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 2.5759760000000003,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "coreweave-chester-va",
@@ -689,7 +779,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 3.106324,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "oracle-batam",
@@ -704,7 +796,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 2.7275039999999997,
       "carbon_intensity_gco2_per_kwh": 450,
-      "renewable_pct": 25
+      "renewable_pct": 25,
+      "electricity_price_usd_per_kwh": 0.07,
+      "water_liters_per_kwh": 3.0
     },
     {
       "id": "google-papillion",
@@ -719,7 +813,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 8.978034,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "coreweave-marble-nc",
@@ -734,7 +830,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 2.46233,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "microsoft-sat40",
@@ -749,7 +847,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 2.84115,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "stack-infrastructure-nva02",
@@ -764,7 +864,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 3.21997,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "stream-phoenix",
@@ -779,7 +881,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 2.424448,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "microsoft-sat14",
@@ -794,7 +898,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 1.7804540000000002,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "vantage-tx1",
@@ -809,7 +915,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 1.212224,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "coreweave-dalton-1---2",
@@ -824,7 +932,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 1.060696,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "alibaba-zhangbei",
@@ -839,7 +949,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 6.402058,
       "carbon_intensity_gco2_per_kwh": 530,
-      "renewable_pct": 29
+      "renewable_pct": 29,
+      "electricity_price_usd_per_kwh": 0.08,
+      "water_liters_per_kwh": 2.5
     },
     {
       "id": "start-campus-sines-data-campus",
@@ -854,7 +966,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 1.2501060000000002,
       "carbon_intensity_gco2_per_kwh": 450,
-      "renewable_pct": 25
+      "renewable_pct": 25,
+      "electricity_price_usd_per_kwh": 0.19,
+      "water_liters_per_kwh": 3.0
     },
     {
       "id": "google-pryor--north-",
@@ -869,7 +983,9 @@
       "data_status": "confirmed",
       "cost_usd_billions": 2.007746,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "coreweave-muskogee-ok",
@@ -884,7 +1000,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "crusoe-abilene-expansion",
@@ -899,7 +1017,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "goodnight",
@@ -914,7 +1034,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-cedar-rapids",
@@ -929,7 +1051,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-fort-wayne",
@@ -944,7 +1068,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "google-kansas-city-east",
@@ -959,7 +1085,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "meta-hyperion",
@@ -974,7 +1102,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "meta-sarpy",
@@ -989,7 +1119,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "openai-stargate-lordstown",
@@ -1004,7 +1136,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "openai-stargate-michigan",
@@ -1019,7 +1153,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "openai-stargate-milam",
@@ -1034,7 +1170,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "openai-stargate-new-mexico",
@@ -1049,7 +1187,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "openai-stargate-shackelford",
@@ -1064,7 +1204,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "openai-stargate-uae",
@@ -1079,7 +1221,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 450,
-      "renewable_pct": 25
+      "renewable_pct": 25,
+      "electricity_price_usd_per_kwh": 0.045,
+      "water_liters_per_kwh": 8.0
     },
     {
       "id": "openai-stargate-wisconsin",
@@ -1094,7 +1238,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "qts-cedar-rapids",
@@ -1109,7 +1255,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 380,
-      "renewable_pct": 22
+      "renewable_pct": 22,
+      "electricity_price_usd_per_kwh": 0.083,
+      "water_liters_per_kwh": 2.3
     },
     {
       "id": "southgate-melbourne",
@@ -1124,7 +1272,9 @@
       "data_status": "announced",
       "cost_usd_billions": 0.0,
       "carbon_intensity_gco2_per_kwh": 590,
-      "renewable_pct": 29
+      "renewable_pct": 29,
+      "electricity_price_usd_per_kwh": 0.145,
+      "water_liters_per_kwh": 4.5
     }
   ]
 }

@@ -37,20 +37,67 @@ GRID_DATA = {
     "Taiwan":        {"carbon_intensity": 560, "renewable_pct": 8},
     "China":         {"carbon_intensity": 530, "renewable_pct": 29},
     "India":         {"carbon_intensity": 700, "renewable_pct": 20},
+    "Indonesia":     {"carbon_intensity": 720, "renewable_pct": 15},
+    "Malaysia":      {"carbon_intensity": 580, "renewable_pct": 17},
     "Australia":     {"carbon_intensity": 590, "renewable_pct": 29},
     "New Zealand":   {"carbon_intensity": 130, "renewable_pct": 84},
     "Brazil":        {"carbon_intensity": 170, "renewable_pct": 88},
     "South Africa":  {"carbon_intensity": 780, "renewable_pct": 12},
     "Bahrain":       {"carbon_intensity": 640, "renewable_pct": 5},
-    "UAE":           {"carbon_intensity": 580, "renewable_pct": 8},
+    "United Arab Emirates": {"carbon_intensity": 580, "renewable_pct": 8},
     "Israel":        {"carbon_intensity": 420, "renewable_pct": 10},
     "Switzerland":   {"carbon_intensity": 40,  "renewable_pct": 62},
     "Austria":       {"carbon_intensity": 130, "renewable_pct": 80},
     "Spain":         {"carbon_intensity": 200, "renewable_pct": 50},
     "Italy":         {"carbon_intensity": 330, "renewable_pct": 42},
     "Poland":        {"carbon_intensity": 700, "renewable_pct": 18},
+    "Portugal":      {"carbon_intensity": 160, "renewable_pct": 61},
 }
 DEFAULT_GRID = {"carbon_intensity": 450, "renewable_pct": 25}
+
+# Static per-country electricity price (industrial/bulk USD per kWh) and water
+# intensity (blended L/kWh, proxying cooling technology + climate aridity) —
+# see SOURCES.md ("Per-country electricity price" and "Per-country water
+# intensity") for how these were derived and their limitations.
+IMPACT_RATES = {
+    "United States":        {"electricity_price_usd_per_kwh": 0.083, "water_liters_per_kwh": 2.3},
+    "Canada":                {"electricity_price_usd_per_kwh": 0.070, "water_liters_per_kwh": 1.8},
+    "United Kingdom":        {"electricity_price_usd_per_kwh": 0.171, "water_liters_per_kwh": 1.5},
+    "Ireland":               {"electricity_price_usd_per_kwh": 0.145, "water_liters_per_kwh": 1.5},
+    "Germany":               {"electricity_price_usd_per_kwh": 0.198, "water_liters_per_kwh": 1.8},
+    "Netherlands":           {"electricity_price_usd_per_kwh": 0.145, "water_liters_per_kwh": 1.8},
+    "Belgium":               {"electricity_price_usd_per_kwh": 0.150, "water_liters_per_kwh": 1.8},
+    "France":                {"electricity_price_usd_per_kwh": 0.110, "water_liters_per_kwh": 1.8},
+    "Sweden":                {"electricity_price_usd_per_kwh": 0.090, "water_liters_per_kwh": 1.3},
+    "Norway":                {"electricity_price_usd_per_kwh": 0.060, "water_liters_per_kwh": 1.3},
+    "Finland":               {"electricity_price_usd_per_kwh": 0.080, "water_liters_per_kwh": 1.3},
+    "Denmark":               {"electricity_price_usd_per_kwh": 0.130, "water_liters_per_kwh": 1.5},
+    "Singapore":             {"electricity_price_usd_per_kwh": 0.140, "water_liters_per_kwh": 3.5},
+    "Japan":                 {"electricity_price_usd_per_kwh": 0.155, "water_liters_per_kwh": 2.0},
+    "South Korea":           {"electricity_price_usd_per_kwh": 0.100, "water_liters_per_kwh": 2.0},
+    "Taiwan":                {"electricity_price_usd_per_kwh": 0.080, "water_liters_per_kwh": 2.5},
+    "China":                 {"electricity_price_usd_per_kwh": 0.080, "water_liters_per_kwh": 2.5},
+    "India":                 {"electricity_price_usd_per_kwh": 0.090, "water_liters_per_kwh": 3.5},
+    "Indonesia":             {"electricity_price_usd_per_kwh": 0.070, "water_liters_per_kwh": 3.0},
+    "Malaysia":              {"electricity_price_usd_per_kwh": 0.055, "water_liters_per_kwh": 3.0},
+    "Australia":             {"electricity_price_usd_per_kwh": 0.145, "water_liters_per_kwh": 4.5},
+    "New Zealand":           {"electricity_price_usd_per_kwh": 0.130, "water_liters_per_kwh": 1.8},
+    "Brazil":                {"electricity_price_usd_per_kwh": 0.100, "water_liters_per_kwh": 2.3},
+    "South Africa":          {"electricity_price_usd_per_kwh": 0.080, "water_liters_per_kwh": 4.5},
+    "Bahrain":               {"electricity_price_usd_per_kwh": 0.030, "water_liters_per_kwh": 8.0},
+    "United Arab Emirates":  {"electricity_price_usd_per_kwh": 0.045, "water_liters_per_kwh": 8.0},
+    "Israel":                {"electricity_price_usd_per_kwh": 0.150, "water_liters_per_kwh": 6.0},
+    "Switzerland":           {"electricity_price_usd_per_kwh": 0.220, "water_liters_per_kwh": 1.3},
+    "Austria":               {"electricity_price_usd_per_kwh": 0.180, "water_liters_per_kwh": 1.5},
+    "Spain":                 {"electricity_price_usd_per_kwh": 0.150, "water_liters_per_kwh": 4.5},
+    "Italy":                 {"electricity_price_usd_per_kwh": 0.250, "water_liters_per_kwh": 1.8},
+    "Poland":                {"electricity_price_usd_per_kwh": 0.140, "water_liters_per_kwh": 1.8},
+    "Portugal":              {"electricity_price_usd_per_kwh": 0.190, "water_liters_per_kwh": 3.0},
+}
+# Explicit, labeled defaults for any country not in IMPACT_RATES above — these
+# intentionally match the previous global constants in logic.py so existing
+# behavior is preserved for countries we don't have specific data for yet.
+DEFAULT_IMPACT_RATES = {"electricity_price_usd_per_kwh": 0.06, "water_liters_per_kwh": 3.0}
 
 
 def fetch_csv(url: str) -> str:
@@ -175,6 +222,7 @@ def main():
                 print(f"  WARN: only resolved to '{geocode_precision}' precision ({lat}, {lng})")
 
         grid = GRID_DATA.get(country, DEFAULT_GRID)
+        rates = IMPACT_RATES.get(country, DEFAULT_IMPACT_RATES)
 
         dc_id = "".join(
             c if c.isalnum() or c == "-" else "-"
@@ -198,6 +246,8 @@ def main():
             "cost_usd_billions": cost_bn,
             "carbon_intensity_gco2_per_kwh": grid["carbon_intensity"],
             "renewable_pct": grid["renewable_pct"],
+            "electricity_price_usd_per_kwh": rates["electricity_price_usd_per_kwh"],
+            "water_liters_per_kwh": rates["water_liters_per_kwh"],
         })
 
     out_path = "data/datacenters.json"
