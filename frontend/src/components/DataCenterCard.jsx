@@ -40,6 +40,7 @@ export default function DataCenterCard({ dc, onClose }) {
   const water = impact.water || {};
   const carbon = impact.carbon || {};
   const land = impact.land || {};
+  const isAnnounced = (dc.data_status ?? impact.data_status) === "announced";
 
   const waterColor = WATER_COLORS[water.severity] ?? "#64748b";
 
@@ -57,7 +58,7 @@ export default function DataCenterCard({ dc, onClose }) {
 
       <div className="dc-detail-stats">
         <div className="dc-stat-chip">
-          <span className="chip-val">{dc.power_mw != null ? `${dc.power_mw.toLocaleString()} MW` : "—"}</span>
+          <span className="chip-val">{dc.power_mw ? `${dc.power_mw.toLocaleString()} MW` : "—"}</span>
           <span className="chip-label">Power</span>
         </div>
         <div className="dc-stat-chip">
@@ -70,6 +71,13 @@ export default function DataCenterCard({ dc, onClose }) {
         </div>
       </div>
 
+      {isAnnounced && (
+        <div className="dc-announced-notice">
+          Capacity not yet publicly announced — impact estimates below are unavailable, not zero.
+        </div>
+      )}
+
+      {isAnnounced ? null : (
       <div className="impact-blocks">
         <ImpactBlock title="Electricity" icon="⚡" color="#f59e0b">
           <StatRow label="Homes powered" value={fmt(elec.homes_powered)} />
@@ -121,6 +129,7 @@ export default function DataCenterCard({ dc, onClose }) {
           </p>
         </ImpactBlock>
       </div>
+      )}
     </div>
   );
 }

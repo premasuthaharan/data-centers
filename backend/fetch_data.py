@@ -159,6 +159,7 @@ def main():
             "lat": lat,
             "lng": lng,
             "power_mw": power_mw,
+            "data_status": "confirmed" if power_mw else "announced",
             "cost_usd_billions": cost_bn,
             "carbon_intensity_gco2_per_kwh": grid["carbon_intensity"],
             "renewable_pct": grid["renewable_pct"],

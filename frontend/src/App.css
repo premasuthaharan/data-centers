@@ -87,6 +87,12 @@
   flex-shrink: 0;
 }
 
+.legend-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 2px 0;
+}
+
 /* ── Detail panel (slide in from right) ── */
 .detail-panel-wrapper {
   position: absolute;
@@ -191,6 +197,17 @@
   color: #475569;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+.dc-announced-notice {
+  background: #1c1a10;
+  border: 1px solid #3a3212;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 12px;
+  color: #d4a72c;
+  line-height: 1.5;
+  margin-bottom: 20px;
 }
 
 /* ── Impact blocks ── */

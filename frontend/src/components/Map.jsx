@@ -33,6 +33,12 @@ function kmToGeoJSONCircle(lng, lat, radiusKm, steps = 64) {
   return coords;
 }
 
+const ANNOUNCED_COLOR = "#475569";
+
+function isAnnounced(dc) {
+  return (dc.data_status ?? dc.impact?.data_status) === "announced";
+}
+
 function buildGeoJSON(datacenters) {
   const circleFeatures = datacenters.map((dc) => ({
     type: "Feature",
@@ -43,8 +49,9 @@ function buildGeoJSON(datacenters) {
     },
     properties: {
       id: dc.id,
-      color: operatorColor(dc.operator),
+      color: isAnnounced(dc) ? ANNOUNCED_COLOR : operatorColor(dc.operator),
       name: dc.name,
+      announced: isAnnounced(dc),
     },
   }));
 
@@ -54,9 +61,10 @@ function buildGeoJSON(datacenters) {
     geometry: { type: "Point", coordinates: [dc.lng, dc.lat] },
     properties: {
       id: dc.id,
-      color: operatorColor(dc.operator),
+      color: isAnnounced(dc) ? ANNOUNCED_COLOR : operatorColor(dc.operator),
       name: dc.name,
       operator: dc.operator,
+      announced: isAnnounced(dc),
     },
   }));
 
@@ -144,7 +152,7 @@ export default function Map({ datacenters, selectedId, onSelectDatacenter }) {
           "circle-color": ["get", "color"],
           "circle-stroke-color": "#ffffff",
           "circle-stroke-width": 1.5,
-          "circle-opacity": 0.9,
+          "circle-opacity": ["case", ["get", "announced"], 0.55, 0.9],
         },
       });
 
