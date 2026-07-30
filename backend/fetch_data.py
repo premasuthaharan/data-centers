@@ -191,6 +191,26 @@ def clean_owner(raw: str) -> str:
     return ", ".join(p for p in parts if p)
 
 
+# If more than this fraction of entries fail to geocode entirely, something
+# systemic is wrong (e.g. Nominatim down/rate-limited) rather than a handful
+# of hard-to-geocode addresses — refuse to write a dataset in that case so a
+# scheduled refresh fails loudly instead of silently degrading the data.
+MAX_GEOCODE_FAILURE_RATE = 0.20
+
+
+def check_geocode_failure_rate(results: list[dict]) -> None:
+    if not results:
+        raise RuntimeError("No entries were parsed from the source CSV — refusing to write an empty dataset")
+    n_failed = sum(1 for r in results if r["geocode_precision"] == "failed")
+    failure_rate = n_failed / len(results)
+    if failure_rate > MAX_GEOCODE_FAILURE_RATE:
+        raise RuntimeError(
+            f"{n_failed}/{len(results)} entries ({failure_rate:.0%}) failed to geocode, "
+            f"exceeding the {MAX_GEOCODE_FAILURE_RATE:.0%} threshold — refusing to write "
+            f"a dataset that may reflect a geocoding outage rather than real data"
+        )
+
+
 def main():
     print("Fetching Epoch AI data centers CSV...")
     raw = fetch_csv(EPOCH_CSV_URL)
@@ -249,6 +269,8 @@ def main():
             "electricity_price_usd_per_kwh": rates["electricity_price_usd_per_kwh"],
             "water_liters_per_kwh": rates["water_liters_per_kwh"],
         })
+
+    check_geocode_failure_rate(results)
 
     out_path = "data/datacenters.json"
     output = {

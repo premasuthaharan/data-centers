@@ -4,8 +4,10 @@ from fetch_data import (
     DEFAULT_IMPACT_RATES,
     GRID_DATA,
     IMPACT_RATES,
+    MAX_GEOCODE_FAILURE_RATE,
     _jitter_country_centroid,
     _simplify_address,
+    check_geocode_failure_rate,
     clean_owner,
     geocode,
     parse_float,
@@ -181,3 +183,37 @@ class TestGeocode:
         result = geocode("", "Atlantis")
         assert result == (7.0, 8.0, "country")
         assert calls == ["Atlantis"]
+
+
+# --- check_geocode_failure_rate ---
+
+def _make_results(n_ok: int, n_failed: int) -> list[dict]:
+    return (
+        [{"geocode_precision": "address"} for _ in range(n_ok)]
+        + [{"geocode_precision": "failed"} for _ in range(n_failed)]
+    )
+
+
+class TestCheckGeocodeFailureRate:
+    def test_no_results_raises(self):
+        with pytest.raises(RuntimeError, match="No entries were parsed"):
+            check_geocode_failure_rate([])
+
+    def test_failure_rate_under_threshold_does_not_raise(self):
+        # 1/10 = 10%, under the 20% threshold.
+        check_geocode_failure_rate(_make_results(n_ok=9, n_failed=1))
+
+    def test_failure_rate_at_threshold_does_not_raise(self):
+        # 2/10 = 20%, exactly at (not over) the threshold.
+        results = _make_results(n_ok=8, n_failed=2)
+        assert MAX_GEOCODE_FAILURE_RATE == 0.20
+        check_geocode_failure_rate(results)
+
+    def test_failure_rate_over_threshold_raises(self):
+        # 3/10 = 30%, over the 20% threshold.
+        with pytest.raises(RuntimeError, match="exceeding the 20% threshold"):
+            check_geocode_failure_rate(_make_results(n_ok=7, n_failed=3))
+
+    def test_all_failed_raises(self):
+        with pytest.raises(RuntimeError, match="exceeding the 20% threshold"):
+            check_geocode_failure_rate(_make_results(n_ok=0, n_failed=5))
