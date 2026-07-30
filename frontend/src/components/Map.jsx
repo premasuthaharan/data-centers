@@ -1,42 +1,10 @@
 import { useEffect, useRef, useCallback } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { operatorColor, kmToGeoJSONCircle, hasCoordinates, isAnnounced } from "./mapHelpers";
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 mapboxgl.accessToken = MAPBOX_TOKEN;
-
-const OPERATOR_COLORS = {
-  Amazon:    "#FF9900",
-  Microsoft: "#00A4EF",
-  Google:    "#34A853",
-  Meta:      "#1877F2",
-  Apple:     "#888888",
-};
-
-function operatorColor(operator = "") {
-  for (const [key, color] of Object.entries(OPERATOR_COLORS)) {
-    if (operator.includes(key)) return color;
-  }
-  return "#9333ea";
-}
-
-// Convert km radius to approximate degrees longitude at a given latitude
-// Used to build a GeoJSON circle approximation
-function kmToGeoJSONCircle(lng, lat, radiusKm, steps = 64) {
-  const coords = [];
-  const distLat = radiusKm / 111.32;
-  const distLng = radiusKm / (111.32 * Math.cos((lat * Math.PI) / 180));
-  for (let i = 0; i <= steps; i++) {
-    const angle = (i / steps) * 2 * Math.PI;
-    coords.push([lng + distLng * Math.cos(angle), lat + distLat * Math.sin(angle)]);
-  }
-  return coords;
-}
-
-// Facilities with no successful geocode have null lat/lng and can't be plotted.
-function hasCoordinates(dc) {
-  return typeof dc.lat === "number" && typeof dc.lng === "number";
-}
 
 function approxNote(precision) {
   if (precision === "country") {
@@ -49,10 +17,6 @@ function approxNote(precision) {
 }
 
 const ANNOUNCED_COLOR = "#475569";
-
-function isAnnounced(dc) {
-  return (dc.data_status ?? dc.impact?.data_status) === "announced";
-}
 
 function buildGeoJSON(datacenters) {
   const locatable = datacenters.filter(hasCoordinates);
