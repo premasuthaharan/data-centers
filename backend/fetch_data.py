@@ -5,7 +5,9 @@ Usage: python3 fetch_data.py
 """
 
 import csv
+import hashlib
 import json
+import math
 import time
 import io
 import urllib.request
@@ -74,30 +76,56 @@ def _nominatim_query(query: str) -> tuple[float, float] | None:
 def _simplify_address(address: str) -> str:
     """Reduce a verbose address to 'City, State' or 'City' for better geocoding."""
     import re
-    # Strip company names (anything before the last comma-separated real address part)
-    # Try to extract: number street, city, state zip pattern
-    m = re.search(r'\d+\s[\w\s]+,\s*([\w\s]+),\s*([A-Z]{2})\s*\d*', address)
-    if m:
-        return f"{m.group(1).strip()}, {m.group(2).strip()}"
-    # Fallback: take the last 2 comma-separated parts
     parts = [p.strip() for p in address.split(",") if p.strip()]
+    # Find the "STATE ZIP" or "STATE" part (e.g. "AL 36105" or "WY") and take the
+    # part immediately before it as the city — this is robust to street prefixes
+    # like "Co Rd 42" that don't start with a house number, unlike a regex over
+    # the whole string. A naive "last 2 comma parts" fallback risks landing on
+    # "STATE ZIP, USA" alone (city dropped), which Nominatim can fuzzy-match to
+    # an unrelated place via the bare zip digits.
+    for i, part in enumerate(parts):
+        if re.fullmatch(r'[A-Z]{2}(\s*\d{3,10})?', part) and i > 0:
+            return f"{parts[i - 1]}, {part.split()[0]}"
     if len(parts) >= 2:
         return ", ".join(parts[-2:])
     return address
 
 
-def geocode(address: str, country: str) -> tuple[float, float] | None:
+def _jitter_country_centroid(lat: float, lng: float, facility_id: str, radius_km: float = 40) -> tuple[float, float]:
+    """Country-tier geocodes all land on the same country centroid, which stacks
+    unrelated facilities on top of each other on the map (only the top one in
+    z-order is even clickable). Spread them deterministically around the
+    centroid so each stays visible/clickable — this does not add precision,
+    it just stops them from occluding one another. geocode_precision stays
+    'country' since the actual location confidence hasn't changed."""
+    digest = hashlib.sha256(facility_id.encode()).hexdigest()
+    angle = (int(digest[:8], 16) / 0xFFFFFFFF) * 2 * math.pi
+    frac = (int(digest[8:16], 16) / 0xFFFFFFFF) ** 0.5  # sqrt for uniform disk density
+    dist_km = frac * radius_km
+    dist_lat = dist_km / 111.32
+    dist_lng = dist_km / (111.32 * math.cos(math.radians(lat)) or 1e-9)
+    return lat + dist_lat * math.sin(angle), lng + dist_lng * math.cos(angle)
+
+
+def geocode(address: str, country: str) -> tuple[float, float, str] | None:
+    """Try progressively coarser queries. Returns (lat, lng, precision):
+    'address' for a full verbatim-address match, 'approximate' for a
+    simplified (city/region-level) address match, 'country' for a bare
+    country-name match, or None if every tier failed. Each tier is a
+    materially different confidence level and must not be conflated —
+    a simplified-address match can still be thousands of km off."""
     attempts = []
     if address:
-        attempts.append(f"{address}, {country}")
-        attempts.append(f"{_simplify_address(address)}, {country}")
-    attempts.append(country)
+        attempts.append((f"{address}, {country}", "address"))
+        attempts.append((f"{_simplify_address(address)}, {country}", "approximate"))
+    attempts.append((country, "country"))
 
-    for query in attempts:
+    for query, precision in attempts:
         result = _nominatim_query(query)
         time.sleep(1.1)
         if result:
-            return result
+            lat, lng = result
+            return lat, lng, precision
     return None
 
 
@@ -136,19 +164,25 @@ def main():
             continue
 
         print(f"[{i+1}/{len(rows)}] Geocoding: {name} ({address or country})")
-        coords = geocode(address, country)
+        result = geocode(address, country)
 
-        if not coords:
-            print(f"  SKIP: could not geocode")
-            continue
+        if not result:
+            print(f"  FAILED: could not geocode at any precision tier")
+            lat, lng, geocode_precision = None, None, "failed"
+        else:
+            lat, lng, geocode_precision = result
+            if geocode_precision != "address":
+                print(f"  WARN: only resolved to '{geocode_precision}' precision ({lat}, {lng})")
 
-        lat, lng = coords
         grid = GRID_DATA.get(country, DEFAULT_GRID)
 
         dc_id = "".join(
             c if c.isalnum() or c == "-" else "-"
             for c in name.lower().replace(" ", "-")
         )[:60]
+
+        if geocode_precision == "country" and lat is not None:
+            lat, lng = _jitter_country_centroid(lat, lng, dc_id)
 
         results.append({
             "id": dc_id,
@@ -158,6 +192,7 @@ def main():
             "address": address,
             "lat": lat,
             "lng": lng,
+            "geocode_precision": geocode_precision,
             "power_mw": power_mw,
             "data_status": "confirmed" if power_mw else "announced",
             "cost_usd_billions": cost_bn,
@@ -172,7 +207,14 @@ def main():
     }
     with open(out_path, "w") as f:
         json.dump(output, f, indent=2)
+
+    n_approx = sum(1 for r in results if r["geocode_precision"] == "approximate")
+    n_country = sum(1 for r in results if r["geocode_precision"] == "country")
+    n_failed = sum(1 for r in results if r["geocode_precision"] == "failed")
     print(f"\nDone. Saved {len(results)} data centers to {out_path}")
+    print(f"  {n_approx} resolved at simplified-address ('approximate') precision only")
+    print(f"  {n_country} resolved at country-level precision only")
+    print(f"  {n_failed} failed to geocode (lat/lng set to null)")
 
 
 if __name__ == "__main__":
