@@ -1,0 +1,48 @@
+name: Refresh data centers dataset
+
+on:
+  schedule:
+    # 06:00 UTC on the 1st of every month
+    - cron: "0 6 1 * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install backend dependencies
+        run: pip install -r backend/requirements.txt
+
+      - name: Refresh dataset
+        run: make refresh-data
+
+      - name: Open PR with dataset changes
+        id: create-pr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "Refresh data centers dataset"
+          title: "Automated dataset refresh"
+          body: |
+            Automated monthly refresh of `backend/data/datacenters.json`
+            via `make refresh-data`, triggered by the
+            `refresh-data.yml` scheduled workflow.
+
+            Review the diff before merging — this re-fetches the Epoch AI
+            source CSV and re-geocodes every entry, so entries may shift,
+            get added, or (rarely) lose precision if Nominatim couldn't
+            resolve an address this run.
+          branch: automated/refresh-data
+          delete-branch: true
+          add-paths: backend/data/datacenters.json
