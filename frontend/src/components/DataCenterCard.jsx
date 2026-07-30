@@ -1,5 +1,10 @@
 const WATER_COLORS = { low: "#22c55e", moderate: "#f59e0b", high: "#f97316", critical: "#ef4444" };
 const WATER_LABELS = { low: "Low stress", moderate: "Moderate stress", high: "High stress", critical: "Critical stress" };
+const PRECISION_WARNINGS = {
+  approximate: "Location is approximate (city/region-level geocode)",
+  country: "Location is approximate (country-level geocode only)",
+  failed: "Location unknown — could not be geocoded",
+};
 
 function fmt(n, unit = "") {
   if (n == null || n === "") return "—";
@@ -42,6 +47,7 @@ export default function DataCenterCard({ dc, onClose }) {
   const land = impact.land || {};
 
   const waterColor = WATER_COLORS[water.severity] ?? "#64748b";
+  const precisionWarning = PRECISION_WARNINGS[dc.geocode_precision];
 
   return (
     <div className="dc-detail-panel">
@@ -53,6 +59,7 @@ export default function DataCenterCard({ dc, onClose }) {
           {dc.operator} · {dc.country}
           {dc.address && <><br /><span className="dc-address">{dc.address}</span></>}
         </div>
+        {precisionWarning && <div className="dc-precision-warning">⚠ {precisionWarning}</div>}
       </div>
 
       <div className="dc-detail-stats">

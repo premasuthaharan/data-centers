@@ -144,6 +144,12 @@
   font-size: 11px;
 }
 
+.dc-precision-warning {
+  color: #ffcc00;
+  font-size: 11px;
+  margin-top: 6px;
+}
+
 /* ── Stat chips ── */
 .dc-detail-stats {
   display: flex;
@@ -301,5 +307,10 @@
 
 .popup-sub {
   color: #64748b;
+  font-size: 11px;
+}
+
+.popup-warn {
+  color: #ffcc00;
   font-size: 11px;
 }

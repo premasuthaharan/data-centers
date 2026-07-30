@@ -32,8 +32,25 @@ function kmToGeoJSONCircle(lng, lat, radiusKm, steps = 64) {
   return coords;
 }
 
+// Facilities with no successful geocode have null lat/lng and can't be plotted.
+function hasCoordinates(dc) {
+  return typeof dc.lat === "number" && typeof dc.lng === "number";
+}
+
+function approxNote(precision) {
+  if (precision === "country") {
+    return `<br/><span class="popup-sub popup-warn">⚠ location approximate (country-level only)</span>`;
+  }
+  if (precision === "approximate") {
+    return `<br/><span class="popup-sub popup-warn">⚠ location approximate (city/region-level)</span>`;
+  }
+  return "";
+}
+
 function buildGeoJSON(datacenters) {
-  const circleFeatures = datacenters.map((dc) => ({
+  const locatable = datacenters.filter(hasCoordinates);
+
+  const circleFeatures = locatable.map((dc) => ({
     type: "Feature",
     id: dc.id,
     geometry: {
@@ -44,10 +61,11 @@ function buildGeoJSON(datacenters) {
       id: dc.id,
       color: operatorColor(dc.operator),
       name: dc.name,
+      geocodePrecision: dc.geocode_precision ?? "address",
     },
   }));
 
-  const pointFeatures = datacenters.map((dc) => ({
+  const pointFeatures = locatable.map((dc) => ({
     type: "Feature",
     id: dc.id,
     geometry: { type: "Point", coordinates: [dc.lng, dc.lat] },
@@ -56,6 +74,7 @@ function buildGeoJSON(datacenters) {
       color: operatorColor(dc.operator),
       name: dc.name,
       operator: dc.operator,
+      geocodePrecision: dc.geocode_precision ?? "address",
     },
   }));
 
@@ -139,8 +158,18 @@ export default function Map({ datacenters, selectedId, onSelectDatacenter }) {
             10, 10,
           ],
           "circle-color": ["get", "color"],
-          "circle-stroke-color": "#ffffff",
-          "circle-stroke-width": 1.5,
+          "circle-stroke-color": [
+            "case",
+            ["==", ["get", "geocodePrecision"], "address"],
+            "#ffffff",
+            "#ffcc00",
+          ],
+          "circle-stroke-width": [
+            "case",
+            ["==", ["get", "geocodePrecision"], "address"],
+            1.5,
+            2.5,
+          ],
           "circle-opacity": 0.9,
         },
       });
@@ -163,7 +192,7 @@ export default function Map({ datacenters, selectedId, onSelectDatacenter }) {
         const p = e.features[0].properties;
         popup.current
           .setLngLat(e.lngLat)
-          .setHTML(`<div class="popup"><strong>${p.name}</strong></div>`)
+          .setHTML(`<div class="popup"><strong>${p.name}</strong>${approxNote(p.geocodePrecision)}</div>`)
           .addTo(map.current);
       });
       map.current.on("mouseleave", "dc-circles-fill", () => {
@@ -177,7 +206,7 @@ export default function Map({ datacenters, selectedId, onSelectDatacenter }) {
         const p = e.features[0].properties;
         popup.current
           .setLngLat(e.lngLat)
-          .setHTML(`<div class="popup"><strong>${p.name}</strong><br/><span class="popup-sub">${p.operator}</span></div>`)
+          .setHTML(`<div class="popup"><strong>${p.name}</strong><br/><span class="popup-sub">${p.operator}</span>${approxNote(p.geocodePrecision)}</div>`)
           .addTo(map.current);
       });
       map.current.on("mouseleave", "dc-points-hit", () => {
