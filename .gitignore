@@ -6,8 +6,10 @@
 
 # --- backend (Python) ---
 backend/__pycache__/
+backend/tests/__pycache__/
 backend/*.pyc
 backend/.venv/
+backend/.pytest_cache/
 
 # --- frontend (Node/Vite) ---
 frontend/node_modules/

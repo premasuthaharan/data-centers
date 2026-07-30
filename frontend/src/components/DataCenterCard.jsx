@@ -1,3 +1,5 @@
+import { fmt } from "./formatters";
+
 const WATER_COLORS = { low: "#22c55e", moderate: "#f59e0b", high: "#f97316", critical: "#ef4444" };
 const WATER_LABELS = { low: "Low stress", moderate: "Moderate stress", high: "High stress", critical: "Critical stress" };
 const PRECISION_WARNINGS = {
@@ -5,11 +7,6 @@ const PRECISION_WARNINGS = {
   country: "Location is approximate (country-level geocode only)",
   failed: "Location unknown — could not be geocoded",
 };
-
-function fmt(n, unit = "") {
-  if (n == null || n === "") return "—";
-  return n.toLocaleString() + (unit ? " " + unit : "");
-}
 
 function SectionHeader({ children }) {
   return <div className="dc-section-label">{children}</div>;
