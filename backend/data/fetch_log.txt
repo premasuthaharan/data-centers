@@ -34,12 +34,12 @@ Found 75 entries
 [24/75] Geocoding: QTS Richmond 3 (3525–3543 Portugee Rd, Sandston, VA 23150)
   WARN: only resolved to 'approximate' precision (37.5107225, -77.3115564)
 [25/75] Geocoding: Meta Montgomery (Co Rd 42, Montgomery, AL 36105, USA)
-  WARN: only resolved to 'approximate' precision (18.3273102, -64.7912457)
+  WARN: only resolved to 'approximate' precision (32.3777111, -86.3090775)
 [26/75] Geocoding: Meta Kuna (601 Kuna Mora Rd,  Kuna ID 83634)
   WARN: only resolved to 'country' precision (39.7837304, -100.445882)
 [27/75] Geocoding: Meta Temple (2310 Eberhardt Rd, Temple, TX 76504)
 [28/75] Geocoding: Meta Cheyenne (Cheyenne, WY 82007, USA)
-  WARN: only resolved to 'approximate' precision (18.3458355, -64.9351914)
+  WARN: only resolved to 'approximate' precision (41.139981, -104.820246)
 [29/75] Geocoding: Amazon Ridgeland (1626 County Line Road Ridgeland, Mississippi)
 [30/75] Geocoding: Meta Aiken (7601 State Hwy 105, Trenton, SC 29847, USA)
   WARN: only resolved to 'approximate' precision (33.7416558, -81.8423388)
@@ -122,30 +122,13 @@ Done. Saved 75 data centers to data/datacenters.json
   17 resolved at country-level precision only
   0 failed to geocode (lat/lng set to null)
 
---- Post-processing (task 4 verification pass) ---
-Fixed a _simplify_address() bug: its regex assumed the street part always
-starts with a house number ("123 Main St, City, ST"), so addresses like
-"Co Rd 42, Montgomery, AL 36105, USA" (road name before the number) fell
-through to a "last 2 comma-separated parts" fallback that dropped the city
-entirely, producing a bare "AL 36105, USA" query. Nominatim fuzzy-matched
-that against unrelated street/postal fragments in the US Virgin Islands.
-Rewrote _simplify_address() to locate the "STATE ZIP"/"STATE" token directly
-and take the preceding comma part as the city, which is robust regardless of
-what precedes it.
-Re-geocoded the 2 facilities that had hit this bug:
-  meta-montgomery: (18.3273102, -64.7912457) [Virgin Islands, wrong] -> (32.3777111, -86.3090775) [Montgomery, AL, correct], precision unchanged at 'approximate'
-  meta-cheyenne:   (18.3458355, -64.9351914) [Virgin Islands, wrong] -> (41.139981, -104.820246) [Cheyenne, WY, correct], precision unchanged at 'approximate'
-Also addressed task 4.2 (shared fallback coordinates): all 17 'country'-tier
-entries previously collapsed onto their country's exact centroid, causing
-unrelated facilities to stack on the same point (10 US facilities on
-(39.7837, -100.4459); 2 China facilities on (34.5412, 108.9237)) — later
-markers in z-order were unclickable. Added a deterministic per-facility
-jitter (_jitter_country_centroid, seeded by facility id via SHA-256, up to
-40km from centroid) applied only to 'country'-tier coordinates. This does
-not add precision — geocode_precision stays 'country' — it only prevents
-occlusion on the map. Re-verified: 0 duplicate coordinates remain except
-2 legitimate same-site pairs (openai-stargate-abilene/crusoe-abilene-expansion
-share a literal street address; qts-richmond-2/qts-richmond-3 are neighboring
-buildings in Sandston, VA), 0 entries fall outside their stated country's
-bounding box, precision breakdown unchanged at 34 address / 24 approximate /
+--- Merge with main (2026-07-29) ---
+Rebased onto main's dataset-freshness-timestamp and flag-unannounced-capacity
+changes. Re-ran fetch_data.py live (log above) with both the
+_simplify_address fix and the country-centroid jitter fix already baked in,
+so this run's output needed no further post-processing. Verified:
+meta-montgomery/meta-cheyenne resolve correctly (not the Virgin Islands),
+0 duplicate coordinates beyond the 2 legitimate same-site pairs
+(openai-stargate-abilene/crusoe-abilene-expansion; qts-richmond-2/
+qts-richmond-3), precision breakdown 34 address / 24 approximate /
 17 country / 0 failed.

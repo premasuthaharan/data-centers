@@ -1,23 +1,23 @@
 ## 1. Data format change
-- [ ] 1.1 Change `datacenters.json`'s top-level shape from a bare array to
+- [x] 1.1 Change `datacenters.json`'s top-level shape from a bare array to
       `{"generated_at": "<ISO8601>", "data_centers": [...]}`
-- [ ] 1.2 Update `fetch_data.py` to write `generated_at =
+- [x] 1.2 Update `fetch_data.py` to write `generated_at =
       datetime.now(timezone.utc).isoformat()` at generation time
 
 ## 2. Backend
-- [ ] 2.1 Update `load_datacenters()` in `logic.py` to read the new
+- [x] 2.1 Update `load_datacenters()` in `logic.py` to read the new
       structure and cache both the timestamp and the list
-- [ ] 2.2 Add a way to retrieve `generated_at` (e.g. a
+- [x] 2.2 Add a way to retrieve `generated_at` (e.g. a
       `get_dataset_metadata()` helper)
-- [ ] 2.3 Include `generated_at` in the `/api/datacenters` response (e.g. as
+- [x] 2.3 Include `generated_at` in the `/api/datacenters` response (e.g. as
       a sibling key, not nested inside the array)
 
 ## 3. Frontend
-- [ ] 3.1 Read `generated_at` from the API response in `App.jsx`
-- [ ] 3.2 Display "Data as of {formatted date}" in the header or footer
+- [x] 3.1 Read `generated_at` from the API response in `App.jsx`
+- [x] 3.2 Display "Data as of {formatted date}" in the header or footer
 
 ## 4. Verification
-- [ ] 4.1 Regenerate the dataset and confirm the timestamp round-trips
+- [x] 4.1 Regenerate the dataset and confirm the timestamp round-trips
       through the API to the UI
-- [ ] 4.2 Confirm existing consumers of `datacenters.json`'s array shape
+- [x] 4.2 Confirm existing consumers of `datacenters.json`'s array shape
       (e.g. `nearest_datacenters`) still work after the structure change

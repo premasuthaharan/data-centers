@@ -11,6 +11,17 @@
   inset: 0;
 }
 
+.map-container--error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(10, 10, 20);
+  color: #9ca3af;
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 20px;
+}
+
 /* ── Top-left title overlay ── */
 .map-overlay-title {
   position: absolute;
@@ -37,6 +48,12 @@
   font-size: 12px;
   color: #64748b;
   line-height: 1.5;
+}
+
+.app-freshness {
+  font-size: 11px;
+  color: #475569;
+  margin-top: 6px;
 }
 
 /* ── Legend overlay ── */
@@ -68,6 +85,12 @@
   height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
+}
+
+.legend-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 2px 0;
 }
 
 /* ── Detail panel (slide in from right) ── */
@@ -180,6 +203,17 @@
   color: #475569;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+.dc-announced-notice {
+  background: #1c1a10;
+  border: 1px solid #3a3212;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 12px;
+  color: #d4a72c;
+  line-height: 1.5;
+  margin-bottom: 20px;
 }
 
 /* ── Impact blocks ── */

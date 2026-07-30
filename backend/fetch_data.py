@@ -12,6 +12,7 @@ import time
 import io
 import urllib.request
 import urllib.parse
+from datetime import datetime, timezone
 
 EPOCH_CSV_URL = "https://epoch.ai/data/data_centers/data_centers.csv"
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
@@ -193,14 +194,19 @@ def main():
             "lng": lng,
             "geocode_precision": geocode_precision,
             "power_mw": power_mw,
+            "data_status": "confirmed" if power_mw else "announced",
             "cost_usd_billions": cost_bn,
             "carbon_intensity_gco2_per_kwh": grid["carbon_intensity"],
             "renewable_pct": grid["renewable_pct"],
         })
 
     out_path = "data/datacenters.json"
+    output = {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "data_centers": results,
+    }
     with open(out_path, "w") as f:
-        json.dump(results, f, indent=2)
+        json.dump(output, f, indent=2)
 
     n_approx = sum(1 for r in results if r["geocode_precision"] == "approximate")
     n_country = sum(1 for r in results if r["geocode_precision"] == "country")
