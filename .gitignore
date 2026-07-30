@@ -10,6 +10,8 @@ backend/tests/__pycache__/
 backend/*.pyc
 backend/.venv/
 backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/
 
 # --- frontend (Node/Vite) ---
 frontend/node_modules/
