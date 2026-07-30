@@ -21,6 +21,8 @@ FIXTURE_DATACENTERS = [
         "cost_usd_billions": 2.5,
         "carbon_intensity_gco2_per_kwh": 380,
         "renewable_pct": 22,
+        "electricity_price_usd_per_kwh": 0.083,
+        "water_liters_per_kwh": 2.3,
     },
     {
         "id": "announced-dc",
@@ -36,6 +38,8 @@ FIXTURE_DATACENTERS = [
         "cost_usd_billions": None,
         "carbon_intensity_gco2_per_kwh": 290,
         "renewable_pct": 35,
+        "electricity_price_usd_per_kwh": 0.145,
+        "water_liters_per_kwh": 1.5,
     },
     {
         "id": "far-dc",
@@ -51,6 +55,8 @@ FIXTURE_DATACENTERS = [
         "cost_usd_billions": 1.0,
         "carbon_intensity_gco2_per_kwh": 590,
         "renewable_pct": 29,
+        "electricity_price_usd_per_kwh": 0.145,
+        "water_liters_per_kwh": 4.5,
     },
 ]
 

@@ -1,6 +1,9 @@
 import pytest
 
 from fetch_data import (
+    DEFAULT_IMPACT_RATES,
+    GRID_DATA,
+    IMPACT_RATES,
     _jitter_country_centroid,
     _simplify_address,
     clean_owner,
@@ -49,6 +52,31 @@ class TestJitterCountryCentroid:
         jlat, jlng = _jitter_country_centroid(lat, lng, "facility-a", radius_km=40)
         dist = haversine_km(lat, lng, jlat, jlng)
         assert dist <= 40
+
+
+# --- IMPACT_RATES ---
+
+class TestImpactRates:
+    def test_every_grid_data_country_has_impact_rates(self):
+        # Every country we already model grid carbon for should also have
+        # localized price/water rates, not silently fall back to defaults.
+        missing = set(GRID_DATA) - set(IMPACT_RATES)
+        assert missing == set()
+
+    def test_default_matches_previous_global_constants(self):
+        # The fallback for countries missing from the table must equal the
+        # old hardcoded 0.06 / 3.0 constants so pre-existing behavior for
+        # unmapped countries doesn't silently change.
+        assert DEFAULT_IMPACT_RATES == {
+            "electricity_price_usd_per_kwh": 0.06,
+            "water_liters_per_kwh": 3.0,
+        }
+
+    def test_rates_vary_by_country(self):
+        us = IMPACT_RATES["United States"]
+        uae = IMPACT_RATES["United Arab Emirates"]
+        assert us["electricity_price_usd_per_kwh"] != uae["electricity_price_usd_per_kwh"]
+        assert us["water_liters_per_kwh"] != uae["water_liters_per_kwh"]
 
 
 # --- clean_owner ---

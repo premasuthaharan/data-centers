@@ -57,6 +57,8 @@ class TestComputeImpact:
             "power_mw": 100.0,
             "carbon_intensity_gco2_per_kwh": 380,
             "renewable_pct": 22,
+            "electricity_price_usd_per_kwh": 0.083,
+            "water_liters_per_kwh": 2.3,
         }
         result = compute_impact(dc)
 
@@ -65,8 +67,8 @@ class TestComputeImpact:
         assert result["electricity"]["annual_kwh"] == 876_000_000
         assert result["electricity"]["price_lift_pct"] == 5.5
         assert result["electricity"]["homes_powered"] == 83429
-        assert result["electricity"]["annual_cost_millions_usd"] == 52.6
-        assert result["water"]["daily_withdrawal_mgd"] == 1.9
+        assert result["electricity"]["annual_cost_millions_usd"] == 72.7
+        assert result["water"]["daily_withdrawal_mgd"] == 1.46
         assert result["water"]["severity"] == "moderate"
         assert result["carbon"]["annual_co2_tonnes"] == 332880
         assert result["carbon"]["cars_equivalent"] == 72365
@@ -74,6 +76,39 @@ class TestComputeImpact:
         assert result["carbon"]["intensity_gco2_per_kwh"] == 380
         assert result["land"]["footprint_m2"] == 10000
         assert result["land"]["waste_heat_mw"] == 30.0
+
+    def test_missing_electricity_price_and_water_use_global_defaults(self):
+        # Records that predate this change (no per-country rates) must fall
+        # back to the previous global constants, not silently zero out.
+        dc = {
+            "power_mw": 100.0,
+            "carbon_intensity_gco2_per_kwh": 380,
+            "renewable_pct": 22,
+        }
+        result = compute_impact(dc)
+
+        assert result["electricity"]["annual_cost_millions_usd"] == 52.6
+        assert result["water"]["daily_withdrawal_mgd"] == 1.9
+
+    def test_different_countries_produce_different_water_and_cost(self):
+        # Same power_mw, different per-country rates, must diverge —
+        # this is the whole point of localizing these constants.
+        arid_high_cost = compute_impact({
+            "power_mw": 100.0,
+            "electricity_price_usd_per_kwh": 0.220,
+            "water_liters_per_kwh": 8.0,
+        })
+        cheap_wet = compute_impact({
+            "power_mw": 100.0,
+            "electricity_price_usd_per_kwh": 0.030,
+            "water_liters_per_kwh": 1.3,
+        })
+
+        assert arid_high_cost["water"]["daily_withdrawal_mgd"] > cheap_wet["water"]["daily_withdrawal_mgd"]
+        assert (
+            arid_high_cost["electricity"]["annual_cost_millions_usd"]
+            > cheap_wet["electricity"]["annual_cost_millions_usd"]
+        )
 
     def test_missing_power_zeroes_out_dependent_fields(self):
         dc = {"power_mw": None}
