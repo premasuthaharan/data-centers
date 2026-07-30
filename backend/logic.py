@@ -58,8 +58,10 @@ def compute_impact(dc: dict) -> dict:
     elec_price_lift_pct = round(min(math.log1p(power_mw) * 1.2, 15), 1) if power_mw else 0
 
     # --- Water stress (million gallons/day) ---
-    # Blended water intensity estimate; see SOURCES.md ("Water intensity")
-    water_liters_per_kwh = 3.0
+    # Per-country blended water intensity, falling back to the global
+    # default for records that predate per-country rates; see SOURCES.md
+    # ("Water intensity")
+    water_liters_per_kwh = dc.get("water_liters_per_kwh") or 3.0
     water_mgd = round((annual_kwh * water_liters_per_kwh) / (3_785_411 * 365), 2)
     # Severity thresholds are an internal heuristic, not an EPA standard;
     # see SOURCES.md ("Water severity thresholds")
@@ -94,9 +96,12 @@ def compute_impact(dc: dict) -> dict:
             "price_lift_pct": elec_price_lift_pct,
             # 10,500 kWh/home/year: EIA average US household consumption; see SOURCES.md
             "homes_powered": round(annual_kwh / 10_500),
-            # $0.06/kWh: internal heuristic approximating a bulk/industrial
-            # rate, well below EIA's ~$0.165/kWh residential average; see SOURCES.md
-            "annual_cost_millions_usd": round((annual_kwh * 0.06) / 1_000_000, 1),
+            # Per-country electricity price, falling back to the global
+            # default for records that predate per-country rates; see
+            # SOURCES.md ("Electricity price")
+            "annual_cost_millions_usd": round(
+                (annual_kwh * (dc.get("electricity_price_usd_per_kwh") or 0.06)) / 1_000_000, 1
+            ),
         },
         # Water
         "water": {

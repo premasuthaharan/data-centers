@@ -28,8 +28,9 @@ internal heuristic rather than implied to be industry fact.
   rough mid-range planning estimate for whole-building average density
   (racks + aisles + support space), not a cited industry standard.
 
-### Water intensity = 3.0 L/kWh (blended)
-- **Used in:** `water_mgd` (`logic.py:48-49`)
+### Water intensity = 3.0 L/kWh (blended) — global default only
+- **Used in:** `water_mgd` fallback when `water_liters_per_kwh` is missing
+  from a record (`logic.py`)
 - **Status:** Internal heuristic (blended estimate), not a single external source.
 - **Context:** Reported figures vary widely by cooling technology and
   climate: industry surveys commonly cite an average water usage
@@ -37,7 +38,24 @@ internal heuristic rather than implied to be industry fact.
   as low as ~0.15-1 L/kWh (e.g., some hyperscaler sites), and evaporative
   cooling towers in hot/dry climates can exceed 7-9 L/kWh. 3.0 L/kWh is a
   blended midpoint chosen to represent a mixed fleet, not a measured or
-  published average.
+  published average. This value is now only used as a fallback — see
+  "Per-country water intensity" below for the primary source of this figure.
+
+### Per-country water intensity (`IMPACT_RATES` in `fetch_data.py`)
+- **Used in:** `water_liters_per_kwh` field on each data center record, read
+  by `water_mgd` in `logic.py`
+- **Status:** Internal heuristic per country, not a single authoritative
+  source per country.
+- **Context:** Values are a judgment call blending two proxies: (1) the
+  blended 3.0 L/kWh internal midpoint above as a baseline, and (2) each
+  country's climate/water-stress profile (using WRI Aqueduct water-stress
+  categories as informal guidance) as a proxy for how much a facility there
+  likely relies on evaporative cooling. Hot/arid countries (e.g. Bahrain,
+  United Arab Emirates, Israel) are set well above the baseline; cold/wet
+  countries (e.g. Sweden, Norway, Finland, Switzerland) are set below it.
+  These are starting estimates for cross-country comparison, not measured
+  facility-level water withdrawal. Countries not in the table use the
+  3.0 L/kWh default above, unchanged from the prior global constant.
 
 ### Water severity thresholds (1 / 5 / 15 MGD → low/moderate/high/critical)
 - **Used in:** `water_severity` (`logic.py:51-58`)
@@ -53,8 +71,9 @@ internal heuristic rather than implied to be industry fact.
   hyperscale sites: ~1-5 MGD, with some individual facilities reported
   above 2-4 MGD) across a readable severity scale.
 
-### Electricity price = $0.06/kWh
-- **Used in:** `annual_cost_millions_usd` (`logic.py:78`)
+### Electricity price = $0.06/kWh — global default only
+- **Used in:** `annual_cost_millions_usd` fallback when
+  `electricity_price_usd_per_kwh` is missing from a record (`logic.py`)
 - **Status:** Internal heuristic, not externally sourced.
 - **Context:** This approximates a large commercial/industrial bulk rate,
   not the retail rate an average household pays. For reference, the
@@ -62,7 +81,24 @@ internal heuristic rather than implied to be industry fact.
   roughly 2.7x this constant. Large data centers typically negotiate
   industrial/wholesale power contracts well below residential rates, but
   $0.06/kWh is not tied to a specific published industrial rate and should
-  be treated as a rough planning estimate.
+  be treated as a rough planning estimate. This value is now only used as a
+  fallback — see "Per-country electricity price" below for the primary
+  source of this figure.
+
+### Per-country electricity price (`IMPACT_RATES` in `fetch_data.py`)
+- **Used in:** `electricity_price_usd_per_kwh` field on each data center
+  record, read by `annual_cost_millions_usd` in `logic.py`
+- **Status:** Internal heuristic per country, loosely anchored to published
+  industrial electricity price data, not a per-country authoritative source.
+- **Context:** Values are informally anchored to IEA/national-statistics
+  industrial (not residential) electricity price ranges circa 2024, e.g.
+  cheap-power/subsidized markets (Bahrain, United Arab Emirates, Malaysia,
+  Norway) sit near $0.03-0.06/kWh, mid-range markets (United States, China,
+  Japan) sit near $0.08-0.16/kWh, and expensive European markets (Germany,
+  Italy, United Kingdom) sit near $0.17-0.25/kWh. These are directional
+  planning estimates, not precise contracted industrial rates, which vary
+  by contract and region within a country. Countries not in the table use
+  the $0.06/kWh default above, unchanged from the prior global constant.
 
 ### Homes powered = annual_kwh / 10,500
 - **Used in:** `homes_powered` (`logic.py:77`)
@@ -110,9 +146,11 @@ Every numeric constant referenced in `compute_impact()` is covered above:
 
 - [x] PUE 1.3
 - [x] 10 kW/m² IT density
-- [x] 3.0 L/kWh blended water estimate
+- [x] 3.0 L/kWh blended water estimate (global default)
+- [x] Per-country water intensity (`IMPACT_RATES`)
 - [x] Water severity thresholds (1 / 5 / 15 MGD)
-- [x] $0.06/kWh electricity price
+- [x] $0.06/kWh electricity price (global default)
+- [x] Per-country electricity price (`IMPACT_RATES`)
 - [x] 10,500 kWh/home/year
 - [x] 4.6 tonnes CO2/car/year
 - [x] 450 gCO2/kWh default carbon intensity
