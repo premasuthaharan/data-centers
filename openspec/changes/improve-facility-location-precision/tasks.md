@@ -1,6 +1,6 @@
 ## 1. Manual research
 
-- [ ] 1.1 For each of the 17 `"country"`-precision facilities (listed in
+- [x] 1.1 For each of the 17 `"country"`-precision facilities (listed in
       the proposal — includes `openai-stargate-new-mexico`,
       `google-kansas-city-east`, `amazon-madison-mega-site`, `meta-kuna`,
       `google-storey-county`, `google-mesa`, `huawei-horinger`,
@@ -11,17 +11,19 @@
       `dayone-nusajaya`), research a specific, sourceable city/region (or
       street address where public reporting names one) from public
       company announcements, news coverage, or permitting records
-- [ ] 1.2 Record each source (URL + date accessed) in `backend/SOURCES.md`
+- [x] 1.2 Record each source (URL + date accessed) in `backend/SOURCES.md`
       under a new section for manually-researched locations, matching the
       documentation style already used for other constants in that file
-- [ ] 1.3 For any facility where no better public information can
+- [x] 1.3 For any facility where no better public information can
       actually be found, leave it at country-level precision rather than
       guessing — document which ones (if any) fall into this category and
-      why
+      why (all 17 had at least a city/region publicly reported, so none
+      fall into this category — see note at the end of the SOURCES.md
+      section)
 
 ## 2. Override mechanism
 
-- [ ] 2.1 Create `backend/data/location_overrides.json`: `{ "<facility_id>":
+- [x] 2.1 Create `backend/data/location_overrides.json`: `{ "<facility_id>":
       { "address": "...", "lat": ..., "lng": ..., "geocode_precision": "..." } }`
       populated from step 1's research
 - [ ] 2.2 In `fetch_data.py`, load this file in `main()` and, per record,
