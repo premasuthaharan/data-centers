@@ -348,3 +348,140 @@
   color: #ffcc00;
   font-size: 11px;
 }
+
+/* ── Near-me panel (top-left, below title overlay) ── */
+.near-me-panel {
+  position: absolute;
+  top: 100px;
+  right: 20px;
+  z-index: 10;
+}
+
+.near-me-trigger {
+  background: rgba(10, 10, 20, 0.82);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #e2e8f0;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.near-me-trigger:hover {
+  background: rgba(20, 20, 34, 0.9);
+}
+
+.near-me-trigger--loading {
+  cursor: default;
+  color: #64748b;
+}
+
+.near-me-card {
+  background: rgba(10, 10, 20, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px 16px;
+  width: 300px;
+  max-height: 70dvh;
+  overflow-y: auto;
+}
+
+.near-me-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  color: #f1f5f9;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.near-me-close {
+  background: none;
+  border: none;
+  color: #475569;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 6px;
+}
+
+.near-me-close:hover {
+  color: #e2e8f0;
+}
+
+.near-me-error {
+  font-size: 12px;
+  color: #ffcc00;
+  margin-bottom: 10px;
+}
+
+.near-me-retry {
+  background: #1e1e2e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #e2e8f0;
+  cursor: pointer;
+}
+
+.near-me-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.near-me-item {
+  list-style: none;
+}
+
+.near-me-item-btn {
+  width: 100%;
+  text-align: left;
+  background: #13131f;
+  border: 1px solid #1e1e2e;
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.near-me-item-btn:hover {
+  border-color: #6366f1;
+}
+
+.near-me-item-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.near-me-item-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.near-me-item-distance {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.near-me-item-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.near-me-item-stats strong {
+  color: #e2e8f0;
+}

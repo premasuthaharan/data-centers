@@ -93,9 +93,53 @@ class TestLocate:
             "country": "United Kingdom",
         }
 
-    def test_missing_ip_param_rejected(self, client):
+    def test_missing_ip_param_falls_back_to_request_ip(self, client, monkeypatch):
+        import main
+
+        captured = {}
+
+        def fake_geolocate_ip(ip):
+            captured["ip"] = ip
+            return {
+                "status": "success",
+                "lat": 1.0,
+                "lon": 2.0,
+                "city": "Testville",
+                "country": "Testland",
+                "countryCode": "TT",
+            }
+
+        monkeypatch.setattr(main, "geolocate_ip", fake_geolocate_ip)
+
         resp = client.get("/api/locate")
-        assert resp.status_code == 422
+
+        assert resp.status_code == 200
+        assert captured["ip"] == "testclient"
+
+    def test_missing_ip_param_uses_x_forwarded_for(self, client, monkeypatch):
+        import main
+
+        captured = {}
+
+        def fake_geolocate_ip(ip):
+            captured["ip"] = ip
+            return {
+                "status": "success",
+                "lat": 1.0,
+                "lon": 2.0,
+                "city": "Testville",
+                "country": "Testland",
+                "countryCode": "TT",
+            }
+
+        monkeypatch.setattr(main, "geolocate_ip", fake_geolocate_ip)
+
+        resp = client.get(
+            "/api/locate", headers={"x-forwarded-for": "9.9.9.9, 8.8.8.8"}
+        )
+
+        assert resp.status_code == 200
+        assert captured["ip"] == "9.9.9.9"
 
     def test_upstream_failure_returns_502(self, client, monkeypatch):
         import main

@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import Map from "./components/Map";
 import DataCenterCard from "./components/DataCenterCard";
+import NearMePanel from "./components/NearMePanel";
 import "./App.css";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
@@ -60,6 +61,8 @@ export default function App() {
           </p>
         )}
       </div>
+
+      <NearMePanel onFlyTo={handleSelect} />
 
       {/* Legend overlay */}
       <div className="map-legend">

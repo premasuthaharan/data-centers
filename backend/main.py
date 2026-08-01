@@ -1,7 +1,7 @@
 import os
 import urllib.request
 import json
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from logic import all_datacenters_with_impact, nearest_datacenters, get_dataset_metadata
 
@@ -41,10 +41,17 @@ def get_all():
     }
 
 
+def client_ip(request: Request) -> str:
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host
+
+
 @app.get("/api/locate")
-def locate(ip: str = Query(...)):
+def locate(request: Request, ip: str | None = Query(None)):
     try:
-        geo = geolocate_ip(ip)
+        geo = geolocate_ip(ip or client_ip(request))
         return {"lat": geo["lat"], "lng": geo["lon"], "city": geo["city"], "country": geo["country"]}
     except Exception as e:
         raise HTTPException(status_code=502, detail=str(e))
