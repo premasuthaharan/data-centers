@@ -222,6 +222,23 @@
   margin-top: 6px;
 }
 
+.dc-copy-link-btn {
+  margin-top: 10px;
+  background: #13131f;
+  border: 1px solid #1e1e2e;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #e2e8f0;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.dc-copy-link-btn:hover {
+  border-color: #6366f1;
+}
+
 /* ── Stat chips ── */
 .dc-detail-stats {
   display: flex;
