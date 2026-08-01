@@ -2,11 +2,12 @@ import { useState, useCallback, useEffect, useMemo } from "react";
 import Map from "./components/Map";
 import DataCenterCard from "./components/DataCenterCard";
 import NearMePanel from "./components/NearMePanel";
-import ScenarioPanel from "./components/ScenarioPanel";
+import ScenarioPanel, { PRESETS } from "./components/ScenarioPanel";
 import CompareModal from "./components/CompareModal";
 import MethodologyPanel from "./components/MethodologyPanel";
 import RegionScorecard from "./components/RegionScorecard";
 import { resolveInitialTheme } from "./theme";
+import { encodeScenarioParams, decodeScenarioParams } from "./utils/scenarioUrl";
 import "./App.css";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
@@ -57,6 +58,48 @@ export default function App() {
       .finally(() => setLoading(false));
   }, []);
 
+  // True once the initial URL-decode attempt below has settled (whether or
+  // not it found/applied a scenario). The scenario URL-sync effect must not
+  // run until this flips true, or it would strip a shared ?scenario= param
+  // from the address bar while the initial POST /api/scenario is still
+  // in flight (scenarioData is still null at that point).
+  const [scenarioUrlHydrated, setScenarioUrlHydrated] = useState(false);
+
+  // On mount, check for a shared scenario in the URL (?scenario=<presetId>
+  // or ?scenario=custom&renewable_pct=...&pue=...). If present, re-apply it
+  // via POST /api/scenario and open the scenario panel pre-populated, so a
+  // shared link reproduces what the sender saw instead of the default
+  // baseline map. A preset id resolves to its overrides via PRESETS; a
+  // malformed/unknown preset id or empty custom params decodes to null and
+  // is silently ignored (falls back to baseline).
+  useEffect(() => {
+    const decoded = decodeScenarioParams(new URLSearchParams(window.location.search));
+    const presetId = decoded?.presetId;
+    const scenario = presetId
+      ? PRESETS.find((p) => p.id === presetId)?.scenario
+      : decoded?.scenario;
+
+    if (!scenario) {
+      setScenarioUrlHydrated(true);
+      return;
+    }
+
+    fetch(`${API}/api/scenario`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ scenario }),
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((body) => {
+        if (body) {
+          setScenarioData({ ...body, presetId, scenario });
+          setActivePanel("scenario");
+        }
+      })
+      .catch(() => {})
+      .finally(() => setScenarioUrlHydrated(true));
+  }, []);
+
   const handleSelect = useCallback((id) => {
     setSelectedId((prev) => (prev === id ? null : id));
     setActivePanel("detail");
@@ -81,6 +124,27 @@ export default function App() {
       window.history.pushState(null, "", url);
     }
   }, [selectedId, activePanel]);
+
+  // Keep the URL in sync with the applied scenario (mirrors the facility
+  // sync above) so the address bar always reflects what's on screen and
+  // reset clears the params rather than leaving a stale scenario in the URL.
+  // Gated on scenarioUrlHydrated — see its declaration above.
+  useEffect(() => {
+    if (!scenarioUrlHydrated) return;
+
+    const url = new URL(window.location.href);
+    const scenarioKeys = ["scenario", "renewable_pct", "carbon_intensity_gco2_per_kwh", "water_liters_per_kwh", "pue"];
+    for (const key of scenarioKeys) url.searchParams.delete(key);
+
+    if (scenarioData) {
+      const params = encodeScenarioParams(scenarioData.presetId, scenarioData.scenario);
+      for (const [key, value] of params) url.searchParams.set(key, value);
+    }
+
+    if (url.href !== window.location.href) {
+      window.history.pushState(null, "", url);
+    }
+  }, [scenarioData, scenarioUrlHydrated]);
 
   const openScenarioPanel = useCallback(() => setActivePanel("scenario"), []);
   const openCompareModal = useCallback(() => setActivePanel("compare"), []);
@@ -229,7 +293,11 @@ export default function App() {
       {/* Slide-in scenario panel */}
       <div className={"detail-panel-wrapper" + (activePanel === "scenario" ? " detail-panel-wrapper--open" : "")}>
         {activePanel === "scenario" && (
-          <ScenarioPanel onClose={closeOverlayPanel} onScenarioChange={setScenarioData} />
+          <ScenarioPanel
+            onClose={closeOverlayPanel}
+            onScenarioChange={setScenarioData}
+            initialScenarioData={scenarioData}
+          />
         )}
       </div>
 
