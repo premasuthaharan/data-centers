@@ -2,6 +2,7 @@ import { describe, it, expect, vi, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import NearMePanel from "../NearMePanel";
+import { severityColor } from "../severityColors";
 
 const LOCATE_RESPONSE = { lat: 39.78, lng: -89.65, city: "Springfield", country: "United States" };
 
@@ -11,9 +12,9 @@ const NEAREST_RESPONSE = [
     name: "Confirmed DC",
     distance_km: 12.3,
     impact: {
-      electricity: { price_lift_pct: 4.2 },
+      electricity: { price_lift_pct: 4.2, price_lift_severity: "moderate" },
       water: { severity: "moderate", daily_withdrawal_mgd: 2.1, households_equivalent: 7000 },
-      carbon: { cars_equivalent: 1234 },
+      carbon: { cars_equivalent: 1234, renewable_pct: 22, renewable_severity: "moderate" },
     },
   },
   {
@@ -21,9 +22,9 @@ const NEAREST_RESPONSE = [
     name: "Far DC",
     distance_km: 340.9,
     impact: {
-      electricity: { price_lift_pct: 1.0 },
+      electricity: { price_lift_pct: 1.0, price_lift_severity: "low" },
       water: { severity: "low", daily_withdrawal_mgd: 0.4, households_equivalent: 1333 },
-      carbon: { cars_equivalent: 210 },
+      carbon: { cars_equivalent: 210, renewable_pct: 61, renewable_severity: "low" },
     },
   },
 ];
@@ -103,6 +104,30 @@ describe("NearMePanel", () => {
     expect(screen.getByText("7,000")).toBeInTheDocument();
     expect(screen.getByText("210")).toBeInTheDocument();
     expect(screen.getByText("1,333")).toBeInTheDocument();
+  });
+
+  it("shows grid renewables % and color-codes it and price lift by severity", async () => {
+    mockGeolocationSuccess(39.78, -89.65);
+    mockFetchSequence([NEAREST_RESPONSE]);
+
+    render(<NearMePanel onFlyTo={() => {}} />);
+    fireEvent.click(screen.getByText(/show data centers near me/i));
+
+    await waitFor(() => expect(screen.getByText("Confirmed DC")).toBeInTheDocument());
+
+    expect(screen.getByText("22%")).toBeInTheDocument();
+    expect(screen.getByText("22%").closest("span")).toHaveStyle({
+      color: severityColor("moderate"),
+    });
+
+    expect(screen.getByText("61%")).toBeInTheDocument();
+    expect(screen.getByText("61%").closest("span")).toHaveStyle({
+      color: severityColor("low"),
+    });
+
+    expect(screen.getByText("+4.2%").closest("span")).toHaveStyle({
+      color: severityColor("moderate"),
+    });
   });
 
   it("falls back to IP-based /api/locate when geolocation permission is denied", async () => {

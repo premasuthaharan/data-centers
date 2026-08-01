@@ -201,6 +201,61 @@ class TestComputeImpact:
         result = compute_impact(dc)
         assert result["water"]["daily_withdrawal_mgd"] == pytest.approx(5.0, abs=0.1)
 
+    @pytest.mark.parametrize(
+        "power_mw,expected_severity",
+        [
+            (10, "low"),        # 2.9% lift
+            (70, "moderate"),   # 5.1% lift
+            (150, "high"),      # 6.0% lift
+            (400, "critical"),  # 7.2% lift
+        ],
+    )
+    def test_price_lift_severity_thresholds(self, power_mw, expected_severity):
+        result = compute_impact({"power_mw": power_mw})
+        assert result["electricity"]["price_lift_severity"] == expected_severity
+
+    def test_price_lift_severity_boundary_at_5_pct(self):
+        dc = {"power_mw": 63.5}
+        result = compute_impact(dc)
+        assert result["electricity"]["price_lift_pct"] == pytest.approx(5.0, abs=0.05)
+        assert result["electricity"]["price_lift_severity"] == "moderate"
+
+    def test_price_lift_severity_boundary_at_7_pct(self):
+        dc = {"power_mw": 340.5}
+        result = compute_impact(dc)
+        assert result["electricity"]["price_lift_pct"] == pytest.approx(7.0, abs=0.05)
+        assert result["electricity"]["price_lift_severity"] == "critical"
+
+    def test_price_lift_severity_none_for_announced_facility(self):
+        # power_mw unset (announced) always computes 0% lift, which isn't a
+        # meaningful "low" signal, so severity is explicitly None.
+        result = compute_impact({})
+        assert result["electricity"]["price_lift_pct"] == 0
+        assert result["electricity"]["price_lift_severity"] is None
+
+    @pytest.mark.parametrize(
+        "renewable_pct,expected_severity",
+        [
+            (8, "critical"),
+            (17, "high"),
+            (22, "moderate"),
+            (42, "low"),
+        ],
+    )
+    def test_renewable_severity_thresholds(self, renewable_pct, expected_severity):
+        result = compute_impact({"power_mw": 100.0, "renewable_pct": renewable_pct})
+        assert result["carbon"]["renewable_severity"] == expected_severity
+
+    def test_renewable_severity_boundary_at_15_pct(self):
+        dc = {"power_mw": 100.0, "renewable_pct": 15}
+        result = compute_impact(dc)
+        assert result["carbon"]["renewable_severity"] == "high"
+
+    def test_renewable_severity_boundary_at_30_pct(self):
+        dc = {"power_mw": 100.0, "renewable_pct": 30}
+        result = compute_impact(dc)
+        assert result["carbon"]["renewable_severity"] == "low"
+
     def test_households_equivalent_matches_mgd_over_300_gallons(self):
         dc = {"power_mw": 100.0, "water_liters_per_kwh": 2.3}
         result = compute_impact(dc)

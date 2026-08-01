@@ -63,13 +63,13 @@
 
 ## 5. Tests
 
-- [ ] 5.1 `test_logic.py`: `price_lift_severity` and `renewable_severity`
+- [x] 5.1 `test_logic.py`: `price_lift_severity` and `renewable_severity`
       thresholds and boundaries (mirroring the existing
       `test_water_severity_thresholds`/`test_water_severity_boundary_*`
       test patterns)
-- [ ] 5.2 Frontend: update `NearMePanel.test.jsx` and any
+- [x] 5.2 Frontend: update `NearMePanel.test.jsx` and any
       `DataCenterCard` tests to assert on the new colored fields
-- [ ] 5.3 Confirm the shared color helper is unit-testable independent of
+- [x] 5.3 Confirm the shared color helper is unit-testable independent of
       either component (mirrors how `mapHelpers.js`'s `waterSeverityColor`
       is already tested standalone)
 
