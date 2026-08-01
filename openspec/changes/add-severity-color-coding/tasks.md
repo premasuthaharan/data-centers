@@ -30,14 +30,17 @@
 
 ## 3. Shared frontend color helper
 
-- [ ] 3.1 Create a shared severity-color module (e.g.
+- [x] 3.1 Create a shared severity-color module (e.g.
       `frontend/src/components/severityColors.js`) exporting the
       low/moderate/high/critical color palette, replacing the two
       independently-duplicated `WATER_COLORS` constants in
       `NearMePanel.jsx` and `DataCenterCard.jsx`
-- [ ] 3.2 Add a lookup for the renewable-% inverted scale if it needs a
+- [x] 3.2 Add a lookup for the renewable-% inverted scale if it needs a
       different mapping direction than the shared palette assumes (higher
-      value = better vs. higher value = worse)
+      value = better vs. higher value = worse) — **not needed**: inversion
+      already happens server-side in `renewable_severity` (`logic.py`), so
+      the frontend just colors by the returned severity string like any
+      other severity field; no separate inverted lookup required.
 
 ## 4. Apply in components
 
