@@ -75,8 +75,8 @@
 
 ## 6. Verification
 
-- [ ] 6.1 `cd backend && pytest` and `cd frontend && npm test` both pass
-- [ ] 6.2 Manual: open "Show data centers near me" and a facility detail
+- [x] 6.1 `cd backend && pytest` and `cd frontend && npm test` both pass
+- [x] 6.2 Manual: open "Show data centers near me" and a facility detail
       card, confirm grid price lift (and renewables, if added) now render
       with severity-appropriate colors consistent with water's existing
       treatment, and that cars/homes/households-equivalent numbers
