@@ -1,19 +1,19 @@
 ## 1. Search input + filtering
 
-- [ ] 1.1 Add a text input to `CompareModal.jsx` above (or replacing) the
+- [x] 1.1 Add a text input to `CompareModal.jsx` above (or replacing) the
       current picker area; track its value in local state
-- [ ] 1.2 Filter `comparable` facilities by case-insensitive substring
+- [x] 1.2 Filter `comparable` facilities by case-insensitive substring
       match against `name` and `operator`, recomputed via `useMemo`
-- [ ] 1.3 Exclude already-selected facilities from the filtered dropdown
+- [x] 1.3 Exclude already-selected facilities from the filtered dropdown
       results (no point showing a facility that's already a chip)
 
 ## 2. Selected-facility chips
 
-- [ ] 2.1 Render selected facilities as removable chips (name + "×")
+- [x] 2.1 Render selected facilities as removable chips (name + "×")
       above or below the search input
-- [ ] 2.2 Clicking a chip's "×" removes it from `selectedIds` (reuse the
+- [x] 2.2 Clicking a chip's "×" removes it from `selectedIds` (reuse the
       existing `toggle` function)
-- [ ] 2.3 Clicking a search-result item adds it to `selectedIds` and
+- [x] 2.3 Clicking a search-result item adds it to `selectedIds` and
       clears/resets the search input
 
 ## 3. Styling
