@@ -5,6 +5,25 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const WATER_COLORS = { low: "#22c55e", moderate: "#f59e0b", high: "#f97316", critical: "#ef4444" };
 
+// Prefer the browser's actual geolocation (prompts for permission, accurate
+// to device GPS/Wi-Fi) over server-side IP geolocation, which is often
+// wildly imprecise (city- or country-level) and never asks the user
+// anything. IP-based /api/locate is kept as a fallback for browsers without
+// geolocation support or when the user denies the permission prompt.
+function getBrowserLocation() {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      reject(new Error("Geolocation not supported"));
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+      (err) => reject(err),
+      { timeout: 10_000 }
+    );
+  });
+}
+
 export default function NearMePanel({ onFlyTo }) {
   const [status, setStatus] = useState("idle"); // idle | loading | error | done
   const [error, setError] = useState(null);
@@ -14,9 +33,14 @@ export default function NearMePanel({ onFlyTo }) {
     setStatus("loading");
     setError(null);
     try {
-      const locRes = await fetch(`${API}/api/locate`);
-      if (!locRes.ok) throw new Error("Could not determine your location");
-      const { lat, lng } = await locRes.json();
+      let lat, lng;
+      try {
+        ({ lat, lng } = await getBrowserLocation());
+      } catch {
+        const locRes = await fetch(`${API}/api/locate`);
+        if (!locRes.ok) throw new Error("Could not determine your location");
+        ({ lat, lng } = await locRes.json());
+      }
 
       const nearRes = await fetch(
         `${API}/api/datacenters/nearest?lat=${lat}&lng=${lng}&n=5`

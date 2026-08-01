@@ -26,6 +26,28 @@ const NEAREST_RESPONSE = [
   },
 ];
 
+function mockGeolocationSuccess(lat, lng) {
+  vi.stubGlobal("navigator", {
+    ...navigator,
+    geolocation: {
+      getCurrentPosition: (success) => success({ coords: { latitude: lat, longitude: lng } }),
+    },
+  });
+}
+
+function mockGeolocationFailure() {
+  vi.stubGlobal("navigator", {
+    ...navigator,
+    geolocation: {
+      getCurrentPosition: (_success, error) => error(new Error("User denied permission")),
+    },
+  });
+}
+
+function mockGeolocationUnsupported() {
+  vi.stubGlobal("navigator", { ...navigator, geolocation: undefined });
+}
+
 function mockFetchSequence(responses) {
   let call = 0;
   globalThis.fetch = vi.fn(() => {
@@ -41,6 +63,7 @@ function mockFetchSequence(responses) {
 describe("NearMePanel", () => {
   afterEach(() => {
     vi.restoreAllMocks();
+    vi.unstubAllGlobals();
   });
 
   it("shows a trigger button initially and no list", () => {
@@ -49,14 +72,31 @@ describe("NearMePanel", () => {
     expect(screen.queryByText("Confirmed DC")).not.toBeInTheDocument();
   });
 
-  it("fetches location then nearest facilities and renders the ranked list", async () => {
-    mockFetchSequence([LOCATE_RESPONSE, NEAREST_RESPONSE]);
+  it("uses the browser's geolocation (prompting for permission) when available", async () => {
+    mockGeolocationSuccess(39.78, -89.65);
+    mockFetchSequence([NEAREST_RESPONSE]);
 
     render(<NearMePanel onFlyTo={() => {}} />);
     fireEvent.click(screen.getByText(/show data centers near me/i));
 
     await waitFor(() => expect(screen.getByText("Confirmed DC")).toBeInTheDocument());
     expect(screen.getByText("Far DC")).toBeInTheDocument();
+    // Only the nearest-facilities call should hit our backend — no
+    // /api/locate call should happen since browser geolocation succeeded.
+    expect(globalThis.fetch).toHaveBeenCalledTimes(1);
+    expect(globalThis.fetch).toHaveBeenCalledWith(
+      expect.stringContaining("/api/datacenters/nearest?lat=39.78&lng=-89.65&n=5")
+    );
+  });
+
+  it("falls back to IP-based /api/locate when geolocation permission is denied", async () => {
+    mockGeolocationFailure();
+    mockFetchSequence([LOCATE_RESPONSE, NEAREST_RESPONSE]);
+
+    render(<NearMePanel onFlyTo={() => {}} />);
+    fireEvent.click(screen.getByText(/show data centers near me/i));
+
+    await waitFor(() => expect(screen.getByText("Confirmed DC")).toBeInTheDocument());
     expect(globalThis.fetch).toHaveBeenNthCalledWith(1, expect.stringContaining("/api/locate"));
     expect(globalThis.fetch).toHaveBeenNthCalledWith(
       2,
@@ -64,8 +104,20 @@ describe("NearMePanel", () => {
     );
   });
 
-  it("calls onFlyTo with the facility id when a result is clicked", async () => {
+  it("falls back to /api/locate when the browser has no geolocation support", async () => {
+    mockGeolocationUnsupported();
     mockFetchSequence([LOCATE_RESPONSE, NEAREST_RESPONSE]);
+
+    render(<NearMePanel onFlyTo={() => {}} />);
+    fireEvent.click(screen.getByText(/show data centers near me/i));
+
+    await waitFor(() => expect(screen.getByText("Confirmed DC")).toBeInTheDocument());
+    expect(globalThis.fetch).toHaveBeenNthCalledWith(1, expect.stringContaining("/api/locate"));
+  });
+
+  it("calls onFlyTo with the facility id when a result is clicked", async () => {
+    mockGeolocationSuccess(39.78, -89.65);
+    mockFetchSequence([NEAREST_RESPONSE]);
     const onFlyTo = vi.fn();
 
     render(<NearMePanel onFlyTo={onFlyTo} />);
@@ -77,7 +129,8 @@ describe("NearMePanel", () => {
     expect(onFlyTo).toHaveBeenCalledWith("confirmed-dc");
   });
 
-  it("shows an error state and allows retrying when the locate request fails", async () => {
+  it("shows an error state and allows retrying when both geolocation and locate fail", async () => {
+    mockGeolocationFailure();
     globalThis.fetch = vi.fn(() => Promise.resolve({ ok: false }));
 
     render(<NearMePanel onFlyTo={() => {}} />);

@@ -371,12 +371,16 @@
   font-size: 11px;
 }
 
-/* ── Near-me panel (top-left, below title overlay) ── */
+/* ── Near-me panel (bottom-right, clear of zoom controls and legend) ── */
 .near-me-panel {
   position: absolute;
-  top: 100px;
+  bottom: 32px;
   right: 20px;
   z-index: 10;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 10px;
 }
 
 .near-me-trigger {
