@@ -235,6 +235,23 @@ def geocode(address: str, country: str) -> tuple[float, float, str] | None:
     return None
 
 
+def geocode_with_override(address: str, country: str, override: dict | None) -> tuple[float, float, str] | None:
+    """Like geocode(), but when a manual override is present, its `address`
+    is a complete, already-verified query string (see SOURCES.md) — querying
+    it through geocode()'s tiers would incorrectly append country again
+    (e.g. "Santa Teresa, New Mexico, United States, United States"), so it's
+    queried directly instead, tagged with the precision recorded alongside
+    it in location_overrides.json. Falls back to the normal CSV-address tiers
+    if the override string itself fails to resolve on a given run."""
+    if override:
+        result = _nominatim_query(override["address"])
+        time.sleep(1.1)
+        if result:
+            lat, lng = result
+            return lat, lng, override["geocode_precision"]
+    return geocode(address, country)
+
+
 def parse_float(val, default=None):
     try:
         return float(val)
@@ -301,14 +318,9 @@ def main():
         override = overrides.get(dc_id)
         if override:
             print(f"[{i+1}/{len(rows)}] Geocoding: {name} (override: {override['address']})")
-            # The override's own researched address is tried first; if for some
-            # reason it fails to resolve on a given run, fall back to whatever
-            # the CSV's Address field would have produced rather than failing
-            # the record outright.
-            result = geocode(override["address"], country) or geocode(address, country)
         else:
             print(f"[{i+1}/{len(rows)}] Geocoding: {name} ({address or country})")
-            result = geocode(address, country)
+        result = geocode_with_override(address, country, override)
 
         if not result:
             print(f"  FAILED: could not geocode at any precision tier")

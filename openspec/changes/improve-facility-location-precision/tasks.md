@@ -65,11 +65,11 @@
 ## 5. Verification
 
 - [x] 5.1 `cd backend && pytest` passes
-- [ ] 5.2 Run `fetch_data.py` end-to-end (or a scoped equivalent) and
+- [x] 5.2 Run `fetch_data.py` end-to-end (or a scoped equivalent) and
       confirm all 17 previously-country-level facilities now show
       improved `geocode_precision`, with `openai-stargate-new-mexico`
       specifically landing inside New Mexico rather than the jittered US
       centroid
-- [ ] 5.3 Re-run `fetch_data.py` a second time immediately after and
+- [x] 5.3 Re-run `fetch_data.py` a second time immediately after and
       confirm none of the just-improved facilities regress back to a
       worse precision

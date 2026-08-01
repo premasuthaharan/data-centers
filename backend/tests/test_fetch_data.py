@@ -15,6 +15,7 @@ from fetch_data import (
     check_geocode_failure_rate,
     clean_owner,
     geocode,
+    geocode_with_override,
     load_existing_datacenters,
     load_location_overrides,
     parse_float,
@@ -190,6 +191,81 @@ class TestGeocode:
         result = geocode("", "Atlantis")
         assert result == (7.0, 8.0, "country")
         assert calls == ["Atlantis"]
+
+
+# --- geocode_with_override ---
+
+class TestGeocodeWithOverride:
+    def test_no_override_falls_back_to_plain_geocode(self, monkeypatch):
+        import fetch_data
+        from fetch_data import geocode_with_override
+
+        monkeypatch.setattr(fetch_data, "_nominatim_query", lambda q: (1.0, 2.0))
+        monkeypatch.setattr(fetch_data.time, "sleep", lambda s: None)
+
+        result = geocode_with_override("123 Main St", "United States", None)
+        assert result == (1.0, 2.0, "address")
+
+    def test_override_queried_verbatim_without_appending_country_again(self, monkeypatch):
+        # Regression test: override addresses already end in the country name
+        # (e.g. "Santa Teresa, New Mexico, United States"); routing them
+        # through geocode()'s tiers would append ", {country}" a second time
+        # and break the match. geocode_with_override must query the override
+        # string exactly as recorded in location_overrides.json.
+        import fetch_data
+        from fetch_data import geocode_with_override
+
+        queries = []
+
+        def fake_query(q):
+            queries.append(q)
+            if q == "Santa Teresa, New Mexico, United States":
+                return (31.87, -106.68)
+            return None
+
+        monkeypatch.setattr(fetch_data, "_nominatim_query", fake_query)
+        monkeypatch.setattr(fetch_data.time, "sleep", lambda s: None)
+
+        override = {
+            "address": "Santa Teresa, New Mexico, United States",
+            "geocode_precision": "approximate",
+        }
+        result = geocode_with_override("", "United States", override)
+
+        assert result == (31.87, -106.68, "approximate")
+        assert queries == ["Santa Teresa, New Mexico, United States"]
+
+    def test_override_precision_field_is_used_verbatim(self, monkeypatch):
+        import fetch_data
+        from fetch_data import geocode_with_override
+
+        monkeypatch.setattr(fetch_data, "_nominatim_query", lambda q: (5.0, 6.0))
+        monkeypatch.setattr(fetch_data.time, "sleep", lambda s: None)
+
+        override = {"address": "Some Researched Place", "geocode_precision": "address"}
+        result = geocode_with_override("", "Wonderland", override)
+        assert result == (5.0, 6.0, "address")
+
+    def test_override_query_failure_falls_back_to_csv_address(self, monkeypatch):
+        import fetch_data
+        from fetch_data import geocode_with_override
+
+        queries = []
+
+        def fake_query(q):
+            queries.append(q)
+            if q == "Bad Override String":
+                return None
+            return (9.0, 9.0)
+
+        monkeypatch.setattr(fetch_data, "_nominatim_query", fake_query)
+        monkeypatch.setattr(fetch_data.time, "sleep", lambda s: None)
+
+        override = {"address": "Bad Override String", "geocode_precision": "approximate"}
+        result = geocode_with_override("123 Main St", "United States", override)
+
+        assert result == (9.0, 9.0, "address")
+        assert queries[0] == "Bad Override String"
 
 
 # --- check_geocode_failure_rate ---
@@ -378,16 +454,17 @@ class TestMainWithOverridesAndRegressionGuard:
             }
         }))
         monkeypatch.setattr(fetch_data, "fetch_csv", lambda url: SAMPLE_CSV)
+        monkeypatch.setattr(fetch_data.time, "sleep", lambda s: None)
 
         queries_seen = []
 
-        def fake_geocode(address, country):
-            queries_seen.append(address)
-            if address == "Researched Location, Somewhere":
-                return (42.0, -71.0, "approximate")
-            return (1.0, 2.0, "address")
+        def fake_nominatim_query(query):
+            queries_seen.append(query)
+            if query == "Researched Location, Somewhere":
+                return (42.0, -71.0)
+            return (1.0, 2.0)
 
-        monkeypatch.setattr(fetch_data, "geocode", fake_geocode)
+        monkeypatch.setattr(fetch_data, "_nominatim_query", fake_nominatim_query)
 
         fetch_data.main()
 
@@ -397,7 +474,9 @@ class TestMainWithOverridesAndRegressionGuard:
         assert record["geocode_precision"] == "approximate"
         assert record["lat"] == 42.0
         assert record["lng"] == -71.0
-        # The override's researched address is what got geocoded, not the raw CSV address.
+        # The override's researched address is what got queried directly, not
+        # run through geocode()'s tiers (which would incorrectly append country
+        # again onto an address string that already ends in a country name).
         assert queries_seen[0] == "Researched Location, Somewhere"
 
     def test_existing_better_precision_is_preserved_not_overwritten(self, tmp_path, monkeypatch):
