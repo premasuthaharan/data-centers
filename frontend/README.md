@@ -40,3 +40,14 @@ npm run preview   # preview the production build locally
 npm run lint      # eslint
 npm test          # vitest
 ```
+
+## Testing & coverage
+
+```
+npm test              # run tests once
+npm run test:coverage # run tests with coverage
+```
+
+Coverage thresholds are configured in `vitest.config.js`
+(`test.coverage.thresholds`); `npm run test:coverage` fails if coverage
+drops below them. `.github/workflows/ci.yml` runs this on every PR.

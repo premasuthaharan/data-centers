@@ -131,9 +131,14 @@ the source CSV, re-geocodes every entry via Nominatim, and overwrites
 PR with the resulting diff for review — see that workflow for the
 automated schedule.
 
-## Testing
+## Testing & coverage
 
 ```
 pip install -r requirements-dev.txt
 pytest
 ```
+
+Coverage is measured automatically (configured in `pytest.ini` /
+`.coveragerc`) and printed after the test results; the run fails if
+coverage drops below the threshold in `pytest.ini`
+(`--cov-fail-under`). `.github/workflows/ci.yml` runs this on every PR.
