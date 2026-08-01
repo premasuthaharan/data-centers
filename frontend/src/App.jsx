@@ -5,6 +5,7 @@ import NearMePanel from "./components/NearMePanel";
 import ScenarioPanel from "./components/ScenarioPanel";
 import CompareModal from "./components/CompareModal";
 import MethodologyPanel from "./components/MethodologyPanel";
+import RegionScorecard from "./components/RegionScorecard";
 import "./App.css";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
@@ -20,8 +21,9 @@ export default function App() {
   // activePanel controls which overlay panel is open. selectedId is kept
   // separate since the detail panel can open from multiple places (marker
   // click, near-me results) without necessarily being the "active panel".
-  const [activePanel, setActivePanel] = useState(null); // 'detail' | 'scenario' | 'compare' | 'methodology' | null
+  const [activePanel, setActivePanel] = useState(null); // 'detail' | 'scenario' | 'compare' | 'methodology' | 'scorecard' | null
   const [scenarioData, setScenarioData] = useState(null);
+  const [focusedRegion, setFocusedRegion] = useState(null);
 
   useEffect(() => {
     // Captured before this data loads so a shared-link facility opens once
@@ -72,6 +74,11 @@ export default function App() {
   const openCompareModal = useCallback(() => setActivePanel("compare"), []);
   const closeOverlayPanel = useCallback(() => setActivePanel(null), []);
   const openMethodologyPanel = useCallback(() => setActivePanel("methodology"), []);
+  const openScorecardPanel = useCallback(() => setActivePanel("scorecard"), []);
+
+  const handleFocusRegion = useCallback((region) => {
+    setFocusedRegion(region.region);
+  }, []);
 
   const selectedDC = datacenters.find((dc) => dc.id === selectedId) ?? null;
 
@@ -107,6 +114,7 @@ export default function App() {
         selectedId={selectedId}
         onSelectDatacenter={handleSelect}
         colorMode={colorMode}
+        focusRegion={focusedRegion}
       />
 
       {/* Top-left title overlay */}
@@ -143,6 +151,9 @@ export default function App() {
           </button>
           <button className="app-action-btn" onClick={openCompareModal}>
             ⚖️ Compare facilities
+          </button>
+          <button className="app-action-btn" onClick={openScorecardPanel}>
+            🏆 Region scorecard
           </button>
         </div>
       </div>
@@ -186,6 +197,13 @@ export default function App() {
       <div className={"detail-panel-wrapper" + (activePanel === "scenario" ? " detail-panel-wrapper--open" : "")}>
         {activePanel === "scenario" && (
           <ScenarioPanel onClose={closeOverlayPanel} onScenarioChange={setScenarioData} />
+        )}
+      </div>
+
+      {/* Slide-in region scorecard panel */}
+      <div className={"detail-panel-wrapper" + (activePanel === "scorecard" ? " detail-panel-wrapper--open" : "")}>
+        {activePanel === "scorecard" && (
+          <RegionScorecard onClose={closeOverlayPanel} onFocusRegion={handleFocusRegion} />
         )}
       </div>
 

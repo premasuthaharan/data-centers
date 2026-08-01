@@ -149,6 +149,52 @@ def compute_impact(
     }
 
 
+# Country land area in km^2 (UN Statistics Division / World Bank "Surface
+# area" series, land area excluding inland water bodies), used to normalize
+# region totals to an intensity-per-area figure. Covers the same country set
+# as GRID_DATA/IMPACT_RATES in fetch_data.py; see SOURCES.md ("Country land
+# area").
+COUNTRY_AREA_KM2 = {
+    "United States": 9_147_420,
+    "Canada": 9_093_507,
+    "United Kingdom": 241_930,
+    "Ireland": 68_883,
+    "Germany": 348_560,
+    "Netherlands": 33_670,
+    "Belgium": 30_280,
+    "France": 547_557,
+    "Sweden": 410_340,
+    "Norway": 365_268,
+    "Finland": 303_890,
+    "Denmark": 42_430,
+    "Singapore": 700,
+    "Japan": 364_555,
+    "South Korea": 97_230,
+    "Taiwan": 35_980,
+    "China": 9_388_211,
+    "India": 2_973_190,
+    "Indonesia": 1_811_570,
+    "Malaysia": 328_550,
+    "Australia": 7_682_300,
+    "New Zealand": 263_310,
+    "Brazil": 8_358_140,
+    "South Africa": 1_213_090,
+    "Bahrain": 760,
+    "United Arab Emirates": 71_020,
+    "Israel": 21_640,
+    "Switzerland": 39_516,
+    "Austria": 82_409,
+    "Spain": 498_800,
+    "Italy": 294_140,
+    "Poland": 306_170,
+    "Portugal": 91_590,
+}
+
+
+def region_area_km2(region: str) -> float | None:
+    return COUNTRY_AREA_KM2.get(region)
+
+
 def aggregate_impact(centers_with_impact: list[dict]) -> dict:
     water_severity_counts = {"low": 0, "moderate": 0, "high": 0, "critical": 0}
     for dc in centers_with_impact:
@@ -167,6 +213,19 @@ def aggregate_impact(centers_with_impact: list[dict]) -> dict:
         ),
         "water_severity_counts": water_severity_counts,
     }
+
+
+def regions_with_aggregate_impact() -> list[dict]:
+    centers = all_datacenters_with_impact()
+    by_region: dict[str, list[dict]] = {}
+    for dc in centers:
+        region = dc.get("country") or "Unknown"
+        by_region.setdefault(region, []).append(dc)
+
+    return [
+        {"region": region, "area_km2": region_area_km2(region), **aggregate_impact(facilities)}
+        for region, facilities in by_region.items()
+    ]
 
 
 def all_datacenters_with_impact() -> list[dict]:

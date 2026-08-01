@@ -11,6 +11,7 @@ from logic import (
     load_datacenters,
     nearest_datacenters,
     get_dataset_metadata,
+    regions_with_aggregate_impact,
     PUE,
 )
 
@@ -64,6 +65,11 @@ def locate(request: Request, ip: str | None = Query(None)):
         return {"lat": geo["lat"], "lng": geo["lon"], "city": geo["city"], "country": geo["country"]}
     except Exception as e:
         raise HTTPException(status_code=502, detail=str(e))
+
+
+@app.get("/api/regions")
+def get_regions():
+    return regions_with_aggregate_impact()
 
 
 @app.get("/api/datacenters/nearest")

@@ -167,6 +167,20 @@ internal heuristic rather than implied to be industry fact.
   current national average when a facility's actual renewable mix is
   unknown.
 
+### Country land area (`COUNTRY_AREA_KM2` in `logic.py`)
+- **Used in:** `region_area_km2()`, which powers the "per km²" normalized
+  view in the region scorecard (`GET /api/regions` → `area_km2`). Not used
+  by `compute_impact()` or any per-facility figure.
+- **Status:** Real source (UN Statistics Division / World Bank "Surface
+  area" series), not a heuristic.
+- **Context:** Land area excluding inland water bodies, in km². Used to
+  normalize a region's aggregate impact (e.g. total annual CO2) by the
+  region's physical size, so a country with many facilities isn't
+  automatically ranked highest purely from facility count. Covers the same
+  country set as `GRID_DATA`/`IMPACT_RATES` in `fetch_data.py`; countries
+  outside this table have no per-km² view (the scorecard falls back to
+  per-facility or total).
+
 ---
 
 ## Verification checklist
