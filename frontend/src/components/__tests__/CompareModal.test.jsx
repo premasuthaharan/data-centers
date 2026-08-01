@@ -1,0 +1,86 @@
+import { describe, it, expect, vi } from "vitest";
+import { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import CompareModal from "../CompareModal";
+
+function makeDc(id, name, overrides = {}) {
+  return {
+    id,
+    name,
+    operator: "Amazon",
+    power_mw: 100,
+    data_status: "confirmed",
+    impact: {
+      electricity: { annual_kwh: 900_000_000, price_lift_pct: 5.5 },
+      carbon: { annual_co2_tonnes: 300_000, renewable_pct: 22 },
+      water: { daily_withdrawal_mgd: 1.5, severity: "moderate" },
+      land: { waste_heat_mw: 30 },
+      ...overrides.impact,
+    },
+    ...overrides,
+  };
+}
+
+const DATACENTERS = [
+  makeDc("dc-a", "Facility A"),
+  makeDc("dc-b", "Facility B"),
+  makeDc("announced-dc", "Announced Facility", {
+    data_status: "announced",
+    impact: {
+      electricity: { annual_kwh: 0, price_lift_pct: 0 },
+      carbon: { annual_co2_tonnes: 0, renewable_pct: 25 },
+      water: { daily_withdrawal_mgd: 0, severity: "low" },
+      land: { waste_heat_mw: 0 },
+    },
+  }),
+];
+
+describe("CompareModal", () => {
+  it("lists only non-announced facilities as selectable", () => {
+    render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
+    expect(screen.getByText("Facility A")).toBeInTheDocument();
+    expect(screen.getByText("Facility B")).toBeInTheDocument();
+    expect(screen.queryByText("Announced Facility")).not.toBeInTheDocument();
+  });
+
+  it("shows a hint instead of a table when fewer than 2 facilities are selected", () => {
+    render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
+    expect(screen.getByText(/select at least 2 facilities/i)).toBeInTheDocument();
+
+    fireEvent.click(screen.getByLabelText("Facility A"));
+    expect(screen.getByText(/select at least 2 facilities/i)).toBeInTheDocument();
+  });
+
+  it("renders a comparison table once 2 facilities are selected", () => {
+    render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
+
+    fireEvent.click(screen.getByLabelText("Facility A"));
+    fireEvent.click(screen.getByLabelText("Facility B"));
+
+    expect(screen.queryByText(/select at least 2 facilities/i)).not.toBeInTheDocument();
+    const table = screen.getByRole("table");
+    expect(table).toBeInTheDocument();
+    expect(screen.getAllByText("Facility A").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Facility B").length).toBeGreaterThan(0);
+    expect(screen.getByText("Grid renewables")).toBeInTheDocument();
+  });
+
+  it("calls onClose when the close button or backdrop is clicked", () => {
+    const onClose = vi.fn();
+    const { container } = render(<CompareModal datacenters={DATACENTERS} onClose={onClose} />);
+
+    fireEvent.click(screen.getByLabelText("Close"));
+    expect(onClose).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(container.querySelector(".compare-modal-overlay"));
+    expect(onClose).toHaveBeenCalledTimes(2);
+  });
+
+  it("does not close when clicking inside the modal content", () => {
+    const onClose = vi.fn();
+    render(<CompareModal datacenters={DATACENTERS} onClose={onClose} />);
+
+    fireEvent.click(screen.getByText("Compare Facilities"));
+    expect(onClose).not.toHaveBeenCalled();
+  });
+});

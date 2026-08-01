@@ -1,9 +1,18 @@
 import os
 import urllib.request
 import json
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from logic import all_datacenters_with_impact, nearest_datacenters, get_dataset_metadata
+from pydantic import BaseModel
+from logic import (
+    aggregate_impact,
+    all_datacenters_with_impact,
+    compute_impact,
+    load_datacenters,
+    nearest_datacenters,
+    get_dataset_metadata,
+    PUE,
+)
 
 app = FastAPI(title="Data Centers API")
 
@@ -18,7 +27,7 @@ allow_origins = (
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allow_origins,
-    allow_methods=["GET"],
+    allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
 
@@ -41,10 +50,17 @@ def get_all():
     }
 
 
+def client_ip(request: Request) -> str:
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host
+
+
 @app.get("/api/locate")
-def locate(ip: str = Query(...)):
+def locate(request: Request, ip: str | None = Query(None)):
     try:
-        geo = geolocate_ip(ip)
+        geo = geolocate_ip(ip or client_ip(request))
         return {"lat": geo["lat"], "lng": geo["lon"], "city": geo["city"], "country": geo["country"]}
     except Exception as e:
         raise HTTPException(status_code=502, detail=str(e))
@@ -53,3 +69,41 @@ def locate(ip: str = Query(...)):
 @app.get("/api/datacenters/nearest")
 def get_nearest(lat: float = Query(...), lng: float = Query(...), n: int = Query(3, ge=1, le=20)):
     return nearest_datacenters(lat, lng, n)
+
+
+class ScenarioOverrides(BaseModel):
+    renewable_pct: float | None = None
+    carbon_intensity_gco2_per_kwh: float | None = None
+    water_liters_per_kwh: float | None = None
+    pue: float | None = None
+
+
+class ScenarioRequest(BaseModel):
+    scenario: ScenarioOverrides
+    facility_ids: list[str] | None = None
+
+
+@app.post("/api/scenario")
+def post_scenario(body: ScenarioRequest):
+    centers = load_datacenters()
+
+    if body.facility_ids is not None:
+        by_id = {dc["id"]: dc for dc in centers}
+        unknown = [fid for fid in body.facility_ids if fid not in by_id]
+        if unknown:
+            raise HTTPException(status_code=404, detail=f"Unknown facility_ids: {unknown}")
+        targeted = [by_id[fid] for fid in body.facility_ids]
+    else:
+        targeted = centers
+
+    overrides = body.scenario.model_dump(exclude={"pue"}, exclude_none=True)
+    pue = body.scenario.pue if body.scenario.pue is not None else PUE
+
+    baseline = [{**dc, "impact": compute_impact(dc)} for dc in targeted]
+    scenario = [{**dc, "impact": compute_impact(dc, overrides=overrides, pue=pue)} for dc in targeted]
+
+    return {
+        "data_centers": scenario,
+        "baseline_totals": aggregate_impact(baseline),
+        "scenario_totals": aggregate_impact(scenario),
+    }

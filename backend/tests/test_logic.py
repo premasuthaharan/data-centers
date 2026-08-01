@@ -5,6 +5,7 @@ import pytest
 from logic import (
     PUE,
     UTILIZATION_FACTOR,
+    aggregate_impact,
     all_datacenters_with_impact,
     compute_impact,
     get_dataset_metadata,
@@ -195,6 +196,111 @@ class TestComputeImpact:
         dc = {"power_mw": 253.0}
         result = compute_impact(dc)
         assert result["water"]["daily_withdrawal_mgd"] == pytest.approx(5.0, abs=0.1)
+
+    def test_default_arguments_match_pre_override_behavior(self):
+        # Regression guard: calling with no overrides/pue/utilization must
+        # produce identical output to calling compute_impact(dc) alone.
+        dc = {
+            "power_mw": 100.0,
+            "carbon_intensity_gco2_per_kwh": 380,
+            "renewable_pct": 22,
+            "electricity_price_usd_per_kwh": 0.083,
+            "water_liters_per_kwh": 2.3,
+        }
+        assert compute_impact(dc) == compute_impact(dc, overrides=None, pue=PUE, utilization=UTILIZATION_FACTOR)
+
+    def test_renewable_pct_override(self):
+        dc = {"power_mw": 100.0, "renewable_pct": 22}
+        result = compute_impact(dc, overrides={"renewable_pct": 100})
+        assert result["carbon"]["renewable_pct"] == 100
+
+    def test_carbon_intensity_override_reduces_co2(self):
+        dc = {"power_mw": 100.0, "carbon_intensity_gco2_per_kwh": 380}
+        baseline = compute_impact(dc)
+        scenario = compute_impact(dc, overrides={"carbon_intensity_gco2_per_kwh": 50})
+        assert scenario["carbon"]["annual_co2_tonnes"] < baseline["carbon"]["annual_co2_tonnes"]
+        assert scenario["carbon"]["intensity_gco2_per_kwh"] == 50
+
+    def test_water_liters_override_reduces_withdrawal(self):
+        dc = {"power_mw": 100.0, "water_liters_per_kwh": 2.3}
+        baseline = compute_impact(dc)
+        scenario = compute_impact(dc, overrides={"water_liters_per_kwh": 0.5})
+        assert scenario["water"]["daily_withdrawal_mgd"] < baseline["water"]["daily_withdrawal_mgd"]
+
+    def test_electricity_price_override_changes_cost(self):
+        dc = {"power_mw": 100.0, "electricity_price_usd_per_kwh": 0.083}
+        baseline = compute_impact(dc)
+        scenario = compute_impact(dc, overrides={"electricity_price_usd_per_kwh": 0.01})
+        assert scenario["electricity"]["annual_cost_millions_usd"] < baseline["electricity"]["annual_cost_millions_usd"]
+
+    def test_stacked_overrides_all_apply(self):
+        dc = {
+            "power_mw": 100.0,
+            "carbon_intensity_gco2_per_kwh": 380,
+            "renewable_pct": 22,
+            "water_liters_per_kwh": 2.3,
+        }
+        result = compute_impact(dc, overrides={
+            "renewable_pct": 100,
+            "carbon_intensity_gco2_per_kwh": 50,
+            "water_liters_per_kwh": 0.5,
+        })
+        assert result["carbon"]["renewable_pct"] == 100
+        assert result["carbon"]["intensity_gco2_per_kwh"] == 50
+        assert result["water"]["daily_withdrawal_mgd"] == pytest.approx(0.33, abs=0.01)
+
+    def test_pue_override_changes_annual_kwh_and_waste_heat(self):
+        dc = {"power_mw": 100.0}
+        baseline = compute_impact(dc)
+        scenario = compute_impact(dc, pue=1.1)
+        assert scenario["electricity"]["annual_kwh"] < baseline["electricity"]["annual_kwh"]
+        assert scenario["land"]["waste_heat_mw"] < baseline["land"]["waste_heat_mw"]
+        assert scenario["land"]["waste_heat_mw"] == round(100.0 * (1.1 - 1), 1)
+
+    def test_utilization_override_changes_annual_kwh_only(self):
+        dc = {"power_mw": 100.0}
+        baseline = compute_impact(dc)
+        scenario = compute_impact(dc, utilization=0.5)
+        assert scenario["electricity"]["annual_kwh"] < baseline["electricity"]["annual_kwh"]
+        # utilization does not factor into footprint/waste heat.
+        assert scenario["land"]["footprint_m2"] == baseline["land"]["footprint_m2"]
+        assert scenario["land"]["waste_heat_mw"] == baseline["land"]["waste_heat_mw"]
+
+
+# --- aggregate_impact ---
+
+class TestAggregateImpact:
+    def test_empty_list_returns_zeroed_totals(self):
+        result = aggregate_impact([])
+        assert result == {
+            "facility_count": 0,
+            "annual_kwh": 0,
+            "annual_co2_tonnes": 0,
+            "daily_withdrawal_mgd": 0,
+            "annual_cost_millions_usd": 0,
+            "water_severity_counts": {"low": 0, "moderate": 0, "high": 0, "critical": 0},
+        }
+
+    def test_sums_across_facilities(self):
+        centers = [
+            {"power_mw": 100.0, "carbon_intensity_gco2_per_kwh": 380, "electricity_price_usd_per_kwh": 0.083},
+            {"power_mw": 50.0, "carbon_intensity_gco2_per_kwh": 590, "electricity_price_usd_per_kwh": 0.145},
+        ]
+        centers_with_impact = [{**dc, "impact": compute_impact(dc)} for dc in centers]
+        result = aggregate_impact(centers_with_impact)
+
+        assert result["facility_count"] == 2
+        assert result["annual_kwh"] == sum(dc["impact"]["electricity"]["annual_kwh"] for dc in centers_with_impact)
+        assert result["annual_co2_tonnes"] == sum(
+            dc["impact"]["carbon"]["annual_co2_tonnes"] for dc in centers_with_impact
+        )
+
+    def test_counts_facilities_per_water_severity(self):
+        centers = [{"power_mw": mw} for mw in (0.001, 100, 300, 1000)]  # low, moderate, high, critical
+        centers_with_impact = [{**dc, "impact": compute_impact(dc)} for dc in centers]
+        result = aggregate_impact(centers_with_impact)
+
+        assert result["water_severity_counts"] == {"low": 1, "moderate": 1, "high": 1, "critical": 1}
 
 
 # --- load_datacenters / get_dataset_metadata ---

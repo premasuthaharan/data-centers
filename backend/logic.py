@@ -50,18 +50,24 @@ UTILIZATION_FACTOR = 0.8
 PUE = 1.3
 
 
-def compute_impact(dc: dict) -> dict:
+def compute_impact(
+    dc: dict,
+    overrides: dict | None = None,
+    pue: float = PUE,
+    utilization: float = UTILIZATION_FACTOR,
+) -> dict:
+    overrides = overrides or {}
     power_mw = dc.get("power_mw") or 0
     # 450 gCO2/kWh default: conservative internal heuristic, higher than the
     # actual US grid average; see SOURCES.md ("Default carbon intensity")
-    carbon = dc.get("carbon_intensity_gco2_per_kwh") or 450
+    carbon = overrides.get("carbon_intensity_gco2_per_kwh") or dc.get("carbon_intensity_gco2_per_kwh") or 450
     # 25% default: approximates the actual 2024 US renewable generation
     # share; see SOURCES.md ("Default renewable percentage")
-    renewable_pct = dc.get("renewable_pct") or 25
+    renewable_pct = overrides.get("renewable_pct") or dc.get("renewable_pct") or 25
 
     # annual_kwh = IT load * utilization * PUE * hours/year, i.e. total
     # facility draw (IT + cooling/overhead), not just nameplate IT capacity.
-    annual_kwh = power_mw * UTILIZATION_FACTOR * PUE * 1_000 * 8_760  # MW → kWh/yr
+    annual_kwh = power_mw * utilization * pue * 1_000 * 8_760  # MW → kWh/yr
 
     # --- Electricity price pressure ---
     # Large DCs can consume 1-5% of a regional grid; we model a price lift
@@ -72,7 +78,7 @@ def compute_impact(dc: dict) -> dict:
     # Per-country blended water intensity, falling back to the global
     # default for records that predate per-country rates; see SOURCES.md
     # ("Water intensity")
-    water_liters_per_kwh = dc.get("water_liters_per_kwh") or 3.0
+    water_liters_per_kwh = overrides.get("water_liters_per_kwh") or dc.get("water_liters_per_kwh") or 3.0
     water_mgd = round((annual_kwh * water_liters_per_kwh) / (3_785_411 * 365), 2)
     # Severity thresholds are an internal heuristic, not an EPA standard;
     # see SOURCES.md ("Water severity thresholds")
@@ -96,7 +102,7 @@ def compute_impact(dc: dict) -> dict:
     # Waste heat (MW thermal) = IT load * (PUE - 1); PUE is an internal
     # heuristic, more optimistic than industry-average PUE — see SOURCES.md.
     # Shares the PUE constant above with annual_kwh so the two stay consistent.
-    waste_heat_mw = round(power_mw * (PUE - 1), 1) if power_mw else 0
+    waste_heat_mw = round(power_mw * (pue - 1), 1) if power_mw else 0
 
     return {
         # Map geometry
@@ -112,7 +118,11 @@ def compute_impact(dc: dict) -> dict:
             # default for records that predate per-country rates; see
             # SOURCES.md ("Electricity price")
             "annual_cost_millions_usd": round(
-                (annual_kwh * (dc.get("electricity_price_usd_per_kwh") or 0.06)) / 1_000_000, 1
+                (annual_kwh * (
+                    overrides.get("electricity_price_usd_per_kwh")
+                    or dc.get("electricity_price_usd_per_kwh")
+                    or 0.06
+                )) / 1_000_000, 1
             ),
         },
         # Water
@@ -132,6 +142,26 @@ def compute_impact(dc: dict) -> dict:
             "footprint_m2": footprint_m2,
             "waste_heat_mw": waste_heat_mw,
         },
+    }
+
+
+def aggregate_impact(centers_with_impact: list[dict]) -> dict:
+    water_severity_counts = {"low": 0, "moderate": 0, "high": 0, "critical": 0}
+    for dc in centers_with_impact:
+        severity = dc["impact"]["water"]["severity"]
+        water_severity_counts[severity] += 1
+
+    return {
+        "facility_count": len(centers_with_impact),
+        "annual_kwh": sum(dc["impact"]["electricity"]["annual_kwh"] for dc in centers_with_impact),
+        "annual_co2_tonnes": sum(dc["impact"]["carbon"]["annual_co2_tonnes"] for dc in centers_with_impact),
+        "daily_withdrawal_mgd": round(
+            sum(dc["impact"]["water"]["daily_withdrawal_mgd"] for dc in centers_with_impact), 2
+        ),
+        "annual_cost_millions_usd": round(
+            sum(dc["impact"]["electricity"]["annual_cost_millions_usd"] for dc in centers_with_impact), 1
+        ),
+        "water_severity_counts": water_severity_counts,
     }
 
 
