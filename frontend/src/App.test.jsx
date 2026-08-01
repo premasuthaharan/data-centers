@@ -7,7 +7,16 @@ vi.mock("./components/Map", () => ({
   default: ({ selectedId }) => <div data-testid="mock-map" data-selected={selectedId ?? ""} />,
 }));
 vi.mock("./components/NearMePanel", () => ({ default: () => <div /> }));
-vi.mock("./components/ScenarioPanel", () => ({ default: () => <div /> }));
+vi.mock("./components/ScenarioPanel", () => ({
+  // A minimal stand-in that lets tests trigger onScenarioChange with a
+  // controlled payload, mirroring what the real POST /api/scenario
+  // response + presetLabel (added in ScenarioPanel) looks like.
+  default: ({ onScenarioChange }) => (
+    <button onClick={() => onScenarioChange(window.__mockScenarioPayload)}>
+      apply mock scenario
+    </button>
+  ),
+}));
 vi.mock("./components/CompareModal", () => ({ default: () => <div /> }));
 
 let fetchMock;
@@ -159,5 +168,80 @@ describe("App theme toggle", () => {
 
     expect(document.documentElement.getAttribute("data-theme")).toBe("light");
     expect(screen.getByLabelText("Switch to dark mode")).toBeInTheDocument();
+  });
+});
+
+describe("App scenario facility detail", () => {
+  const DATACENTERS = [
+    {
+      id: "dc-a",
+      name: "Facility A",
+      operator: "Amazon",
+      country: "US",
+      data_status: "confirmed",
+      impact: {
+        data_status: "confirmed",
+        electricity: { annual_kwh: 900_000_000, price_lift_pct: 5.5, homes_powered: 86_766 },
+        carbon: { annual_co2_tonnes: 300_000, cars_equivalent: 65_217, renewable_pct: 22 },
+        water: { daily_withdrawal_mgd: 1.52, severity: "moderate", households_equivalent: 5067 },
+        land: { footprint_m2: 10_000, waste_heat_mw: 30 },
+      },
+    },
+  ];
+
+  const SCENARIO_RECORD = {
+    id: "dc-a",
+    impact: {
+      data_status: "confirmed",
+      electricity: { annual_kwh: 600_000_000, price_lift_pct: 5.5, homes_powered: 57_143 },
+      carbon: { annual_co2_tonnes: 30_000, cars_equivalent: 6_522, renewable_pct: 100 },
+      water: { daily_withdrawal_mgd: 1.52, severity: "moderate", households_equivalent: 5067 },
+      land: { footprint_m2: 10_000, waste_heat_mw: 30 },
+    },
+  };
+
+  beforeEach(() => {
+    window.__mockScenarioPayload = {
+      data_centers: [SCENARIO_RECORD],
+      presetLabel: "Grid Decarbonization",
+    };
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({ data_centers: DATACENTERS, generated_at: "2026-01-01" }),
+        })
+      )
+    );
+  });
+
+  it("matches the selected facility's scenario record by id and shows the preset label", async () => {
+    window.history.pushState(null, "", "/?facility=dc-a");
+    render(<App />);
+    await waitFor(() => expect(screen.getByText("Facility A")).toBeInTheDocument());
+
+    fireEvent.click(screen.getByText(/Policy scenarios/));
+    fireEvent.click(screen.getByText("apply mock scenario"));
+
+    await waitFor(() => expect(screen.getByText(/Under: Grid Decarbonization/)).toBeInTheDocument());
+    expect(screen.getByText("300,000 t")).toBeInTheDocument();
+    expect(screen.getByText("30,000 t")).toBeInTheDocument();
+  });
+
+  it("reverts to baseline-only rendering after the scenario is reset", async () => {
+    window.history.pushState(null, "", "/?facility=dc-a");
+    render(<App />);
+    await waitFor(() => expect(screen.getByText("Facility A")).toBeInTheDocument());
+
+    fireEvent.click(screen.getByText(/Policy scenarios/));
+    fireEvent.click(screen.getByText("apply mock scenario"));
+    await waitFor(() => expect(screen.getByText(/Under: Grid Decarbonization/)).toBeInTheDocument());
+
+    // The mocked ScenarioPanel's onScenarioChange(null) simulates "Reset to baseline".
+    window.__mockScenarioPayload = null;
+    fireEvent.click(screen.getByText("apply mock scenario"));
+
+    await waitFor(() => expect(screen.queryByText(/Under:/)).not.toBeInTheDocument());
+    expect(screen.queryByText("30,000 t")).not.toBeInTheDocument();
   });
 });
