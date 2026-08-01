@@ -44,16 +44,20 @@
 
 ## 4. Apply in components
 
-- [ ] 4.1 `NearMePanel.jsx`: color-code "Grid price lift" using
+- [x] 4.1 `NearMePanel.jsx`: color-code "Grid price lift" using
       `price_lift_severity`, matching the existing water-severity styling
       pattern (colored value, not colored label)
-- [ ] 4.2 `NearMePanel.jsx`: decide whether "Grid renewables %" should be
+- [x] 4.2 `NearMePanel.jsx`: decide whether "Grid renewables %" should be
       added to the ranked-list stats at all (it currently isn't shown
-      there) — if added, color-code it; if not, note why in the PR
-- [ ] 4.3 `DataCenterCard.jsx`: replace the hardcoded
+      there) — if added, color-code it; if not, note why in the PR —
+      **decided: add it.** It's now a first-class severity-scored metric
+      alongside water/price-lift, and the panel already shows the
+      analogous carbon stat (cars equivalent), so omitting renewables
+      would be an inconsistent gap.
+- [x] 4.3 `DataCenterCard.jsx`: replace the hardcoded
       `accent="#f59e0b"` on the price-lift `StatRow` with the new
       `price_lift_severity`-driven color
-- [ ] 4.4 `DataCenterCard.jsx`: color-code "Grid renewables" using
+- [x] 4.4 `DataCenterCard.jsx`: color-code "Grid renewables" using
       `renewable_severity`, consistent with how water severity is already
       applied to its `ImpactBlock`/`StatRow`
 
