@@ -409,6 +409,36 @@
   line-height: 1.5;
 }
 
+/* ── Mapbox navigation control (zoom/compass) ── */
+.mapboxgl-ctrl-group {
+  background: #13131f !important;
+  border: 1px solid #1e1e2e !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+  overflow: hidden;
+}
+
+.mapboxgl-ctrl-group button {
+  background-color: transparent !important;
+  border-color: #1e1e2e !important;
+}
+
+.mapboxgl-ctrl-group button + button {
+  border-top: 1px solid #1e1e2e !important;
+}
+
+.mapboxgl-ctrl-group button:hover {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.mapboxgl-ctrl-group button .mapboxgl-ctrl-icon {
+  filter: invert(1) brightness(1.4);
+}
+
+.mapboxgl-ctrl-group button:disabled .mapboxgl-ctrl-icon {
+  opacity: 0.3;
+}
+
 .popup strong {
   display: block;
   font-weight: 600;
