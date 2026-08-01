@@ -6,12 +6,13 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
+    setupFiles: ['./src/setupTests.js'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],
       all: true,
       include: ['src/**/*.{js,jsx}'],
-      exclude: ['src/main.jsx', 'src/**/__tests__/**'],
+      exclude: ['src/main.jsx', 'src/setupTests.js', 'src/**/__tests__/**'],
       // 10%, a few points below the current measured ~13% statement
       // coverage — most components (App.jsx, DataCenterCard.jsx, most of
       // Map.jsx) have no component-level tests yet, only their extracted

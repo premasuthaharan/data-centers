@@ -4,6 +4,7 @@ import DataCenterCard from "./components/DataCenterCard";
 import NearMePanel from "./components/NearMePanel";
 import ScenarioPanel from "./components/ScenarioPanel";
 import CompareModal from "./components/CompareModal";
+import MethodologyPanel from "./components/MethodologyPanel";
 import "./App.css";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
@@ -19,7 +20,7 @@ export default function App() {
   // activePanel controls which overlay panel is open. selectedId is kept
   // separate since the detail panel can open from multiple places (marker
   // click, near-me results) without necessarily being the "active panel".
-  const [activePanel, setActivePanel] = useState(null); // 'detail' | 'scenario' | 'compare' | null
+  const [activePanel, setActivePanel] = useState(null); // 'detail' | 'scenario' | 'compare' | 'methodology' | null
   const [scenarioData, setScenarioData] = useState(null);
 
   useEffect(() => {
@@ -46,6 +47,7 @@ export default function App() {
   const openScenarioPanel = useCallback(() => setActivePanel("scenario"), []);
   const openCompareModal = useCallback(() => setActivePanel("compare"), []);
   const closeOverlayPanel = useCallback(() => setActivePanel(null), []);
+  const openMethodologyPanel = useCallback(() => setActivePanel("methodology"), []);
 
   const selectedDC = datacenters.find((dc) => dc.id === selectedId) ?? null;
 
@@ -85,6 +87,14 @@ export default function App() {
 
       {/* Top-left title overlay */}
       <div className="map-overlay-title">
+        <button
+          className="info-btn"
+          onClick={openMethodologyPanel}
+          aria-label="Data sources & methodology"
+          title="Data sources & methodology"
+        >
+          i
+        </button>
         <h1 className="app-title">Data Center Impact</h1>
         <p className="app-subtitle">
           {loading
@@ -138,6 +148,13 @@ export default function App() {
       <div className={"detail-panel-wrapper" + (activePanel === "detail" && selectedDC ? " detail-panel-wrapper--open" : "")}>
         {selectedDC && (
           <DataCenterCard dc={selectedDC} onClose={handleClose} />
+        )}
+      </div>
+
+      {/* Slide-in methodology panel */}
+      <div className={"detail-panel-wrapper" + (activePanel === "methodology" ? " detail-panel-wrapper--open" : "")}>
+        {activePanel === "methodology" && (
+          <MethodologyPanel onClose={closeOverlayPanel} />
         )}
       </div>
 
