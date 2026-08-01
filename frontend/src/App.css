@@ -723,6 +723,73 @@
   color: #ef4444;
 }
 
+/* ── Region scorecard (reuses .scenario-panel / .near-me-list styles) ── */
+.region-metric-switcher {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.region-metric-btn {
+  flex: 1;
+  text-align: center;
+  background: #13131f;
+  border: 1px solid #1e1e2e;
+  border-radius: 8px;
+  padding: 8px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.region-metric-btn:hover {
+  border-color: #6366f1;
+}
+
+.region-metric-btn--active {
+  border-color: #6366f1;
+  background: #171730;
+  color: #f1f5f9;
+}
+
+.region-basis-switcher {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.region-basis-btn {
+  flex: 1;
+  text-align: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 5px 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.region-basis-btn:hover {
+  color: #94a3b8;
+}
+
+.region-basis-btn--active {
+  border-color: #1e1e2e;
+  background: #13131f;
+  color: #a5b4fc;
+}
+
+.region-scorecard-footnote {
+  font-size: 11px;
+  color: #475569;
+  margin-top: 12px;
+}
+
 /* ── Compare modal ── */
 .compare-modal-overlay {
   position: fixed;
