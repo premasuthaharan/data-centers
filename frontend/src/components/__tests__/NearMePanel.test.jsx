@@ -12,7 +12,8 @@ const NEAREST_RESPONSE = [
     distance_km: 12.3,
     impact: {
       electricity: { price_lift_pct: 4.2 },
-      water: { severity: "moderate", daily_withdrawal_mgd: 2.1 },
+      water: { severity: "moderate", daily_withdrawal_mgd: 2.1, households_equivalent: 7000 },
+      carbon: { cars_equivalent: 1234 },
     },
   },
   {
@@ -21,7 +22,8 @@ const NEAREST_RESPONSE = [
     distance_km: 340.9,
     impact: {
       electricity: { price_lift_pct: 1.0 },
-      water: { severity: "low", daily_withdrawal_mgd: 0.4 },
+      water: { severity: "low", daily_withdrawal_mgd: 0.4, households_equivalent: 1333 },
+      carbon: { cars_equivalent: 210 },
     },
   },
 ];
@@ -87,6 +89,20 @@ describe("NearMePanel", () => {
     expect(globalThis.fetch).toHaveBeenCalledWith(
       expect.stringContaining("/api/datacenters/nearest?lat=39.78&lng=-89.65&n=5")
     );
+  });
+
+  it("shows cars and household water equivalents for each result", async () => {
+    mockGeolocationSuccess(39.78, -89.65);
+    mockFetchSequence([NEAREST_RESPONSE]);
+
+    render(<NearMePanel onFlyTo={() => {}} />);
+    fireEvent.click(screen.getByText(/show data centers near me/i));
+
+    await waitFor(() => expect(screen.getByText("Confirmed DC")).toBeInTheDocument());
+    expect(screen.getByText("1,234")).toBeInTheDocument();
+    expect(screen.getByText("7,000")).toBeInTheDocument();
+    expect(screen.getByText("210")).toBeInTheDocument();
+    expect(screen.getByText("1,333")).toBeInTheDocument();
   });
 
   it("falls back to IP-based /api/locate when geolocation permission is denied", async () => {

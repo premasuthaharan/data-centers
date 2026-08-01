@@ -73,6 +73,7 @@ class TestComputeImpact:
         assert result["electricity"]["annual_cost_millions_usd"] == 75.6
         assert result["water"]["daily_withdrawal_mgd"] == 1.52
         assert result["water"]["severity"] == "moderate"
+        assert result["water"]["households_equivalent"] == 5067
         assert result["carbon"]["annual_co2_tonnes"] == 346195
         assert result["carbon"]["cars_equivalent"] == 75260
         assert result["carbon"]["renewable_pct"] == 22
@@ -152,6 +153,7 @@ class TestComputeImpact:
         assert result["electricity"]["annual_cost_millions_usd"] == 0
         assert result["water"]["daily_withdrawal_mgd"] == 0
         assert result["water"]["severity"] == "low"
+        assert result["water"]["households_equivalent"] == 0
         assert result["carbon"]["annual_co2_tonnes"] == 0
         assert result["carbon"]["cars_equivalent"] == 0
         assert result["land"]["footprint_m2"] == 0
@@ -196,6 +198,12 @@ class TestComputeImpact:
         dc = {"power_mw": 253.0}
         result = compute_impact(dc)
         assert result["water"]["daily_withdrawal_mgd"] == pytest.approx(5.0, abs=0.1)
+
+    def test_households_equivalent_matches_mgd_over_300_gallons(self):
+        dc = {"power_mw": 100.0, "water_liters_per_kwh": 2.3}
+        result = compute_impact(dc)
+        mgd = result["water"]["daily_withdrawal_mgd"]
+        assert result["water"]["households_equivalent"] == round((mgd * 1_000_000) / 300)
 
     def test_default_arguments_match_pre_override_behavior(self):
         # Regression guard: calling with no overrides/pue/utilization must

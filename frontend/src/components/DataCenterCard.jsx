@@ -108,6 +108,7 @@ export default function DataCenterCard({ dc, onClose }) {
             value={WATER_LABELS[water.severity] ?? "—"}
             accent={waterColor}
           />
+          <StatRow label="Households equivalent" value={fmt(water.households_equivalent)} sub="households/day" />
           <p className="impact-note">
             Cooling towers evaporate millions of gallons daily, competing with municipal water supplies and local agriculture — especially critical in drought-prone regions.
           </p>
