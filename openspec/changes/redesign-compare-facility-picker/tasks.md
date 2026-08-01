@@ -18,14 +18,14 @@
 
 ## 3. Styling
 
-- [ ] 3.1 Add new CSS classes for the search input, dropdown list, and
+- [x] 3.1 Add new CSS classes for the search input, dropdown list, and
       chips in `App.css`, matching the dark theme already established
       (`#13131f` backgrounds, `#1e1e2e` borders, consistent with
       `.near-me-item-btn`/`.scenario-preset-btn` patterns)
-- [ ] 3.2 Cap the dropdown's visible height with a scrollable max-height
+- [x] 3.2 Cap the dropdown's visible height with a scrollable max-height
       (e.g. `max-height: 40dvh; overflow-y: auto`) so an empty search
       doesn't render all 75 facilities unbounded
-- [ ] 3.3 Remove now-unused `.compare-picker`/`.compare-picker-item` CSS
+- [x] 3.3 Remove now-unused `.compare-picker`/`.compare-picker-item` CSS
 
 ## 4. Tests
 
