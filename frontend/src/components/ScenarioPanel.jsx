@@ -1,9 +1,10 @@
 import { useState, useCallback } from "react";
 import { fmt } from "./formatters";
+import { encodeScenarioParams } from "../utils/scenarioUrl";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
-const PRESETS = [
+export const PRESETS = [
   {
     id: "renewable-100",
     label: "100% Renewable Mandate",
@@ -67,11 +68,17 @@ function TotalsRow({ label, baseline, scenario, unit, format }) {
   );
 }
 
-export default function ScenarioPanel({ onClose, onScenarioChange }) {
-  const [activePresetId, setActivePresetId] = useState(null);
+// initialScenarioData seeds the panel's own applied-scenario state (preset
+// highlight + totals) from a scenario App.jsx already applied on mount from
+// a shared link — otherwise the map/URL correctly reflect the scenario but
+// the panel itself looks blank/unapplied the first time it's opened.
+export default function ScenarioPanel({ onClose, onScenarioChange, initialScenarioData }) {
+  const [activePresetId, setActivePresetId] = useState(() => initialScenarioData?.presetId ?? null);
+  const [activeScenario, setActiveScenario] = useState(() => initialScenarioData?.scenario ?? null);
   const [status, setStatus] = useState("idle"); // idle | loading | error
   const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(() => initialScenarioData ?? null);
+  const [copied, setCopied] = useState(false);
 
   const applyScenario = useCallback(
     async (presetId, scenario, presetLabel) => {
@@ -87,12 +94,15 @@ export default function ScenarioPanel({ onClose, onScenarioChange }) {
         const body = await res.json();
         setData(body);
         setActivePresetId(presetId);
+        setActiveScenario(scenario);
         setStatus("idle");
-        // presetLabel is attached here (rather than in the API response)
-        // so other consumers of scenarioData — e.g. DataCenterCard's
-        // "Under: <label>" badge — can show which policy is active without
-        // a backend change.
-        onScenarioChange?.({ ...body, presetLabel });
+        // presetLabel/presetId/scenario are attached here (rather than only
+        // the API response) so other consumers of scenarioData can act
+        // without reaching back into ScenarioPanel's internal state:
+        // DataCenterCard's "Under: <label>" badge needs presetLabel;
+        // App.jsx's shareable-URL sync needs presetId/scenario to
+        // re-encode the applied scenario.
+        onScenarioChange?.({ ...body, presetId, presetLabel, scenario });
       } catch (e) {
         setError(e.message);
         setStatus("error");
@@ -103,11 +113,26 @@ export default function ScenarioPanel({ onClose, onScenarioChange }) {
 
   const reset = useCallback(() => {
     setActivePresetId(null);
+    setActiveScenario(null);
     setData(null);
     setStatus("idle");
     setError(null);
     onScenarioChange?.(null);
   }, [onScenarioChange]);
+
+  const copyLink = useCallback(() => {
+    const url = new URL(window.location.href);
+    const params = encodeScenarioParams(activePresetId, activeScenario);
+    for (const key of [...url.searchParams.keys()]) {
+      if (key === "scenario" || params.has(key)) url.searchParams.delete(key);
+    }
+    for (const [key, value] of params) url.searchParams.set(key, value);
+
+    navigator.clipboard.writeText(url.href).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  }, [activePresetId, activeScenario]);
 
   return (
     <div className="scenario-panel">
@@ -137,9 +162,14 @@ export default function ScenarioPanel({ onClose, onScenarioChange }) {
       </div>
 
       {activePresetId && (
-        <button className="scenario-reset-btn" onClick={reset} disabled={status === "loading"}>
-          Reset to baseline
-        </button>
+        <div className="scenario-active-actions">
+          <button className="scenario-copy-link-btn" onClick={copyLink} disabled={status === "loading"}>
+            {copied ? "✓ Link copied" : "🔗 Copy link"}
+          </button>
+          <button className="scenario-reset-btn" onClick={reset} disabled={status === "loading"}>
+            Reset to baseline
+          </button>
+        </div>
       )}
 
       {status === "loading" && <div className="scenario-status">Applying scenario…</div>}

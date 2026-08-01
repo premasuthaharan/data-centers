@@ -758,8 +758,15 @@
   color: var(--text-secondary);
 }
 
+.scenario-active-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.scenario-copy-link-btn,
 .scenario-reset-btn {
-  width: 100%;
+  flex: 1;
   background: var(--border-default);
   border: 1px solid var(--bg-glass-hairline);
   border-radius: 8px;
@@ -768,7 +775,18 @@
   font-weight: 600;
   color: var(--text-primary);
   cursor: pointer;
-  margin-bottom: 16px;
+  transition: border-color 0.15s;
+}
+
+.scenario-copy-link-btn:hover,
+.scenario-reset-btn:hover {
+  border-color: var(--accent);
+}
+
+.scenario-copy-link-btn:disabled,
+.scenario-reset-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
 }
 
 .scenario-status {
