@@ -91,6 +91,48 @@ internal heuristic rather than implied to be industry fact.
   hyperscale sites: ~1-5 MGD, with some individual facilities reported
   above 2-4 MGD) across a readable severity scale.
 
+### Grid price lift severity thresholds (5 / 6 / 7% → low/moderate/high/critical)
+- **Used in:** `price_lift_severity` (`logic.py`, `electricity` block)
+- **Status:** Internal heuristic, not externally sourced. Tuned against the
+  real distribution of `price_lift_pct` across the current 75-facility
+  dataset (`backend/data/datacenters.json`), not just the illustrative
+  numbers originally sketched in the proposal.
+- **Context:** `price_lift_pct` itself is `min(log1p(power_mw) * 1.2, 15)`
+  (see the electricity price pressure comment in `logic.py`), anchored at
+  100MW≈+2%, 1000MW≈+8%, capped at 15%. But the current dataset's powered
+  facilities (`power_mw > 0`) range from 132MW to 946MW — well above the
+  formula's 100MW anchor — so in practice `price_lift_pct` only ever lands
+  between 4.0% and 8.2%, clustered around 5-7% (median 6.0%, p25 5.4%, p75
+  6.6%). The originally-sketched thresholds (low <2%, moderate 2-8%, high
+  8-12%, critical >12%) would put nearly the entire dataset in "moderate"
+  and never reach "critical," since no current facility exceeds 8.2%.
+  Thresholds were instead set to spread the *actual* distribution
+  meaningfully: low <5% (5 facilities), moderate 5-6% (20), high 6-7% (26),
+  critical ≥7% (8), using facilities with `power_mw > 0` only — announced
+  facilities (`power_mw` unset) always compute to a 0% lift, which isn't a
+  meaningful "low" severity signal, so they're excluded from severity
+  scoring the same way they're excluded from the compare picker.
+
+### Grid renewables severity thresholds (15 / 20 / 30% → critical/high/moderate/low, inverted scale)
+- **Used in:** `renewable_severity` (`logic.py`, `carbon` block)
+- **Status:** Internal heuristic, not externally sourced. Inverted relative
+  to the other three-tier scales in this file: higher `renewable_pct` is
+  *better*, so it maps to *lower* severity.
+- **Context:** 66 of 75 facilities in the current dataset have no
+  per-facility renewable mix data and fall back to the ~22% default (see
+  "Default renewable percentage" below); the remaining facilities with real
+  data range from 8% to 61%. With that shape, any threshold near the 22%
+  default cluster puts most of the dataset in one bucket — this is expected
+  given how little per-facility renewable data currently exists, not a
+  flaw in the threshold choice. Thresholds (critical <15%, high 15-20%,
+  moderate 20-30%, low ≥30%) were chosen so the default cluster reads as
+  "moderate" (roughly tracking the national renewable-generation average
+  the default itself approximates), while genuinely low (8%) and genuinely
+  high (42%, 61%) real facilities are correctly flagged as critical/high
+  and low respectively. As more per-facility `renewable_pct` data is added
+  (see `fetch_data.py`), the distribution across buckets should become less
+  default-cluster-dominated.
+
 ### Electricity price = $0.06/kWh — global default only
 - **Used in:** `annual_cost_millions_usd` fallback when
   `electricity_price_usd_per_kwh` is missing from a record (`logic.py`)

@@ -1,11 +1,11 @@
 ## 1. Define thresholds
 
-- [ ] 1.1 Analyze the real distribution of `price_lift_pct` and
+- [x] 1.1 Analyze the real distribution of `price_lift_pct` and
       `renewable_pct` across the current 75-facility dataset to set
       sensible, non-arbitrary threshold cutoffs (not just the illustrative
       numbers in the proposal) — e.g. via a quick script over
       `backend/data/datacenters.json`
-- [ ] 1.2 Document the chosen thresholds and their rationale in
+- [x] 1.2 Document the chosen thresholds and their rationale in
       `backend/SOURCES.md`, alongside the existing water-severity
       threshold documentation, so future contributors have one place to
       look for all severity-scale definitions
