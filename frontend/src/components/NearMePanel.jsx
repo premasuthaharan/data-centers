@@ -110,6 +110,12 @@ export default function NearMePanel({ onFlyTo }) {
                       <span style={{ color: waterColor }}>
                         Water: <strong>{water.severity ?? "—"}</strong>
                       </span>
+                      <span>
+                        Cars equivalent <strong>{fmt(dc.impact?.carbon?.cars_equivalent)}</strong>
+                      </span>
+                      <span>
+                        Households equivalent <strong>{fmt(water.households_equivalent)}</strong>
+                      </span>
                     </div>
                   </button>
                 </li>

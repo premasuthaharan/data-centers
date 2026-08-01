@@ -120,6 +120,15 @@ internal heuristic rather than implied to be industry fact.
   by contract and region within a country. Countries not in the table use
   the $0.06/kWh default above, unchanged from the prior global constant.
 
+### Households equivalent (water) = daily_withdrawal_mgd / 300 gal/household/day
+- **Used in:** `households_equivalent` (`logic.py`, `water` block)
+- **Status:** Real source (EPA WaterSense), commonly-cited approximation.
+- **Source:** [EPA WaterSense — Statistics and Facts](https://www.epa.gov/watersense/statistics-and-facts):
+  the average US household uses about 300 gallons of water per day. Applied
+  as `daily_withdrawal_mgd * 1,000,000 / 300` to translate a facility's daily
+  water withdrawal into a "households'-worth of daily water use" figure,
+  mirroring the cars/homes framing used for CO2 and electricity.
+
 ### Homes powered = annual_kwh / 10,500
 - **Used in:** `homes_powered` (`logic.py:77`)
 - **Status:** Real source (EIA).
@@ -173,6 +182,7 @@ Every numeric constant referenced in `compute_impact()` is covered above:
 - [x] $0.06/kWh electricity price (global default)
 - [x] Per-country electricity price (`IMPACT_RATES`)
 - [x] 10,500 kWh/home/year
+- [x] 300 gal/household/day (water households equivalent)
 - [x] 4.6 tonnes CO2/car/year
 - [x] 450 gCO2/kWh default carbon intensity
 - [x] 25% default renewable percentage

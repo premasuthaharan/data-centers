@@ -90,6 +90,9 @@ def compute_impact(
         water_severity = "high"
     else:
         water_severity = "critical"
+    # 300 gal/household/day: EPA WaterSense average US household water use;
+    # see SOURCES.md ("Households equivalent (water)")
+    water_households_equivalent = round((water_mgd * 1_000_000) / 300)
 
     # --- Carbon / air quality ---
     annual_co2_tonnes = round((annual_kwh * carbon) / 1_000_000)
@@ -129,6 +132,7 @@ def compute_impact(
         "water": {
             "daily_withdrawal_mgd": water_mgd,
             "severity": water_severity,
+            "households_equivalent": water_households_equivalent,
         },
         # Carbon / air
         "carbon": {
