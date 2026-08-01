@@ -65,13 +65,19 @@ export default function Map({ datacenters, selectedId, onSelectDatacenter, color
   const popup = useRef(null);
   const onSelectRef = useRef(onSelectDatacenter);
   onSelectRef.current = onSelectDatacenter;
-  // Kept in sync with the theme prop so the style.load handler (registered
-  // once, fires again after every setStyle()) always reads the current
-  // theme rather than the one captured at mount.
+  // The style.load listener is registered once (see the mount effect below)
+  // and re-fires on every setStyle() call, so it must always read the
+  // latest theme/datacenters/colorMode via refs rather than closing over
+  // the values from whichever render first registered it — otherwise a
+  // theme toggle re-adds empty sources and nothing ever repopulates them.
   const themeRef = useRef(theme);
+  const datacentersRef = useRef(datacenters);
+  const colorModeRef = useRef(colorMode);
   useEffect(() => {
     themeRef.current = theme;
-  }, [theme]);
+    datacentersRef.current = datacenters;
+    colorModeRef.current = colorMode;
+  }, [theme, datacenters, colorMode]);
 
   const handleClick = useCallback((e) => {
     if (e.features?.length) onSelectRef.current(e.features[0].properties.id);
@@ -200,26 +206,36 @@ export default function Map({ datacenters, selectedId, onSelectDatacenter, color
     map.current.on("click", "dc-circles-fill", handleClick);
     map.current.on("click", "dc-points-hit", handleClick);
 
-    // Re-populate from current data immediately — setStyle() wipes sources,
-    // so a theme switch would otherwise show an empty map until some other
-    // prop change happens to re-trigger the data effect below.
-    if (datacenters.length > 0) {
-      const { circles, points } = buildGeoJSON(datacenters, colorMode);
+    // Re-populate from the latest data immediately — setStyle() wipes
+    // sources, so a theme switch would otherwise show an empty map until
+    // some other prop change happens to re-trigger the data effect below.
+    if (datacentersRef.current.length > 0) {
+      const { circles, points } = buildGeoJSON(datacentersRef.current, colorModeRef.current);
       map.current.getSource("dc-circles")?.setData({ type: "FeatureCollection", features: circles });
       map.current.getSource("dc-points")?.setData({ type: "FeatureCollection", features: points });
     }
-  }, [handleClick, datacenters, colorMode]);
+  }, [handleClick]);
+
+  // Tracks which theme the *current* map.current instance's style actually
+  // reflects. Set at construction time and whenever setStyle() is invoked —
+  // both happen inside effects tied to this specific instance, so (unlike a
+  // plain "is this the first run" ref) it can't go stale across StrictMode's
+  // dev-mode mount→cleanup→mount cycle, which reuses the component's hook
+  // state but does tear down and recreate the actual Map instance.
+  const appliedThemeRef = useRef(null);
 
   useEffect(() => {
     if (!MAPBOX_TOKEN) return;
 
+    const initialTheme = themeRef.current;
     map.current = new mapboxgl.Map({
       container: mapRef.current,
-      style: MAP_STYLES[themeRef.current] ?? MAP_STYLES.dark,
+      style: MAP_STYLES[initialTheme] ?? MAP_STYLES.dark,
       center: [-40, 30],
       zoom: 2.2,
       projection: "globe",
     });
+    appliedThemeRef.current = initialTheme;
 
     map.current.addControl(new mapboxgl.NavigationControl(), "top-right");
     popup.current = new mapboxgl.Popup({ closeButton: false, offset: 10 });
@@ -234,15 +250,10 @@ export default function Map({ datacenters, selectedId, onSelectDatacenter, color
 
   // Switch the Mapbox style when the theme changes. setStyle() tears down
   // and reloads the style, which re-fires "style.load" and re-runs
-  // setupLayers via the listener registered above. Skipped on mount since
-  // the map is already initialized with the right style.
-  const isFirstThemeRun = useRef(true);
+  // setupLayers via the listener registered above.
   useEffect(() => {
-    if (isFirstThemeRun.current) {
-      isFirstThemeRun.current = false;
-      return;
-    }
-    if (!map.current) return;
+    if (!map.current || appliedThemeRef.current === theme) return;
+    appliedThemeRef.current = theme;
     map.current.setStyle(MAP_STYLES[theme] ?? MAP_STYLES.dark);
   }, [theme]);
 
@@ -256,7 +267,13 @@ export default function Map({ datacenters, selectedId, onSelectDatacenter, color
       map.current.getSource("dc-points")?.setData({ type: "FeatureCollection", features: points });
     };
 
-    if (map.current.isStyleLoaded()) {
+    // isStyleLoaded() can still report false for a brief window right after
+    // "style.load" has already fired (e.g. during the fog/globe setup that
+    // follows it) — checking whether our source actually exists is a more
+    // reliable signal that setupLayers has already run than isStyleLoaded().
+    // Getting this wrong means style.load never fires again and this data
+    // update is silently dropped, leaving the map with no markers.
+    if (map.current.getSource("dc-circles")) {
       ready();
     } else {
       map.current.once("style.load", ready);
