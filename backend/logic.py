@@ -73,6 +73,21 @@ def compute_impact(
     # Large DCs can consume 1-5% of a regional grid; we model a price lift
     # using a logarithmic scale anchored at: 100MW = +2%, 1000MW = +8%
     elec_price_lift_pct = round(min(math.log1p(power_mw) * 1.2, 15), 1) if power_mw else 0
+    # Thresholds tuned against the real price_lift_pct distribution for
+    # power_mw > 0 facilities (4.0-8.2%, not the formula's theoretical 0-15%
+    # range); see SOURCES.md ("Grid price lift severity thresholds").
+    # Facilities with no power_mw ("announced") always compute to 0%, which
+    # isn't a meaningful "low" signal, so they get no severity at all.
+    if not power_mw:
+        price_lift_severity = None
+    elif elec_price_lift_pct < 5:
+        price_lift_severity = "low"
+    elif elec_price_lift_pct < 6:
+        price_lift_severity = "moderate"
+    elif elec_price_lift_pct < 7:
+        price_lift_severity = "high"
+    else:
+        price_lift_severity = "critical"
 
     # --- Water stress (million gallons/day) ---
     # Per-country blended water intensity, falling back to the global
@@ -98,6 +113,18 @@ def compute_impact(
     annual_co2_tonnes = round((annual_kwh * carbon) / 1_000_000)
     # 4.6 t CO2/car/year: EPA typical passenger vehicle figure; see SOURCES.md
     cars_equivalent = round(annual_co2_tonnes / 4.6)
+    # Inverted scale: higher renewable_pct is better, so it maps to lower
+    # severity. Thresholds tuned against the real renewable_pct distribution
+    # (dominant ~22% default cluster, 8-61% tail); see SOURCES.md ("Grid
+    # renewables severity thresholds").
+    if renewable_pct < 15:
+        renewable_severity = "critical"
+    elif renewable_pct < 20:
+        renewable_severity = "high"
+    elif renewable_pct < 30:
+        renewable_severity = "moderate"
+    else:
+        renewable_severity = "low"
 
     # --- Land use / heat island ---
     # Rough floor area estimate (internal heuristic); see SOURCES.md ("IT density")
@@ -115,6 +142,7 @@ def compute_impact(
         "electricity": {
             "annual_kwh": round(annual_kwh),
             "price_lift_pct": elec_price_lift_pct,
+            "price_lift_severity": price_lift_severity,
             # 10,500 kWh/home/year: EIA average US household consumption; see SOURCES.md
             "homes_powered": round(annual_kwh / 10_500),
             # Per-country electricity price, falling back to the global
@@ -139,6 +167,7 @@ def compute_impact(
             "annual_co2_tonnes": annual_co2_tonnes,
             "cars_equivalent": cars_equivalent,
             "renewable_pct": renewable_pct,
+            "renewable_severity": renewable_severity,
             "intensity_gco2_per_kwh": carbon,
         },
         # Land / heat

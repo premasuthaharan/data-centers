@@ -12,15 +12,21 @@
 
 ## 2. Backend severity fields
 
-- [ ] 2.1 In `compute_impact()` (`backend/logic.py`), add
+- [x] 2.1 In `compute_impact()` (`backend/logic.py`), add
       `price_lift_severity` to the `electricity` block and
       `renewable_severity` to the `carbon` block, using the thresholds
       from step 1
-- [ ] 2.2 Update `aggregate_impact()` if it should also report
+- [x] 2.2 Update `aggregate_impact()` if it should also report
       `price_lift_severity_counts`/`renewable_severity_counts` alongside
       the existing `water_severity_counts` (decide based on whether this
       is actually useful for the scenario-totals UI, not just for
-      symmetry)
+      symmetry) — **decided: skip.** `water_severity_counts` exists only
+      to power `RegionScorecard.jsx`'s dominant-severity badge; no UI in
+      this change's scope (`NearMePanel.jsx`/`DataCenterCard.jsx` only,
+      per the proposal's Impact section) consumes aggregate severity
+      counts for price lift or renewables. Adding them now would be
+      speculative surface area with no caller — can be added later if a
+      scorecard-style view for these metrics is actually proposed.
 
 ## 3. Shared frontend color helper
 
