@@ -14,6 +14,8 @@ import urllib.request
 import urllib.parse
 from datetime import datetime, timezone
 
+from snapshot_utils import prune_snapshots, write_snapshot
+
 EPOCH_CSV_URL = "https://epoch.ai/data/data_centers/data_centers.csv"
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
 
@@ -273,12 +275,17 @@ def main():
     check_geocode_failure_rate(results)
 
     out_path = "data/datacenters.json"
+    generated_at = datetime.now(timezone.utc)
     output = {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": generated_at.isoformat(),
         "data_centers": results,
     }
     with open(out_path, "w") as f:
         json.dump(output, f, indent=2)
+
+    snapshot_path = write_snapshot(output, generated_at.strftime("%Y-%m-%d"))
+    print(f"Saved snapshot to {snapshot_path}")
+    prune_snapshots()
 
     n_approx = sum(1 for r in results if r["geocode_precision"] == "approximate")
     n_country = sum(1 for r in results if r["geocode_precision"] == "country")
