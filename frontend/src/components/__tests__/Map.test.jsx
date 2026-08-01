@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest";
 import {
   operatorColor,
+  waterSeverityColor,
+  markerColor,
   kmToGeoJSONCircle,
   hasCoordinates,
   isAnnounced,
@@ -22,6 +24,40 @@ describe("operatorColor", () => {
   it("falls back to purple for empty/missing operator", () => {
     expect(operatorColor("")).toBe("#9333ea");
     expect(operatorColor(undefined)).toBe("#9333ea");
+  });
+});
+
+describe("waterSeverityColor", () => {
+  it("maps each known severity to its color", () => {
+    expect(waterSeverityColor("low")).toBe("#22c55e");
+    expect(waterSeverityColor("moderate")).toBe("#f59e0b");
+    expect(waterSeverityColor("high")).toBe("#f97316");
+    expect(waterSeverityColor("critical")).toBe("#ef4444");
+  });
+
+  it("falls back to gray for unknown/missing severity", () => {
+    expect(waterSeverityColor("unknown")).toBe("#64748b");
+    expect(waterSeverityColor(undefined)).toBe("#64748b");
+  });
+});
+
+describe("markerColor", () => {
+  const dc = { operator: "Google Cloud", impact: { water: { severity: "high" } } };
+
+  it("uses operator color by default", () => {
+    expect(markerColor(dc)).toBe("#34A853");
+  });
+
+  it("uses operator color when colorMode is 'operator'", () => {
+    expect(markerColor(dc, "operator")).toBe("#34A853");
+  });
+
+  it("uses water severity color when colorMode is 'water'", () => {
+    expect(markerColor(dc, "water")).toBe("#f97316");
+  });
+
+  it("falls back to gray when colorMode is 'water' and severity is missing", () => {
+    expect(markerColor({ operator: "Google" }, "water")).toBe("#64748b");
   });
 });
 

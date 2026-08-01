@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { operatorColor, kmToGeoJSONCircle, hasCoordinates, isAnnounced } from "./mapHelpers";
+import { markerColor, kmToGeoJSONCircle, hasCoordinates, isAnnounced } from "./mapHelpers";
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 mapboxgl.accessToken = MAPBOX_TOKEN;
@@ -18,7 +18,7 @@ function approxNote(precision) {
 
 const ANNOUNCED_COLOR = "#475569";
 
-function buildGeoJSON(datacenters) {
+function buildGeoJSON(datacenters, colorMode) {
   const locatable = datacenters.filter(hasCoordinates);
 
   const circleFeatures = locatable.map((dc) => ({
@@ -30,7 +30,7 @@ function buildGeoJSON(datacenters) {
     },
     properties: {
       id: dc.id,
-      color: isAnnounced(dc) ? ANNOUNCED_COLOR : operatorColor(dc.operator),
+      color: isAnnounced(dc) ? ANNOUNCED_COLOR : markerColor(dc, colorMode),
       name: dc.name,
       geocodePrecision: dc.geocode_precision ?? "address",
       announced: isAnnounced(dc),
@@ -43,7 +43,7 @@ function buildGeoJSON(datacenters) {
     geometry: { type: "Point", coordinates: [dc.lng, dc.lat] },
     properties: {
       id: dc.id,
-      color: isAnnounced(dc) ? ANNOUNCED_COLOR : operatorColor(dc.operator),
+      color: isAnnounced(dc) ? ANNOUNCED_COLOR : markerColor(dc, colorMode),
       name: dc.name,
       operator: dc.operator,
       geocodePrecision: dc.geocode_precision ?? "address",
@@ -54,7 +54,7 @@ function buildGeoJSON(datacenters) {
   return { circles: circleFeatures, points: pointFeatures };
 }
 
-export default function Map({ datacenters, selectedId, onSelectDatacenter }) {
+export default function Map({ datacenters, selectedId, onSelectDatacenter, colorMode = "operator" }) {
   const mapRef = useRef(null);
   const map = useRef(null);
   const popup = useRef(null);
@@ -199,12 +199,12 @@ export default function Map({ datacenters, selectedId, onSelectDatacenter }) {
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Update GeoJSON when datacenters load
+  // Update GeoJSON when datacenters or color mode change
   useEffect(() => {
     if (!map.current || datacenters.length === 0) return;
 
     const ready = () => {
-      const { circles, points } = buildGeoJSON(datacenters);
+      const { circles, points } = buildGeoJSON(datacenters, colorMode);
       map.current.getSource("dc-circles")?.setData({ type: "FeatureCollection", features: circles });
       map.current.getSource("dc-points")?.setData({ type: "FeatureCollection", features: points });
     };
@@ -214,7 +214,7 @@ export default function Map({ datacenters, selectedId, onSelectDatacenter }) {
     } else {
       map.current.once("style.load", ready);
     }
-  }, [datacenters]);
+  }, [datacenters, colorMode]);
 
   // Highlight selected DC
   useEffect(() => {
