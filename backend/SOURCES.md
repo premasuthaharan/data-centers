@@ -181,6 +181,110 @@ internal heuristic rather than implied to be industry fact.
   outside this table have no per-km² view (the scorecard falls back to
   per-facility or total).
 
+### Manually-researched locations (`backend/data/location_overrides.json`)
+- **Used in:** `fetch_data.py` `main()` — checked per-record before the CSV
+  `Address` field is geocoded; when a facility `id` has an entry in
+  `location_overrides.json`, that entry's `address` string is geocoded
+  first (with the CSV `Address` still available as a fallback tier if the
+  override string itself fails to resolve).
+- **Status:** Real sources (news coverage, company/government
+  announcements), not a heuristic — but note the `geocode_precision`
+  recorded per facility reflects what Nominatim actually resolved for the
+  researched address string, which for many of these is city/region-level
+  ("approximate"), not a confirmed street address ("address").
+- **Context:** These are the 17 facilities that shipped at `"country"`
+  geocode precision because the Epoch AI CSV's `Address` column was empty
+  or contained a value Nominatim couldn't resolve, despite each facility's
+  *name* already containing a real, findable location (e.g. "OpenAI
+  Stargate New Mexico"). Each entry below was found via public reporting
+  and verified to actually resolve via Nominatim before being added to
+  `location_overrides.json` (accessed 2026-08-01):
+  - **openai-stargate-new-mexico** — Santa Teresa, Doña Ana County, NM
+    ("Project Jupiter"). [El Paso Matters](https://elpasomatters.org/2025/09/25/stargate-open-ai-oracle-project-jupiter-data-center-dona-ana-new-mexico-el-paso-texas/),
+    [Doña Ana County](https://www.donaana.gov/about_us/project_jupiter.php).
+  - **google-kansas-city-east** — 9501 NE Parvin Rd, Hunt Midwest Business
+    Center, Kansas City, MO. [LoopNet listing](https://www.loopnet.com/Listing/9501-NE-Parvin-Rd-Kansas-City-MO/35605269/),
+    [Baxtel](https://baxtel.com/data-center/google-kansas-city). "East"
+    distinguishes this (earlier) site from Google's newer Northland
+    campus; that distinction is an inference from chronology, not an
+    official Google label found in sourcing.
+  - **amazon-madison-mega-site** — Canton, Madison County, MS (off
+    Nissan Parkway / Highway 22). [Mississippi Today](https://mississippitoday.org/2026/06/09/amazon-data-centers-mississippi/),
+    [Canton Mississippi](https://www.canton-mississippi.com/aws-plans-10-billion-data-center-investment-in-mississippi-big-boost-for-tech/).
+    Matches the CSV's existing address field; the business-park name in
+    that string ("Madison Mega Site") is likely what kept it from
+    resolving in Nominatim, so the override drops it and geocodes to
+    the city instead.
+  - **meta-kuna** — 6990 W Kuna-Mora Rd, Kuna, ID. [DataCenterMap](https://www.datacentermap.com/usa/idaho/boise/meta-kuna-data-center/),
+    [Idaho Commerce](https://commerce.idaho.gov/press-releases/meta-announces-kuna-as-location-of-new-data-center/).
+    The CSV's existing address uses house number 601; multiple
+    independent sources converge on 6990 instead, which is what's used
+    here.
+  - **google-storey-county** — 7400 USA Pkwy, Tahoe Reno Industrial
+    Center, Storey County, NV. [DataCenterMap](https://www.datacentermap.com/usa/nevada/reno/google-storey-county/),
+    [Google Data Centers](https://datacenters.google/locations/storey-county-nevada/).
+  - **google-mesa** — East Elliot Road / Sossaman Road, Mesa, AZ (187-acre
+    campus). [AZBEX](https://azbex.com/planning-development/google-planning-next-phase-of-mesa-data-center-facility/),
+    [DataCenterMap](https://www.datacentermap.com/usa/arizona/phoenix/google-mesa-campus/).
+  - **huawei-horinger** — Horinger New Area, Hohhot, Inner Mongolia, China
+    (city/district-level; no public street address found).
+    [China Daily](http://regional.chinadaily.com.cn/hohhot/2023-10/11/c_930029.htm),
+    [Xinhua](https://english.news.cn/20231129/fb14f64feea8471083033d1adc5f37b7/c.html).
+  - **vnet-bayin-ulanqab** — Ulanqab, Inner Mongolia, China (city-level
+    only; "Bayin" from the CSV's existing address could not be verified
+    as a real sub-location in Ulanqab, so it's dropped from the override).
+    [Datacenters.com](https://www.datacenters.com/vnet-group-inc-ulanqab).
+  - **oracle-batam** — Nongsa Digital Park, Batam, Riau Islands, Indonesia
+    (Oracle leases DayOne's facility there as sole tenant).
+    [DataCenterDynamics](https://www.datacenterdynamics.com/en/news/oracle-considers-indonesian-cloud-region-in-batam-report/),
+    [Bloomberg](https://www.bloomberg.com/news/articles/2025-03-14/oracle-said-to-weigh-data-center-on-indonesia-s-batam-island).
+  - **google-papillion** — 14706 Schram Rd, Papillion, NE. [DataCenterMap](https://www.datacentermap.com/usa/nebraska/papillion/google-papillion/),
+    [Journal Star](https://journalstar.com/business/local/google-to-build-600-million-data-center-in-papillion/article_bfb56f35-f1dc-51e8-9153-c2afbf813c15.html).
+    This differs from the CSV's existing address ("Gold Coast Rd"); Schram
+    Road is corroborated by multiple independent directory sources and is
+    used here, but should be cross-checked against Google's own site
+    listing if that becomes available.
+  - **start-campus-sines-data-campus** — Sines, Setúbal District, Portugal
+    (ZILS industrial/logistics zone). [Start Campus](https://www.startcampus.pt/sines),
+    [Open Compute Project](https://www.opencompute.org/facilities/74/start-campus-sines-12gw-data-campus-sin02).
+    The CSV's existing address includes the company name prefix
+    ("Start Campus - Sustainable Data Center Services,"), which is likely
+    what kept it from resolving; the override drops it.
+  - **openai-stargate-michigan** — Saline Township, Washtenaw County, MI
+    ("The Barn" campus). [DataCenterDynamics](https://www.datacenterdynamics.com/en/news/oracle-and-openai-start-construction-on-stargate-data-center-campus-in-saline-township-michigan/),
+    [Related Digital](https://www.related.com/press-releases/2025-10-30/openai-oracle-and-related-digital-announce-stargate-data-center-site).
+  - **openai-stargate-milam** — Cameron, Milam County, TX ("Freebird"
+    campus, ~70 mi NE of Austin). [KVUE](https://www.kvue.com/article/news/local/milam-county-openai-data-center/269-3a70f4ee-3ab8-426a-8174-d5fa121ebdf8),
+    [DataCenterMap](https://www.datacentermap.com/usa/texas/cameron/stargate-milam-county/).
+    Confirms "Milam" in the facility name refers to Milam County, TX (not,
+    e.g., a Milam elsewhere) — a bare "Cameron, Texas" query without the
+    county qualifier incorrectly resolves to Cameron County near the
+    Mexican border, ~500km away, so the county qualifier is required here.
+  - **openai-stargate-uae** — Abu Dhabi, UAE (10-sq-mi "UAE-US AI Campus,"
+    developed by G42's Khazna Data Centres; no verified street address).
+    [TechRepublic](https://www.techrepublic.com/article/news-stargate-uae-openai-ai-data-center/),
+    [Gulf News](https://gulfnews.com/business/markets/uae-openai-will-build-massive-stargate-ai-center-in-abu-dhabi-1.500136990).
+    The CSV's existing address ("Nexus L&T Project Office, Al Bihouth, Al
+    Dhafrah") could not be independently corroborated, so the override
+    falls back to city-level rather than keeping an unverified string.
+  - **openai-stargate-wisconsin** — Port Washington, Ozaukee County, WI
+    ("Lighthouse" campus). [Vantage Data Centers](https://vantage-dc.com/news/openai-oracle-and-vantage-data-centers-announce-stargate-data-center-site-in-wisconsin/),
+    [Ozaukee Press](https://www.ozaukeepress.com/content/openai-oracle-run-stargate-port-data-center).
+  - **southgate-melbourne** — Melbourne, Victoria, Australia (Project
+    Southgate, Firmus/Nvidia/CDC Data Centres partnership; the specific
+    campus within Melbourne is not confirmed in sourcing, so city-level is
+    used rather than asserting a specific suburb).
+    [DataCenterDynamics](https://www.datacenterdynamics.com/en/news/ai-cloud-firm-partners-with-cdc-for-australian-data-center-capacity/),
+    [Firmus](https://firmus.co/newsroom/southgate-expansion).
+  - **dayone-nusajaya** — Nusajaya Tech Park, Iskandar Puteri, Johor
+    Bahru, Malaysia. [DataCenterMap](https://www.datacentermap.com/malaysia/johor-bahru/gds-nusajaya-tech-park-campus/),
+    [DayOne Data Centers](https://dayonedc.com/market/johor).
+
+  All 17 facilities above now resolve to real city/region or street-level
+  locations rather than the jittered country centroid. No facility from
+  the original 17 was left at country-level precision — every one had at
+  least a city/region publicly reported.
+
 ---
 
 ## Verification checklist

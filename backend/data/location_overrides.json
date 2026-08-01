@@ -1,0 +1,104 @@
+{
+  "openai-stargate-new-mexico": {
+    "address": "Santa Teresa, New Mexico, United States",
+    "lat": 31.8700346,
+    "lng": -106.6865799,
+    "geocode_precision": "approximate"
+  },
+  "google-kansas-city-east": {
+    "address": "9501 NE Parvin Rd, Kansas City, Missouri, United States",
+    "lat": 39.1726846,
+    "lng": -94.4606406,
+    "geocode_precision": "address"
+  },
+  "amazon-madison-mega-site": {
+    "address": "Canton, Mississippi, United States",
+    "lat": 32.612602,
+    "lng": -90.0367512,
+    "geocode_precision": "approximate"
+  },
+  "meta-kuna": {
+    "address": "6990 W Kuna-Mora Rd, Kuna, Idaho, United States",
+    "lat": 43.4606325,
+    "lng": -116.2691734,
+    "geocode_precision": "address"
+  },
+  "google-storey-county": {
+    "address": "7400 USA Pkwy, Storey County, Nevada, United States",
+    "lat": 39.5573167,
+    "lng": -119.4897155,
+    "geocode_precision": "address"
+  },
+  "google-mesa": {
+    "address": "East Elliot Road, Mesa, Arizona, United States",
+    "lat": 33.3498037,
+    "lng": -111.5893804,
+    "geocode_precision": "approximate"
+  },
+  "huawei-horinger": {
+    "address": "Horinger, Hohhot, Inner Mongolia, China",
+    "lat": 40.2952478,
+    "lng": 111.9044975,
+    "geocode_precision": "approximate"
+  },
+  "vnet-bayin-ulanqab": {
+    "address": "Ulanqab, Inner Mongolia, China",
+    "lat": 40.9902685,
+    "lng": 113.1315646,
+    "geocode_precision": "approximate"
+  },
+  "oracle-batam": {
+    "address": "Nongsa Digital Park, Batam, Indonesia",
+    "lat": 1.1860647,
+    "lng": 104.1014503,
+    "geocode_precision": "address"
+  },
+  "google-papillion": {
+    "address": "14706 Schram Rd, Papillion, Nebraska, United States",
+    "lat": 41.1325776,
+    "lng": -96.1444596,
+    "geocode_precision": "address"
+  },
+  "start-campus-sines-data-campus": {
+    "address": "Sines, Setubal District, Portugal",
+    "lat": 37.956549,
+    "lng": -8.8689639,
+    "geocode_precision": "approximate"
+  },
+  "openai-stargate-michigan": {
+    "address": "Saline Township, Michigan, United States",
+    "lat": 42.1245153,
+    "lng": -83.8385743,
+    "geocode_precision": "approximate"
+  },
+  "openai-stargate-milam": {
+    "address": "Cameron, Milam County, Texas, United States",
+    "lat": 30.8532454,
+    "lng": -96.9769304,
+    "geocode_precision": "approximate"
+  },
+  "openai-stargate-uae": {
+    "address": "Abu Dhabi, United Arab Emirates",
+    "lat": 24.4538352,
+    "lng": 54.3774014,
+    "geocode_precision": "approximate"
+  },
+  "openai-stargate-wisconsin": {
+    "address": "Port Washington, Wisconsin, United States",
+    "lat": 43.3885538,
+    "lng": -87.8692845,
+    "geocode_precision": "approximate"
+  },
+  "southgate-melbourne": {
+    "address": "Melbourne, Victoria, Australia",
+    "lat": -37.8142454,
+    "lng": 144.9631732,
+    "geocode_precision": "approximate"
+  },
+  "dayone-nusajaya": {
+    "address": "Nusajaya Tech Park, Iskandar Puteri, Johor, Malaysia",
+    "lat": 1.4308493,
+    "lng": 103.5951104,
+    "geocode_precision": "address"
+  }
+}
