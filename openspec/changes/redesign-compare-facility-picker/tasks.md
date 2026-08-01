@@ -29,18 +29,18 @@
 
 ## 4. Tests
 
-- [ ] 4.1 Rewrite `CompareModal.test.jsx`'s picker-interaction tests:
+- [x] 4.1 Rewrite `CompareModal.test.jsx`'s picker-interaction tests:
       typing in the search input filters results; clicking a result adds
       a chip; clicking a chip's remove button removes it; the "select at
       least 2" hint and comparison table behavior are unchanged
-- [ ] 4.2 Keep/adapt the existing "excludes announced facilities" and
+- [x] 4.2 Keep/adapt the existing "excludes announced facilities" and
       "close on backdrop/✕" tests, updating selectors as needed for the
       new markup
 
 ## 5. Verification
 
-- [ ] 5.1 `cd frontend && npm test` passes
-- [ ] 5.2 Manual: open Compare Facilities, search by partial name and by
+- [x] 5.1 `cd frontend && npm test` passes
+- [x] 5.2 Manual: open Compare Facilities, search by partial name and by
       operator, add 2+ via search results, remove one via its chip,
       confirm the table updates correctly; confirm the dropdown doesn't
       overflow the modal when the search is empty
