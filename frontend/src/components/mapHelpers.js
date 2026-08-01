@@ -13,6 +13,26 @@ export function operatorColor(operator = "") {
   return "#9333ea";
 }
 
+const WATER_SEVERITY_COLORS = {
+  low: "#22c55e",
+  moderate: "#f59e0b",
+  high: "#f97316",
+  critical: "#ef4444",
+};
+
+export function waterSeverityColor(severity) {
+  return WATER_SEVERITY_COLORS[severity] ?? "#64748b";
+}
+
+// Picks the marker color for a facility depending on the map's current
+// color mode: "operator" (brand color, the default) or "water" (severity
+// of water withdrawal — used when a policy scenario is active, since that's
+// one of the few impact fields with an established color scale).
+export function markerColor(dc, colorMode = "operator") {
+  if (colorMode === "water") return waterSeverityColor(dc.impact?.water?.severity);
+  return operatorColor(dc.operator);
+}
+
 // Convert km radius to approximate degrees longitude at a given latitude
 // Used to build a GeoJSON circle approximation
 export function kmToGeoJSONCircle(lng, lat, radiusKm, steps = 64) {

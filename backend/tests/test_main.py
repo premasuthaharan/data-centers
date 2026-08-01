@@ -93,9 +93,53 @@ class TestLocate:
             "country": "United Kingdom",
         }
 
-    def test_missing_ip_param_rejected(self, client):
+    def test_missing_ip_param_falls_back_to_request_ip(self, client, monkeypatch):
+        import main
+
+        captured = {}
+
+        def fake_geolocate_ip(ip):
+            captured["ip"] = ip
+            return {
+                "status": "success",
+                "lat": 1.0,
+                "lon": 2.0,
+                "city": "Testville",
+                "country": "Testland",
+                "countryCode": "TT",
+            }
+
+        monkeypatch.setattr(main, "geolocate_ip", fake_geolocate_ip)
+
         resp = client.get("/api/locate")
-        assert resp.status_code == 422
+
+        assert resp.status_code == 200
+        assert captured["ip"] == "testclient"
+
+    def test_missing_ip_param_uses_x_forwarded_for(self, client, monkeypatch):
+        import main
+
+        captured = {}
+
+        def fake_geolocate_ip(ip):
+            captured["ip"] = ip
+            return {
+                "status": "success",
+                "lat": 1.0,
+                "lon": 2.0,
+                "city": "Testville",
+                "country": "Testland",
+                "countryCode": "TT",
+            }
+
+        monkeypatch.setattr(main, "geolocate_ip", fake_geolocate_ip)
+
+        resp = client.get(
+            "/api/locate", headers={"x-forwarded-for": "9.9.9.9, 8.8.8.8"}
+        )
+
+        assert resp.status_code == 200
+        assert captured["ip"] == "9.9.9.9"
 
     def test_upstream_failure_returns_502(self, client, monkeypatch):
         import main
@@ -109,6 +153,73 @@ class TestLocate:
 
         assert resp.status_code == 502
         assert "invalid query" in resp.json()["detail"]
+
+
+# --- POST /api/scenario ---
+
+class TestScenario:
+    def test_no_facility_ids_applies_to_all(self, client):
+        resp = client.post("/api/scenario", json={"scenario": {"renewable_pct": 100}})
+
+        assert resp.status_code == 200
+        body = resp.json()
+        assert len(body["data_centers"]) == 3
+        assert all(dc["impact"]["carbon"]["renewable_pct"] == 100 for dc in body["data_centers"])
+        assert body["baseline_totals"]["facility_count"] == 3
+        assert body["scenario_totals"]["facility_count"] == 3
+
+    def test_facility_ids_subset(self, client):
+        resp = client.post(
+            "/api/scenario",
+            json={"scenario": {"renewable_pct": 100}, "facility_ids": ["confirmed-dc"]},
+        )
+
+        assert resp.status_code == 200
+        body = resp.json()
+        assert len(body["data_centers"]) == 1
+        assert body["data_centers"][0]["id"] == "confirmed-dc"
+        assert body["baseline_totals"]["facility_count"] == 1
+
+    def test_unknown_facility_id_returns_404(self, client):
+        resp = client.post(
+            "/api/scenario",
+            json={"scenario": {"renewable_pct": 100}, "facility_ids": ["does-not-exist"]},
+        )
+        assert resp.status_code == 404
+
+    def test_empty_override_body_returns_unchanged_totals(self, client):
+        resp = client.post("/api/scenario", json={"scenario": {}})
+
+        assert resp.status_code == 200
+        body = resp.json()
+        assert body["baseline_totals"] == body["scenario_totals"]
+
+    def test_invalid_override_body_returns_422(self, client):
+        resp = client.post("/api/scenario", json={"scenario": {"renewable_pct": "not-a-number"}})
+        assert resp.status_code == 422
+
+    def test_missing_scenario_key_returns_422(self, client):
+        resp = client.post("/api/scenario", json={})
+        assert resp.status_code == 422
+
+    def test_scenario_reduces_co2_relative_to_baseline(self, client):
+        resp = client.post(
+            "/api/scenario", json={"scenario": {"carbon_intensity_gco2_per_kwh": 10}}
+        )
+
+        assert resp.status_code == 200
+        body = resp.json()
+        assert (
+            body["scenario_totals"]["annual_co2_tonnes"]
+            < body["baseline_totals"]["annual_co2_tonnes"]
+        )
+
+    def test_pue_override_applied(self, client):
+        resp = client.post("/api/scenario", json={"scenario": {"pue": 1.1}})
+
+        assert resp.status_code == 200
+        body = resp.json()
+        assert body["scenario_totals"]["annual_kwh"] < body["baseline_totals"]["annual_kwh"]
 
 
 # --- CORS origin parsing ---
