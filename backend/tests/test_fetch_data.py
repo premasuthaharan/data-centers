@@ -1,5 +1,8 @@
+import json
+
 import pytest
 
+import fetch_data
 from fetch_data import (
     DEFAULT_IMPACT_RATES,
     GRID_DATA,
@@ -217,3 +220,45 @@ class TestCheckGeocodeFailureRate:
     def test_all_failed_raises(self):
         with pytest.raises(RuntimeError, match="exceeding the 20% threshold"):
             check_geocode_failure_rate(_make_results(n_ok=0, n_failed=5))
+
+
+# --- main() snapshot writing ---
+
+SAMPLE_CSV = (
+    "Name,Owner,Country,Address,Current power (MW),"
+    "Current total capital cost (2025 USD billions)\n"
+    "Test DC,Amazon #confident,United States,"
+    "1 Main St, Springfield, IL 62701,100,2.5\n"
+)
+
+
+class TestMainWritesSnapshot:
+    def test_writes_datacenters_json_and_matching_dated_snapshot(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        (tmp_path / "data").mkdir()
+        monkeypatch.setattr(fetch_data, "fetch_csv", lambda url: SAMPLE_CSV)
+        monkeypatch.setattr(fetch_data, "geocode", lambda address, country: (1.0, 2.0, "address"))
+
+        fetch_data.main()
+
+        main_output = json.loads((tmp_path / "data" / "datacenters.json").read_text())
+        snapshots_dir = tmp_path / "data" / "snapshots"
+        snapshot_files = list(snapshots_dir.glob("*.json"))
+
+        assert len(snapshot_files) == 1
+        snapshot_output = json.loads(snapshot_files[0].read_text())
+        assert snapshot_output == main_output
+        assert snapshot_files[0].stem == main_output["generated_at"][:10]
+
+    def test_rerunning_same_day_overwrites_snapshot_without_duplicating(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        (tmp_path / "data").mkdir()
+        monkeypatch.setattr(fetch_data, "fetch_csv", lambda url: SAMPLE_CSV)
+        monkeypatch.setattr(fetch_data, "geocode", lambda address, country: (1.0, 2.0, "address"))
+
+        fetch_data.main()
+        fetch_data.main()
+
+        snapshots_dir = tmp_path / "data" / "snapshots"
+        snapshot_files = list(snapshots_dir.glob("*.json"))
+        assert len(snapshot_files) == 1
