@@ -1,3 +1,4 @@
+import { useState, useCallback } from "react";
 import { fmt } from "./formatters";
 
 const WATER_COLORS = { low: "#22c55e", moderate: "#f59e0b", high: "#f97316", critical: "#ef4444" };
@@ -47,6 +48,17 @@ export default function DataCenterCard({ dc, onClose }) {
   const waterColor = WATER_COLORS[water.severity] ?? "#64748b";
   const precisionWarning = PRECISION_WARNINGS[dc.geocode_precision];
 
+  const [copied, setCopied] = useState(false);
+
+  const copyLink = useCallback(() => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("facility", dc.id);
+    navigator.clipboard.writeText(url.href).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  }, [dc.id]);
+
   return (
     <div className="dc-detail-panel">
       <button className="dc-close-btn" onClick={onClose} aria-label="Close">✕</button>
@@ -58,6 +70,9 @@ export default function DataCenterCard({ dc, onClose }) {
           {dc.address && <><br /><span className="dc-address">{dc.address}</span></>}
         </div>
         {precisionWarning && <div className="dc-precision-warning">⚠ {precisionWarning}</div>}
+        <button className="dc-copy-link-btn" onClick={copyLink}>
+          {copied ? "✓ Link copied" : "🔗 Copy link"}
+        </button>
       </div>
 
       <div className="dc-detail-stats">

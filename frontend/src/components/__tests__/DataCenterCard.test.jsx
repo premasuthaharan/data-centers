@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, it, expect, vi, afterEach } from "vitest";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import DataCenterCard from "../DataCenterCard";
 
@@ -24,6 +24,11 @@ function makeDc(overrides = {}) {
     ...overrides,
   };
 }
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+  window.history.pushState(null, "", "/");
+});
 
 describe("DataCenterCard", () => {
   it("renders the water households equivalent alongside severity and MGD", () => {
@@ -57,5 +62,20 @@ describe("DataCenterCard", () => {
     render(<DataCenterCard dc={dc} onClose={() => {}} />);
 
     expect(screen.queryByText("Households equivalent")).not.toBeInTheDocument();
+  });
+});
+
+describe("DataCenterCard copy link", () => {
+  it("copies the current facility's shareable URL to the clipboard", async () => {
+    window.history.pushState(null, "", "/?facility=dc-a");
+    const writeText = vi.fn(() => Promise.resolve());
+    vi.stubGlobal("navigator", { ...navigator, clipboard: { writeText } });
+
+    render(<DataCenterCard dc={makeDc()} onClose={() => {}} />);
+
+    fireEvent.click(screen.getByRole("button", { name: /copy link/i }));
+
+    expect(writeText).toHaveBeenCalledWith(expect.stringContaining("facility=dc-a"));
+    await waitFor(() => expect(screen.getByText(/link copied/i)).toBeInTheDocument());
   });
 });

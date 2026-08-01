@@ -24,11 +24,20 @@ export default function App() {
   const [scenarioData, setScenarioData] = useState(null);
 
   useEffect(() => {
+    // Captured before this data loads so a shared-link facility opens once
+    // the list arrives, without racing the URL-sync effect below (which
+    // would otherwise strip the query param on its own first run).
+    const sharedFacilityId = new URLSearchParams(window.location.search).get("facility");
+
     fetch(`${API}/api/datacenters`)
       .then((r) => r.json())
       .then((data) => {
         setDatacenters(data.data_centers);
         setGeneratedAt(data.generated_at);
+        if (sharedFacilityId && data.data_centers.some((dc) => dc.id === sharedFacilityId)) {
+          setSelectedId(sharedFacilityId);
+          setActivePanel("detail");
+        }
       })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
@@ -43,6 +52,21 @@ export default function App() {
     setSelectedId(null);
     setActivePanel(null);
   }, []);
+
+  // Keep the URL in sync with the open detail card so it's always
+  // shareable, without triggering a page reload or extra history entries
+  // per keystroke-equivalent state change.
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (activePanel === "detail" && selectedId) {
+      url.searchParams.set("facility", selectedId);
+    } else {
+      url.searchParams.delete("facility");
+    }
+    if (url.href !== window.location.href) {
+      window.history.pushState(null, "", url);
+    }
+  }, [selectedId, activePanel]);
 
   const openScenarioPanel = useCallback(() => setActivePanel("scenario"), []);
   const openCompareModal = useCallback(() => setActivePanel("compare"), []);
