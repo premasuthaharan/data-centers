@@ -21,6 +21,7 @@ const ROWS = [
 
 export default function CompareModal({ datacenters, onClose }) {
   const [selectedIds, setSelectedIds] = useState([]);
+  const [query, setQuery] = useState("");
 
   const comparable = useMemo(
     () => datacenters.filter((dc) => dc.impact && (dc.data_status ?? dc.impact.data_status) !== "announced"),
@@ -29,10 +30,22 @@ export default function CompareModal({ datacenters, onClose }) {
 
   const selected = comparable.filter((dc) => selectedIds.includes(dc.id));
 
-  const toggle = (id) => {
-    setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
-    );
+  const searchResults = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return comparable.filter((dc) => {
+      if (selectedIds.includes(dc.id)) return false;
+      if (!q) return true;
+      return dc.name.toLowerCase().includes(q) || (dc.operator ?? "").toLowerCase().includes(q);
+    });
+  }, [comparable, selectedIds, query]);
+
+  const add = (id) => {
+    setSelectedIds((prev) => [...prev, id]);
+    setQuery("");
+  };
+
+  const remove = (id) => {
+    setSelectedIds((prev) => prev.filter((x) => x !== id));
   };
 
   return (
@@ -42,16 +55,49 @@ export default function CompareModal({ datacenters, onClose }) {
         <div className="compare-modal-title">Compare Facilities</div>
 
         <div className="compare-picker">
-          {comparable.map((dc) => (
-            <label key={dc.id} className="compare-picker-item">
-              <input
-                type="checkbox"
-                checked={selectedIds.includes(dc.id)}
-                onChange={() => toggle(dc.id)}
-              />
-              {dc.name}
-            </label>
-          ))}
+          {selected.length > 0 && (
+            <div className="compare-chip-list">
+              {selected.map((dc) => (
+                <span key={dc.id} className="compare-chip">
+                  {dc.name}
+                  <button
+                    type="button"
+                    className="compare-chip-remove"
+                    onClick={() => remove(dc.id)}
+                    aria-label={`Remove ${dc.name}`}
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
+
+          <input
+            type="text"
+            className="compare-search-input"
+            placeholder="Search facilities by name or operator…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+
+          <ul className="compare-search-results">
+            {searchResults.map((dc) => (
+              <li key={dc.id}>
+                <button
+                  type="button"
+                  className="compare-search-result-btn"
+                  onClick={() => add(dc.id)}
+                >
+                  <span className="compare-search-result-name">{dc.name}</span>
+                  <span className="compare-search-result-operator">{dc.operator ?? "—"}</span>
+                </button>
+              </li>
+            ))}
+            {searchResults.length === 0 && (
+              <li className="compare-search-empty">No matching facilities.</li>
+            )}
+          </ul>
         </div>
 
         {selected.length >= 2 ? (
