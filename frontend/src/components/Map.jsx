@@ -54,7 +54,7 @@ function buildGeoJSON(datacenters, colorMode) {
   return { circles: circleFeatures, points: pointFeatures };
 }
 
-export default function Map({ datacenters, selectedId, onSelectDatacenter, colorMode = "operator" }) {
+export default function Map({ datacenters, selectedId, onSelectDatacenter, colorMode = "operator", focusRegion }) {
   const mapRef = useRef(null);
   const map = useRef(null);
   const popup = useRef(null);
@@ -247,6 +247,30 @@ export default function Map({ datacenters, selectedId, onSelectDatacenter, color
       }
     }
   }, [selectedId, datacenters]);
+
+  // Fit the map to every facility in the focused region, so "focus this
+  // region" from the scorecard shows the whole cluster rather than a single
+  // facility (which is what selectedId's flyTo above is for).
+  useEffect(() => {
+    if (!map.current || !focusRegion) return;
+
+    const inRegion = datacenters.filter((dc) => dc.country === focusRegion && hasCoordinates(dc));
+    if (inRegion.length === 0) return;
+
+    if (inRegion.length === 1) {
+      const dc = inRegion[0];
+      map.current.flyTo({ center: [dc.lng, dc.lat], zoom: 6, speed: 1.2, curve: 1.4 });
+      return;
+    }
+
+    const lngs = inRegion.map((dc) => dc.lng);
+    const lats = inRegion.map((dc) => dc.lat);
+    const bounds = [
+      [Math.min(...lngs), Math.min(...lats)],
+      [Math.max(...lngs), Math.max(...lats)],
+    ];
+    map.current.fitBounds(bounds, { padding: 80, speed: 1.2, curve: 1.4 });
+  }, [focusRegion, datacenters]);
 
   if (!MAPBOX_TOKEN) {
     return (

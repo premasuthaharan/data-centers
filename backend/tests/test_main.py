@@ -29,6 +29,40 @@ class TestGetAll:
         assert all("impact" in dc for dc in body["data_centers"])
 
 
+# --- GET /api/regions ---
+
+class TestGetRegions:
+    def test_groups_by_country_with_one_facility_each(self, client):
+        resp = client.get("/api/regions")
+
+        assert resp.status_code == 200
+        body = resp.json()
+        regions = {r["region"]: r for r in body}
+        assert set(regions) == {"United States", "Ireland", "Australia"}
+        assert all(r["facility_count"] == 1 for r in regions.values())
+
+    def test_region_totals_match_manually_summed_impact(self, client):
+        import logic
+
+        all_dcs = logic.all_datacenters_with_impact()
+        us_dc = next(dc for dc in all_dcs if dc["country"] == "United States")
+
+        resp = client.get("/api/regions")
+        us_region = next(r for r in resp.json() if r["region"] == "United States")
+
+        assert us_region["annual_co2_tonnes"] == us_dc["impact"]["carbon"]["annual_co2_tonnes"]
+        assert us_region["annual_kwh"] == us_dc["impact"]["electricity"]["annual_kwh"]
+        assert us_region["daily_withdrawal_mgd"] == us_dc["impact"]["water"]["daily_withdrawal_mgd"]
+
+    def test_includes_area_km2_for_known_countries(self, client):
+        resp = client.get("/api/regions")
+        regions = {r["region"]: r for r in resp.json()}
+
+        assert regions["United States"]["area_km2"] == 9_147_420
+        assert regions["Ireland"]["area_km2"] == 68_883
+        assert regions["Australia"]["area_km2"] == 7_682_300
+
+
 # --- GET /api/datacenters/nearest ---
 
 class TestGetNearest:

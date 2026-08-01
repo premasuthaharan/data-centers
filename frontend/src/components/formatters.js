@@ -1,4 +1,5 @@
-export function fmt(n, unit = "") {
+export function fmt(n, unit = "", decimals = null) {
   if (n == null || n === "") return "—";
-  return n.toLocaleString() + (unit ? " " + unit : "");
+  const opts = decimals == null ? {} : { minimumFractionDigits: decimals, maximumFractionDigits: decimals };
+  return n.toLocaleString(undefined, opts) + (unit ? " " + unit : "");
 }

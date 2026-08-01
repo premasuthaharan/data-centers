@@ -1,3 +1,4 @@
+import json
 import math
 
 import pytest
@@ -13,6 +14,7 @@ from logic import (
     impact_radius_km,
     load_datacenters,
     nearest_datacenters,
+    regions_with_aggregate_impact,
 )
 
 
@@ -309,6 +311,106 @@ class TestAggregateImpact:
         result = aggregate_impact(centers_with_impact)
 
         assert result["water_severity_counts"] == {"low": 1, "moderate": 1, "high": 1, "critical": 1}
+
+
+# --- regions_with_aggregate_impact ---
+
+class TestRegionsWithAggregateImpact:
+    def test_groups_by_country(
+        self, datacenters_json_file, monkeypatch, reset_logic_cache
+    ):
+        import logic
+
+        monkeypatch.setattr(logic, "_DATA_PATH", datacenters_json_file)
+        result = regions_with_aggregate_impact()
+
+        regions = {r["region"]: r for r in result}
+        assert set(regions) == {"United States", "Ireland", "Australia"}
+        assert all(r["facility_count"] == 1 for r in regions.values())
+
+    def test_region_totals_match_aggregate_impact_of_its_facilities(
+        self, datacenters_json_file, monkeypatch, reset_logic_cache
+    ):
+        import logic
+
+        monkeypatch.setattr(logic, "_DATA_PATH", datacenters_json_file)
+        all_dcs = all_datacenters_with_impact()
+        us_dcs = [dc for dc in all_dcs if dc["country"] == "United States"]
+        expected = aggregate_impact(us_dcs)
+
+        result = regions_with_aggregate_impact()
+        us_region = next(r for r in result if r["region"] == "United States")
+
+        assert {k: v for k, v in us_region.items() if k not in ("region", "area_km2")} == expected
+
+    def test_known_country_includes_area_km2(
+        self, datacenters_json_file, monkeypatch, reset_logic_cache
+    ):
+        import logic
+
+        monkeypatch.setattr(logic, "_DATA_PATH", datacenters_json_file)
+        result = regions_with_aggregate_impact()
+        regions = {r["region"]: r for r in result}
+
+        assert regions["United States"]["area_km2"] == logic.COUNTRY_AREA_KM2["United States"]
+
+    def test_unknown_country_has_null_area_km2(
+        self, tmp_path, monkeypatch, reset_logic_cache
+    ):
+        import logic
+
+        dataset = {
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "data_centers": [{"id": "a", "country": "Narnia", "power_mw": 10.0}],
+        }
+        path = tmp_path / "datacenters.json"
+        path.write_text(json.dumps(dataset))
+        monkeypatch.setattr(logic, "_DATA_PATH", path)
+
+        result = regions_with_aggregate_impact()
+
+        assert result[0]["area_km2"] is None
+
+    def test_multiple_facilities_in_same_region_are_grouped(
+        self, tmp_path, monkeypatch, reset_logic_cache
+    ):
+        import logic
+
+        dataset = {
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "data_centers": [
+                {"id": "a", "country": "United States", "power_mw": 100.0},
+                {"id": "b", "country": "United States", "power_mw": 50.0},
+                {"id": "c", "country": "Ireland", "power_mw": 20.0},
+            ],
+        }
+        path = tmp_path / "datacenters.json"
+        path.write_text(json.dumps(dataset))
+        monkeypatch.setattr(logic, "_DATA_PATH", path)
+
+        result = regions_with_aggregate_impact()
+        regions = {r["region"]: r for r in result}
+
+        assert regions["United States"]["facility_count"] == 2
+        assert regions["Ireland"]["facility_count"] == 1
+
+    def test_missing_country_grouped_under_unknown(
+        self, tmp_path, monkeypatch, reset_logic_cache
+    ):
+        import logic
+
+        dataset = {
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "data_centers": [{"id": "a", "power_mw": 10.0}],
+        }
+        path = tmp_path / "datacenters.json"
+        path.write_text(json.dumps(dataset))
+        monkeypatch.setattr(logic, "_DATA_PATH", path)
+
+        result = regions_with_aggregate_impact()
+
+        assert result[0]["region"] == "Unknown"
+        assert result[0]["facility_count"] == 1
 
 
 # --- load_datacenters / get_dataset_metadata ---
