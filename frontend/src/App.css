@@ -350,6 +350,7 @@
   font-size: 15px;
   font-weight: 700;
   color: var(--text-primary);
+  text-align: center;
 }
 
 .chip-label {
@@ -357,6 +358,7 @@
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-align: center;
 }
 
 .dc-announced-notice {
@@ -441,11 +443,12 @@
 
 .stat-row {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
   font-size: 14px;
   padding: 3px 0;
-  gap: 8px;
+  gap: 4px 8px;
 }
 
 .stat-label {
@@ -457,6 +460,8 @@
   color: var(--text-primary);
   font-weight: 600;
   text-align: right;
+  white-space: nowrap;
+  margin-left: auto;
 }
 
 .stat-sub {
@@ -761,7 +766,9 @@
 .scenario-active-actions {
   display: flex;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-default);
 }
 
 .scenario-copy-link-btn,
@@ -873,7 +880,7 @@
   border: 1px solid var(--border-default);
   border-radius: 8px;
   padding: 8px 6px;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-secondary);
   cursor: pointer;
@@ -903,7 +910,7 @@
   border: 1px solid transparent;
   border-radius: 6px;
   padding: 5px 4px;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-secondary);
   cursor: pointer;
@@ -1091,4 +1098,16 @@
 
 .compare-table tbody td {
   color: var(--text-primary);
+}
+
+.compare-table tbody td.compare-cell--best {
+  color: #22c55e;
+}
+
+.compare-table tbody td.compare-cell--worst {
+  color: #ef4444;
+}
+
+.compare-cell-marker {
+  font-size: 13px;
 }

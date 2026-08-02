@@ -111,7 +111,7 @@ export default function NearMePanel({ onFlyTo }) {
                       <span style={{ color: waterColor }}>
                         Water: <strong>{water.severity ?? "—"}</strong>
                       </span>
-                      <span style={{ color: renewableColor }}>
+                      <span style={{ color: renewableColor }} title="Country-level average, not measured per facility">
                         Grid renewables{" "}
                         <strong>{carbon.renewable_pct != null ? `${carbon.renewable_pct}%` : "—"}</strong>
                       </span>
