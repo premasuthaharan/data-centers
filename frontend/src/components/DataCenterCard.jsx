@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { fmt } from "./formatters";
 import { severityColor } from "./severityColors";
+import { encodeScenarioParams } from "../utils/scenarioUrl";
 
 const WATER_LABELS = { low: "Low stress", moderate: "Moderate stress", high: "High stress", critical: "Critical stress" };
 const WATER_SEVERITY_RANK = { low: 0, moderate: 1, high: 2, critical: 3 };
@@ -60,7 +61,7 @@ function ImpactBlock({ title, color, icon, children }) {
   );
 }
 
-export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose }) {
+export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose, activePresetId, activeScenario }) {
   const impact = dc.impact || {};
   const elec = impact.electricity || {};
   const water = impact.water || {};
@@ -84,11 +85,18 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose 
   const copyLink = useCallback(() => {
     const url = new URL(window.location.href);
     url.searchParams.set("facility", dc.id);
+
+    const scenarioParams = encodeScenarioParams(activePresetId, activeScenario);
+    for (const key of ["scenario", "renewable_pct", "carbon_intensity_gco2_per_kwh", "water_liters_per_kwh", "pue"]) {
+      url.searchParams.delete(key);
+    }
+    for (const [key, value] of scenarioParams) url.searchParams.set(key, value);
+
     navigator.clipboard.writeText(url.href).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     });
-  }, [dc.id]);
+  }, [dc.id, activePresetId, activeScenario]);
 
   return (
     <div className="dc-detail-panel">

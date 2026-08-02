@@ -335,3 +335,105 @@ describe("App shared scenario link", () => {
     );
   });
 });
+
+describe("App combined scenario + facility share link", () => {
+  const DATACENTERS = [
+    {
+      id: "dc-a",
+      name: "Facility A",
+      operator: "Amazon",
+      country: "US",
+      data_status: "confirmed",
+      impact: {
+        data_status: "confirmed",
+        electricity: { annual_kwh: 900_000_000, price_lift_pct: 5.5, homes_powered: 86_766 },
+        carbon: { annual_co2_tonnes: 300_000, cars_equivalent: 65_217, renewable_pct: 22 },
+        water: { daily_withdrawal_mgd: 1.52, severity: "moderate", households_equivalent: 5067 },
+        land: { footprint_m2: 10_000, waste_heat_mw: 30 },
+      },
+    },
+  ];
+
+  const SCENARIO_RECORD = {
+    id: "dc-a",
+    impact: {
+      data_status: "confirmed",
+      electricity: { annual_kwh: 600_000_000, price_lift_pct: 5.5, homes_powered: 57_143 },
+      carbon: { annual_co2_tonnes: 30_000, cars_equivalent: 6_522, renewable_pct: 100 },
+      water: { daily_withdrawal_mgd: 1.52, severity: "moderate", households_equivalent: 5067 },
+      land: { footprint_m2: 10_000, waste_heat_mw: 30 },
+    },
+  };
+
+  const SCENARIO_RESPONSE = {
+    data_centers: [SCENARIO_RECORD],
+    baseline_totals: { facility_count: 1, annual_co2_tonnes: 300_000 },
+    scenario_totals: { facility_count: 1, annual_co2_tonnes: 30_000 },
+    presetLabel: "Grid Decarbonization",
+  };
+
+  function mockFetchByUrl() {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((url) => {
+        if (typeof url === "string" && url.includes("/api/scenario")) {
+          return Promise.resolve({ ok: true, json: () => Promise.resolve(SCENARIO_RESPONSE) });
+        }
+        return Promise.resolve({
+          json: () => Promise.resolve({ data_centers: DATACENTERS, generated_at: "2026-01-01" }),
+        });
+      })
+    );
+  }
+
+  it("resolves both params together and lands on the facility detail with scenario deltas, not the scenario panel", async () => {
+    window.history.pushState(null, "", "/?scenario=grid-decarbonization&facility=dc-a");
+    mockFetchByUrl();
+
+    render(<App />);
+
+    await waitFor(() =>
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/api/scenario"),
+        expect.objectContaining({
+          method: "POST",
+          body: JSON.stringify({ scenario: { carbon_intensity_gco2_per_kwh: 50 } }),
+        })
+      )
+    );
+
+    await waitFor(() => expect(screen.getByText("Facility A")).toBeInTheDocument());
+    expect(screen.getByTestId("mock-map")).toHaveAttribute("data-selected", "dc-a");
+    // Scenario deltas render directly on first paint (no baseline-only flash).
+    expect(screen.getByText("300,000 t")).toBeInTheDocument();
+    expect(screen.getByText("30,000 t")).toBeInTheDocument();
+  });
+
+  it("only ?scenario= present still opens the aggregate scenario panel (unchanged behavior)", async () => {
+    window.history.pushState(null, "", "/?scenario=grid-decarbonization");
+    mockFetchByUrl();
+
+    render(<App />);
+
+    await waitFor(() =>
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/api/scenario"),
+        expect.anything()
+      )
+    );
+    expect(screen.queryByText("Facility A")).not.toBeInTheDocument();
+  });
+
+  it("only ?facility= present still opens the facility detail without a scenario call (unchanged behavior)", async () => {
+    window.history.pushState(null, "", "/?facility=dc-a");
+    mockFetchByUrl();
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByText("Facility A")).toBeInTheDocument());
+    expect(globalThis.fetch).not.toHaveBeenCalledWith(
+      expect.stringContaining("/api/scenario"),
+      expect.anything()
+    );
+  });
+});
