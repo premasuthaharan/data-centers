@@ -2,7 +2,7 @@
 
 Journalists and advocacy groups are a natural audience for this data
 (see the community-organizing framing in
-[[add-community-impact-annotations]]), but today the only way to share
+[[community-impact-annotations]]), but today the only way to share
 anything from this site is a full-app link (`facility=<id>` /
 `scenario=...` share links from `facility-share-links` and
 `scenario-share-links`). There's no way to (a) get the underlying data
