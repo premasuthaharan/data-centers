@@ -4,7 +4,7 @@
       absent/null when unknown) to `backend/data/datacenters.json` entries
 - [ ] 1.2 `fetch_data.py`: populate `build_date` from source data where
       available (e.g. Epoch AI CSV columns, trackpolicy.org data once
-      [[add-trackpolicy-datacenters]] lands); leave absent otherwise
+      [[trackpolicy-datacenters]] lands); leave absent otherwise
 
 ## 2. Backend pass-through
 

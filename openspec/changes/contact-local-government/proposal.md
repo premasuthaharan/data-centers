@@ -7,8 +7,8 @@ path from "I'm concerned about this" to "here's who represents this
 address and how to reach them." A "Contact your representatives" action
 on a facility, similar in spirit to the "search by legislator/district"
 idea, turns the site from awareness into a concrete next step — closely
-related to [[add-community-impact-annotations]]'s organizing framing and
-[[add-facility-lifecycle-status]]'s `"planned"`/`"under_construction"`
+related to [[community-impact-annotations]]'s organizing framing and
+[[facility-lifecycle-status]]'s `"planned"`/`"under_construction"`
 facilities, where contacting a representative before a permitting
 decision is finalized is far more actionable than after.
 
@@ -44,7 +44,7 @@ decision is finalized is far more actionable than after.
 - Scope to facility-level (using the facility's own address), not a
   separate "search by my address" feature — the ask here is "who
   represents *this* facility," which is simpler than
-  [[add-realistic-policy-scenarios]]'s adjacent idea of district-based
+  [[realistic-policy-scenarios]]'s adjacent idea of district-based
   search across the whole map.
 
 ## Impact
@@ -60,7 +60,7 @@ decision is finalized is far more actionable than after.
   scale) that should be confirmed before implementation, not assumed.
   Flag explicitly during implementation if a genuinely keyless
   alternative isn't found.
-- Depends conceptually on [[add-facility-lifecycle-status]] for framing
+- Depends conceptually on [[facility-lifecycle-status]] for framing
   (contacting representatives is most actionable for
   `"planned"`/`"under_construction"` facilities) but doesn't require it
   to ship first — the button is useful for any facility's address

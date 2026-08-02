@@ -15,7 +15,7 @@ say "PUE must be 1.1 everywhere"; they say things like "data centers pay
 their own grid interconnection costs" or "utilities may not shift
 data-center infrastructure costs onto residential ratepayers" (cost
 allocation), or impose per-facility permitting/noise setbacks (Local
-Control, Noise & Vibration — [[add-trackpolicy-datacenters]]'s TeraWulf
+Control, Noise & Vibration — [[trackpolicy-datacenters]]'s TeraWulf
 Somerset entry already notes real noise concerns). Today's scenarios can't
 represent any of that, because the underlying schema only has
 environmental/efficiency fields, not cost-allocation or regulatory ones.
@@ -43,7 +43,7 @@ legislated.
     doesn't have today.
   - **Local moratorium / permitting slowdown**: a scenario modeling what
     happens if `"planned"`/`"under_construction"` facilities (once
-    [[add-facility-lifecycle-status]] lands) are blocked or delayed by
+    [[facility-lifecycle-status]] lands) are blocked or delayed by
     local control ordinances — this scenario type depends on that change.
   - Existing environmental presets (renewable mandate, grid
     decarbonization, PUE standard, water recycling) stay, since they do
@@ -58,7 +58,7 @@ legislated.
   data (e.g. current tax incentive value, current cost-allocation
   treatment) that today's schema doesn't carry, meaning this change may
   need its own data-collection step similar to
-  [[add-trackpolicy-datacenters]].
+  [[trackpolicy-datacenters]].
 - Each new preset gets a short citation/description referencing the kind
   of real bill it reflects (not a specific bill number unless one is
   concretely sourced), so the tool's framing stays honest about being
@@ -81,6 +81,6 @@ legislated.
   nailed down. Implementation should start with that research and treat
   the mechanics above as candidates, not a final spec.
 - Independent of the other three changes except where noted above (the
-  moratorium scenario wants [[add-facility-lifecycle-status]]); the
+  moratorium scenario wants [[facility-lifecycle-status]]); the
   environmental-preset recalibration and cost-allocation/tax-incentive
   work can proceed without them.

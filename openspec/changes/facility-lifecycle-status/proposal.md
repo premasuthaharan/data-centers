@@ -1,6 +1,6 @@
 ## Why
 
-[[add-trackpolicy-datacenters]] pulls in facilities from trackpolicy.org,
+[[trackpolicy-datacenters]] pulls in facilities from trackpolicy.org,
 which tracks real construction status per site — e.g. its visible list
 already shows "Project Rainier" (New Carlisle, IN) and "Meta Prometheus"
 (New Albany, OH) as under construction alongside others already
@@ -20,7 +20,7 @@ or vice versa.
 Without a real lifecycle field, every facility we render implies "this
 exists and is drawing power today," which becomes actively misleading
 once trackpolicy.org-sourced planned/under-construction sites are mixed
-in via [[add-trackpolicy-datacenters]] — their footprint (grid, water,
+in via [[trackpolicy-datacenters]] — their footprint (grid, water,
 carbon impact) hasn't happened yet, but our impact math would present it
 as though it had.
 
@@ -31,7 +31,7 @@ as though it had.
   Default `"operational"` for all existing entries (matches reality today —
   nothing currently in the dataset is flagged otherwise) so this is
   additive and non-breaking.
-- `fetch_data.py` / the [[add-trackpolicy-datacenters]] merge step sets
+- `fetch_data.py` / the [[trackpolicy-datacenters]] merge step sets
   `construction_status` from trackpolicy.org's status field where
   available; entries without a known status default to `"operational"`
   (the existing assumption) rather than guessing "planned."
@@ -67,7 +67,7 @@ as though it had.
   `mapHelpers.js` (marker treatment), `frontend/src/components/
   DataCenterCard.jsx` (status badge + impact suppression), `frontend/src/
   components/CompareModal.jsx` (picker filtering).
-- Depends on [[add-trackpolicy-datacenters]] for real status data on new
+- Depends on [[trackpolicy-datacenters]] for real status data on new
   entries, but is schema/UI work that stands on its own — existing
   entries all default to `"operational"` and render exactly as they do
   today, so this can land before or after that change without either
