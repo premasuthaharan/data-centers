@@ -22,6 +22,7 @@ const ROWS = [
 export default function CompareModal({ datacenters, onClose }) {
   const [selectedIds, setSelectedIds] = useState([]);
   const [query, setQuery] = useState("");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   const comparable = useMemo(
     () => datacenters.filter((dc) => dc.impact && (dc.data_status ?? dc.impact.data_status) !== "announced"),
@@ -79,25 +80,29 @@ export default function CompareModal({ datacenters, onClose }) {
             placeholder="Search facilities by name or operator…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onFocus={() => setIsSearchFocused(true)}
+            onBlur={() => setTimeout(() => setIsSearchFocused(false), 150)}
           />
 
-          <ul className="compare-search-results">
-            {searchResults.map((dc) => (
-              <li key={dc.id}>
-                <button
-                  type="button"
-                  className="compare-search-result-btn"
-                  onClick={() => add(dc.id)}
-                >
-                  <span className="compare-search-result-name">{dc.name}</span>
-                  <span className="compare-search-result-operator">{dc.operator ?? "—"}</span>
-                </button>
-              </li>
-            ))}
-            {searchResults.length === 0 && (
-              <li className="compare-search-empty">No matching facilities.</li>
-            )}
-          </ul>
+          {(isSearchFocused || query.trim()) && (
+            <ul className="compare-search-results">
+              {searchResults.map((dc) => (
+                <li key={dc.id}>
+                  <button
+                    type="button"
+                    className="compare-search-result-btn"
+                    onClick={() => add(dc.id)}
+                  >
+                    <span className="compare-search-result-name">{dc.name}</span>
+                    <span className="compare-search-result-operator">{dc.operator ?? "—"}</span>
+                  </button>
+                </li>
+              ))}
+              {searchResults.length === 0 && (
+                <li className="compare-search-empty">No matching facilities.</li>
+              )}
+            </ul>
+          )}
         </div>
 
         {selected.length >= 2 ? (

@@ -21,13 +21,13 @@ function SectionHeader({ children }) {
 // scenario convention. Only rendered when scenarioValue differs from value,
 // so fields a scenario doesn't touch stay plain rather than showing a
 // same-to-same arrow.
-function StatRow({ label, value, format, sub, accent, scenarioValue, lowerIsBetter = true }) {
+function StatRow({ label, value, format, sub, accent, scenarioValue, lowerIsBetter = true, labelTitle }) {
   const fmtVal = format ?? ((n) => fmt(n));
   const changed = scenarioValue != null && scenarioValue !== value;
   const improved = changed && (lowerIsBetter ? scenarioValue < value : scenarioValue > value);
   return (
     <div className="stat-row">
-      <span className="stat-label">{label}</span>
+      <span className="stat-label" title={labelTitle}>{label}</span>
       <span className="stat-value" style={accent ? { color: accent } : undefined}>
         {fmtVal(value)}
         {sub && <span className="stat-sub"> {sub}</span>}
@@ -197,6 +197,7 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose 
           />
           <StatRow
             label="Grid renewables"
+            labelTitle="Country-level average, not measured per facility"
             value={carbon.renewable_pct}
             scenarioValue={sCarbon?.renewable_pct}
             format={(n) => (n != null ? `${n}%` : "—")}
