@@ -2,6 +2,7 @@ import { describe, it, expect, vi, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import DataCenterCard from "../DataCenterCard";
+import { severityColor } from "../severityColors";
 
 function makeDc(overrides = {}) {
   return {
@@ -15,8 +16,18 @@ function makeDc(overrides = {}) {
     impact: {
       radius_km: 50,
       data_status: "confirmed",
-      electricity: { annual_kwh: 900_000_000, price_lift_pct: 5.5, homes_powered: 86_766 },
-      carbon: { annual_co2_tonnes: 300_000, cars_equivalent: 65_217, renewable_pct: 22 },
+      electricity: {
+        annual_kwh: 900_000_000,
+        price_lift_pct: 5.5,
+        price_lift_severity: "moderate",
+        homes_powered: 86_766,
+      },
+      carbon: {
+        annual_co2_tonnes: 300_000,
+        cars_equivalent: 65_217,
+        renewable_pct: 22,
+        renewable_severity: "moderate",
+      },
       water: { daily_withdrawal_mgd: 1.52, severity: "moderate", households_equivalent: 5067 },
       land: { footprint_m2: 10_000, waste_heat_mw: 30 },
       ...overrides.impact,
@@ -45,6 +56,13 @@ describe("DataCenterCard", () => {
 
     expect(screen.getByText("65,217")).toBeInTheDocument();
     expect(screen.getByText("86,766")).toBeInTheDocument();
+  });
+
+  it("color-codes price lift and grid renewables by severity", () => {
+    render(<DataCenterCard dc={makeDc()} onClose={() => {}} />);
+
+    expect(screen.getByText("+5.5%")).toHaveStyle({ color: severityColor("moderate") });
+    expect(screen.getByText("22%")).toHaveStyle({ color: severityColor("moderate") });
   });
 
   it("does not render impact blocks for announced (unbuilt) facilities", () => {

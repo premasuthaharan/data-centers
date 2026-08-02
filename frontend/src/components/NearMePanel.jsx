@@ -1,9 +1,8 @@
 import { useState, useCallback } from "react";
 import { fmt } from "./formatters";
+import { severityColor } from "./severityColors";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
-
-const WATER_COLORS = { low: "#22c55e", moderate: "#f59e0b", high: "#f97316", critical: "#ef4444" };
 
 // Prefer the browser's actual geolocation (prompts for permission, accurate
 // to device GPS/Wi-Fi) over server-side IP geolocation, which is often
@@ -90,7 +89,11 @@ export default function NearMePanel({ onFlyTo }) {
           <ul className="near-me-list">
             {results.map((dc) => {
               const water = dc.impact?.water ?? {};
-              const waterColor = WATER_COLORS[water.severity] ?? "#64748b";
+              const elec = dc.impact?.electricity ?? {};
+              const carbon = dc.impact?.carbon ?? {};
+              const waterColor = severityColor(water.severity);
+              const priceLiftColor = severityColor(elec.price_lift_severity);
+              const renewableColor = severityColor(carbon.renewable_severity);
               return (
                 <li key={dc.id} className="near-me-item">
                   <button className="near-me-item-btn" onClick={() => onFlyTo?.(dc.id)}>
@@ -99,19 +102,21 @@ export default function NearMePanel({ onFlyTo }) {
                       <span className="near-me-item-distance">{fmt(dc.distance_km, "km")}</span>
                     </div>
                     <div className="near-me-item-stats">
-                      <span>
+                      <span style={elec.price_lift_severity ? { color: priceLiftColor } : undefined}>
                         Grid price lift{" "}
                         <strong>
-                          {dc.impact?.electricity?.price_lift_pct != null
-                            ? `+${dc.impact.electricity.price_lift_pct}%`
-                            : "—"}
+                          {elec.price_lift_pct != null ? `+${elec.price_lift_pct}%` : "—"}
                         </strong>
                       </span>
                       <span style={{ color: waterColor }}>
                         Water: <strong>{water.severity ?? "—"}</strong>
                       </span>
+                      <span style={{ color: renewableColor }}>
+                        Grid renewables{" "}
+                        <strong>{carbon.renewable_pct != null ? `${carbon.renewable_pct}%` : "—"}</strong>
+                      </span>
                       <span>
-                        Cars equivalent <strong>{fmt(dc.impact?.carbon?.cars_equivalent)}</strong>
+                        Cars equivalent <strong>{fmt(carbon.cars_equivalent)}</strong>
                       </span>
                       <span>
                         Households equivalent <strong>{fmt(water.households_equivalent)}</strong>

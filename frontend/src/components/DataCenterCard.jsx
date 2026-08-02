@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { fmt } from "./formatters";
+import { severityColor } from "./severityColors";
 
-const WATER_COLORS = { low: "#22c55e", moderate: "#f59e0b", high: "#f97316", critical: "#ef4444" };
 const WATER_LABELS = { low: "Low stress", moderate: "Moderate stress", high: "High stress", critical: "Critical stress" };
 const WATER_SEVERITY_RANK = { low: 0, moderate: 1, high: 2, critical: 3 };
 const WATER_SEVERITY_BY_RANK = ["low", "moderate", "high", "critical"];
@@ -75,7 +75,9 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose 
   const sCarbon = sImpact?.carbon;
   const sLand = sImpact?.land;
 
-  const waterColor = WATER_COLORS[water.severity] ?? "#64748b";
+  const waterColor = severityColor(water.severity);
+  const priceLiftColor = severityColor(elec.price_lift_severity);
+  const renewableColor = severityColor(carbon.renewable_severity);
   const precisionWarning = PRECISION_WARNINGS[dc.geocode_precision];
 
   const [copied, setCopied] = useState(false);
@@ -146,7 +148,7 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose 
             value={elec.price_lift_pct}
             scenarioValue={sElec?.price_lift_pct}
             format={(n) => (n != null ? `+${n}%` : "—")}
-            accent="#f59e0b"
+            accent={priceLiftColor}
             sub="above baseline"
           />
           <p className="impact-note">
@@ -199,6 +201,7 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose 
             scenarioValue={sCarbon?.renewable_pct}
             format={(n) => (n != null ? `${n}%` : "—")}
             lowerIsBetter={false}
+            accent={renewableColor}
           />
           <div className="dc-renewables-bar" style={{ marginTop: 8 }}>
             <div className="dc-renewables-fill" style={{ width: `${(sCarbon ?? carbon).renewable_pct ?? 0}%` }} />
