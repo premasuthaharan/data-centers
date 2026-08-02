@@ -10,12 +10,20 @@ vi.mock("./components/NearMePanel", () => ({ default: () => <div /> }));
 vi.mock("./components/ScenarioPanel", () => ({
   // A minimal stand-in that lets tests trigger onScenarioChange with a
   // controlled payload, mirroring what the real POST /api/scenario
-  // response + presetLabel (added in ScenarioPanel) looks like.
+  // response + presetLabel/presetId/scenario (added in ScenarioPanel)
+  // looks like.
   default: ({ onScenarioChange }) => (
     <button onClick={() => onScenarioChange(window.__mockScenarioPayload)}>
       apply mock scenario
     </button>
   ),
+  PRESETS: [
+    {
+      id: "grid-decarbonization",
+      label: "Grid Decarbonization",
+      scenario: { carbon_intensity_gco2_per_kwh: 50 },
+    },
+  ],
 }));
 vi.mock("./components/CompareModal", () => ({ default: () => <div /> }));
 
@@ -243,5 +251,87 @@ describe("App scenario facility detail", () => {
 
     await waitFor(() => expect(screen.queryByText(/Under:/)).not.toBeInTheDocument());
     expect(screen.queryByText("30,000 t")).not.toBeInTheDocument();
+  });
+});
+
+describe("App shared scenario link", () => {
+  const SCENARIO_RESPONSE = {
+    data_centers: [],
+    baseline_totals: { facility_count: 3, annual_co2_tonnes: 500_000 },
+    scenario_totals: { facility_count: 3, annual_co2_tonnes: 50_000 },
+  };
+
+  function mockFetchSequence(responses) {
+    let call = 0;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((url, opts) => {
+        const body = responses[Math.min(call, responses.length - 1)];
+        call += 1;
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(typeof body === "function" ? body(url, opts) : body),
+        });
+      })
+    );
+  }
+
+  it("re-applies a preset from ?scenario=<presetId> and opens the scenario panel", async () => {
+    window.history.pushState(null, "", "/?scenario=grid-decarbonization");
+    mockFetchSequence([{ data_centers: [], generated_at: null }, SCENARIO_RESPONSE]);
+
+    render(<App />);
+
+    await waitFor(() =>
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/api/scenario"),
+        expect.objectContaining({
+          method: "POST",
+          body: JSON.stringify({ scenario: { carbon_intensity_gco2_per_kwh: 50 } }),
+        })
+      )
+    );
+  });
+
+  it("re-applies custom overrides from ?scenario=custom&... query params", async () => {
+    window.history.pushState(null, "", "/?scenario=custom&renewable_pct=80&pue=1.1");
+    mockFetchSequence([{ data_centers: [], generated_at: null }, SCENARIO_RESPONSE]);
+
+    render(<App />);
+
+    await waitFor(() =>
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/api/scenario"),
+        expect.objectContaining({
+          method: "POST",
+          body: JSON.stringify({ scenario: { renewable_pct: 80, pue: 1.1 } }),
+        })
+      )
+    );
+  });
+
+  it("ignores an unknown preset id and does not call POST /api/scenario", async () => {
+    window.history.pushState(null, "", "/?scenario=not-a-real-preset");
+    mockFetchSequence([{ data_centers: [], generated_at: null }]);
+
+    render(<App />);
+
+    await waitFor(() => expect(globalThis.fetch).toHaveBeenCalled());
+    expect(globalThis.fetch).not.toHaveBeenCalledWith(
+      expect.stringContaining("/api/scenario"),
+      expect.anything()
+    );
+  });
+
+  it("does not call POST /api/scenario when no scenario param is present", async () => {
+    mockFetchSequence([{ data_centers: [], generated_at: null }]);
+
+    render(<App />);
+
+    await waitFor(() => expect(globalThis.fetch).toHaveBeenCalled());
+    expect(globalThis.fetch).not.toHaveBeenCalledWith(
+      expect.stringContaining("/api/scenario"),
+      expect.anything()
+    );
   });
 });

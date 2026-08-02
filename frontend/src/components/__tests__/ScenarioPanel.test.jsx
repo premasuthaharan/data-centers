@@ -60,8 +60,28 @@ describe("ScenarioPanel", () => {
     );
     expect(onScenarioChange).toHaveBeenCalledWith({
       ...SCENARIO_RESPONSE,
+      presetId: "grid-decarbonization",
       presetLabel: "Grid Decarbonization",
+      scenario: { carbon_intensity_gco2_per_kwh: 50 },
     });
+  });
+
+  it("copy link writes the preset's shareable URL to the clipboard", async () => {
+    mockFetchOnce(SCENARIO_RESPONSE);
+    window.history.pushState(null, "", "/");
+    const writeText = vi.fn(() => Promise.resolve());
+    vi.stubGlobal("navigator", { ...navigator, clipboard: { writeText } });
+
+    render(<ScenarioPanel onClose={() => {}} onScenarioChange={() => {}} />);
+    fireEvent.click(screen.getByText("Grid Decarbonization"));
+    await waitFor(() => expect(screen.getByText(/baseline → scenario/)).toBeInTheDocument());
+
+    fireEvent.click(screen.getByText(/copy link/i));
+
+    expect(writeText).toHaveBeenCalledWith(expect.stringContaining("scenario=grid-decarbonization"));
+    await waitFor(() => expect(screen.getByText(/link copied/i)).toBeInTheDocument());
+
+    vi.unstubAllGlobals();
   });
 
   it("reset clears the applied scenario and notifies the parent with null", async () => {
@@ -92,5 +112,31 @@ describe("ScenarioPanel", () => {
     render(<ScenarioPanel onClose={onClose} onScenarioChange={() => {}} />);
     fireEvent.click(screen.getByLabelText("Close"));
     expect(onClose).toHaveBeenCalled();
+  });
+});
+
+describe("ScenarioPanel hydration from a shared link", () => {
+  it("shows the applied preset highlighted and totals when initialScenarioData is provided", () => {
+    render(
+      <ScenarioPanel
+        onClose={() => {}}
+        onScenarioChange={() => {}}
+        initialScenarioData={{
+          ...SCENARIO_RESPONSE,
+          presetId: "grid-decarbonization",
+          scenario: { carbon_intensity_gco2_per_kwh: 50 },
+        }}
+      />
+    );
+
+    expect(screen.getByText(/baseline → scenario/)).toBeInTheDocument();
+    expect(screen.getByText("Grid Decarbonization").closest("button")).toHaveClass(
+      "scenario-preset-btn--active"
+    );
+  });
+
+  it("renders with no applied scenario when initialScenarioData is absent (no regression)", () => {
+    render(<ScenarioPanel onClose={() => {}} onScenarioChange={() => {}} />);
+    expect(screen.queryByText(/baseline → scenario/)).not.toBeInTheDocument();
   });
 });
