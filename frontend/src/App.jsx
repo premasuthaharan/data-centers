@@ -93,6 +93,13 @@ export default function App() {
   }, []);
 
   const selectedDC = datacenters.find((dc) => dc.id === selectedId) ?? null;
+  // The scenario-recomputed record for the selected facility, if a scenario
+  // is active and this facility is within its scope (POST /api/scenario's
+  // facility_ids, when used — currently always all facilities since
+  // ScenarioPanel doesn't scope by id). undefined when no scenario is
+  // active or the facility falls outside scope, which DataCenterCard treats
+  // as "render baseline only".
+  const scenarioDC = scenarioData?.data_centers.find((dc) => dc.id === selectedId);
 
   // While a scenario is active, the map renders scenario-recomputed
   // facilities colored by water severity instead of operator brand color,
@@ -203,7 +210,12 @@ export default function App() {
       {/* Slide-in detail panel */}
       <div className={"detail-panel-wrapper" + (activePanel === "detail" && selectedDC ? " detail-panel-wrapper--open" : "")}>
         {selectedDC && (
-          <DataCenterCard dc={selectedDC} onClose={handleClose} />
+          <DataCenterCard
+            dc={selectedDC}
+            scenarioDc={scenarioDC}
+            scenarioLabel={scenarioData?.presetLabel}
+            onClose={handleClose}
+          />
         )}
       </div>
 
