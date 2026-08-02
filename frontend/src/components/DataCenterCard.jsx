@@ -6,7 +6,6 @@ const WATER_LABELS = { low: "Low stress", moderate: "Moderate stress", high: "Hi
 const WATER_SEVERITY_RANK = { low: 0, moderate: 1, high: 2, critical: 3 };
 const WATER_SEVERITY_BY_RANK = ["low", "moderate", "high", "critical"];
 const PRECISION_WARNINGS = {
-  approximate: "Location is approximate (city/region-level geocode)",
   country: "Location is approximate (country-level geocode only)",
   failed: "Location unknown — could not be geocoded",
 };

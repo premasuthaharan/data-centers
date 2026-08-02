@@ -165,4 +165,52 @@ describe("CompareModal", () => {
     fireEvent.click(screen.getByText("Compare Facilities"));
     expect(onClose).not.toHaveBeenCalled();
   });
+
+  it("marks the better and worse cell in a row where values differ", () => {
+    const datacenters = [
+      makeDc("dc-a", "Facility A", {
+        impact: {
+          electricity: { annual_kwh: 900_000_000, price_lift_pct: 5.5 },
+          carbon: { annual_co2_tonnes: 100_000, renewable_pct: 22 },
+          water: { daily_withdrawal_mgd: 1.5, severity: "moderate" },
+          land: { waste_heat_mw: 30 },
+        },
+      }),
+      makeDc("dc-b", "Facility B", {
+        impact: {
+          electricity: { annual_kwh: 900_000_000, price_lift_pct: 5.5 },
+          carbon: { annual_co2_tonnes: 500_000, renewable_pct: 22 },
+          water: { daily_withdrawal_mgd: 1.5, severity: "moderate" },
+          land: { waste_heat_mw: 30 },
+        },
+      }),
+    ];
+    render(<CompareModal datacenters={datacenters} onClose={() => {}} />);
+
+    focusSearch();
+    fireEvent.click(screen.getByText("Facility A"));
+    focusSearch();
+    fireEvent.click(screen.getByText("Facility B"));
+
+    const co2Row = screen.getByText("Annual CO₂").closest("tr");
+    const cells = co2Row.querySelectorAll("td");
+    expect(cells[0]).toHaveClass("compare-cell--best");
+    expect(cells[1]).toHaveClass("compare-cell--worst");
+  });
+
+  it("does not mark a row where every selected facility has the same value", () => {
+    render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
+
+    focusSearch();
+    fireEvent.click(screen.getByText("Facility A"));
+    focusSearch();
+    fireEvent.click(screen.getByText("Facility B"));
+
+    // Both DATACENTERS entries share renewable_pct: 22 — no winner to mark.
+    const renewablesRow = screen.getByText("Grid renewables").closest("tr");
+    for (const cell of renewablesRow.querySelectorAll("td")) {
+      expect(cell).not.toHaveClass("compare-cell--best");
+      expect(cell).not.toHaveClass("compare-cell--worst");
+    }
+  });
 });

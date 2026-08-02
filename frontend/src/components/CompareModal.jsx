@@ -2,22 +2,79 @@ import { useState, useMemo } from "react";
 import { fmt } from "./formatters";
 
 const WATER_COLORS = { low: "#22c55e", moderate: "#f59e0b", high: "#f97316", critical: "#ef4444" };
+const WATER_SEVERITY_RANK = { low: 0, moderate: 1, high: 2, critical: 3 };
 
+// rawGet feeds the per-row best/worst comparison; lowerIsBetter picks the
+// direction ("more renewables" is better, "more CO2" is worse). Rows
+// without rawGet (e.g. Operator) aren't comparable and skip highlighting.
 const ROWS = [
   { label: "Operator", get: (dc) => dc.operator ?? "—" },
   { label: "Power", get: (dc) => (dc.power_mw ? `${dc.power_mw.toLocaleString()} MW` : "—") },
-  { label: "Annual electricity", get: (dc) => `${(dc.impact.electricity.annual_kwh / 1e9).toFixed(1)} TWh` },
-  { label: "Grid price lift", get: (dc) => `+${dc.impact.electricity.price_lift_pct}%` },
-  { label: "Annual CO₂", get: (dc) => fmt(dc.impact.carbon.annual_co2_tonnes, "t") },
-  { label: "Grid renewables", get: (dc) => `${dc.impact.carbon.renewable_pct}%` },
+  {
+    label: "Annual electricity",
+    get: (dc) => `${(dc.impact.electricity.annual_kwh / 1e9).toFixed(1)} TWh`,
+    rawGet: (dc) => dc.impact.electricity.annual_kwh,
+    lowerIsBetter: true,
+  },
+  {
+    label: "Grid price lift",
+    get: (dc) => `+${dc.impact.electricity.price_lift_pct}%`,
+    rawGet: (dc) => dc.impact.electricity.price_lift_pct,
+    lowerIsBetter: true,
+  },
+  {
+    label: "Annual CO₂",
+    get: (dc) => fmt(dc.impact.carbon.annual_co2_tonnes, "t"),
+    rawGet: (dc) => dc.impact.carbon.annual_co2_tonnes,
+    lowerIsBetter: true,
+  },
+  {
+    label: "Grid renewables",
+    get: (dc) => `${dc.impact.carbon.renewable_pct}%`,
+    rawGet: (dc) => dc.impact.carbon.renewable_pct,
+    lowerIsBetter: false,
+  },
   {
     label: "Water withdrawal",
     get: (dc) => fmt(dc.impact.water.daily_withdrawal_mgd, "MGD"),
     color: (dc) => WATER_COLORS[dc.impact.water.severity],
+    rawGet: (dc) => dc.impact.water.daily_withdrawal_mgd,
+    lowerIsBetter: true,
   },
-  { label: "Water severity", get: (dc) => dc.impact.water.severity ?? "—", color: (dc) => WATER_COLORS[dc.impact.water.severity] },
-  { label: "Waste heat", get: (dc) => fmt(dc.impact.land.waste_heat_mw, "MW") },
+  {
+    label: "Water severity",
+    get: (dc) => dc.impact.water.severity ?? "—",
+    color: (dc) => WATER_COLORS[dc.impact.water.severity],
+    rawGet: (dc) => WATER_SEVERITY_RANK[dc.impact.water.severity] ?? 0,
+    lowerIsBetter: true,
+  },
+  {
+    label: "Waste heat",
+    get: (dc) => fmt(dc.impact.land.waste_heat_mw, "MW"),
+    rawGet: (dc) => dc.impact.land.waste_heat_mw,
+    lowerIsBetter: true,
+  },
 ];
+
+// Best cell gets a "▾ better" marker, worst gets "▴ worse" — only when the
+// row is comparable (rawGet defined) and values actually differ, so an
+// all-tied row (e.g. every facility at the same 22% country renewable
+// average) doesn't get an arbitrary winner.
+function rowMarkers(row, selected) {
+  if (!row.rawGet) return new Map();
+  const values = selected.map((dc) => row.rawGet(dc));
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  if (min === max) return new Map();
+  const bestVal = row.lowerIsBetter ? min : max;
+  const worstVal = row.lowerIsBetter ? max : min;
+  const markers = new Map();
+  selected.forEach((dc, i) => {
+    if (values[i] === bestVal) markers.set(dc.id, "best");
+    else if (values[i] === worstVal) markers.set(dc.id, "worst");
+  });
+  return markers;
+}
 
 export default function CompareModal({ datacenters, onClose }) {
   const [selectedIds, setSelectedIds] = useState([]);
@@ -117,16 +174,28 @@ export default function CompareModal({ datacenters, onClose }) {
                 </tr>
               </thead>
               <tbody>
-                {ROWS.map((row) => (
-                  <tr key={row.label}>
-                    <th>{row.label}</th>
-                    {selected.map((dc) => (
-                      <td key={dc.id} style={row.color ? { color: row.color(dc) } : undefined}>
-                        {row.get(dc)}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
+                {ROWS.map((row) => {
+                  const markers = rowMarkers(row, selected);
+                  return (
+                    <tr key={row.label}>
+                      <th>{row.label}</th>
+                      {selected.map((dc) => {
+                        const marker = markers.get(dc.id);
+                        return (
+                          <td
+                            key={dc.id}
+                            className={marker ? `compare-cell--${marker}` : undefined}
+                            style={row.color ? { color: row.color(dc) } : undefined}
+                          >
+                            {marker === "best" && <span className="compare-cell-marker" aria-label="Best">▾ </span>}
+                            {marker === "worst" && <span className="compare-cell-marker" aria-label="Worst">▴ </span>}
+                            {row.get(dc)}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

@@ -443,11 +443,12 @@
 
 .stat-row {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
   font-size: 14px;
   padding: 3px 0;
-  gap: 8px;
+  gap: 4px 8px;
 }
 
 .stat-label {
@@ -459,6 +460,8 @@
   color: var(--text-primary);
   font-weight: 600;
   text-align: right;
+  white-space: nowrap;
+  margin-left: auto;
 }
 
 .stat-sub {
@@ -1095,4 +1098,16 @@
 
 .compare-table tbody td {
   color: var(--text-primary);
+}
+
+.compare-table tbody td.compare-cell--best {
+  color: #22c55e;
+}
+
+.compare-table tbody td.compare-cell--worst {
+  color: #ef4444;
+}
+
+.compare-cell-marker {
+  font-size: 13px;
 }
