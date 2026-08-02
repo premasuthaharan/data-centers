@@ -23,7 +23,7 @@ function makeDc(id, name, overrides = {}) {
 
 const DATACENTERS = [
   makeDc("dc-a", "Facility A"),
-  makeDc("dc-b", "Facility B"),
+  makeDc("dc-b", "Facility B", { operator: "Google" }),
   makeDc("announced-dc", "Announced Facility", {
     data_status: "announced",
     impact: {
@@ -35,27 +35,75 @@ const DATACENTERS = [
   }),
 ];
 
+function search(text) {
+  fireEvent.change(screen.getByPlaceholderText(/search facilities/i), {
+    target: { value: text },
+  });
+}
+
 describe("CompareModal", () => {
-  it("lists only non-announced facilities as selectable", () => {
+  it("lists only non-announced facilities as search results", () => {
     render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
     expect(screen.getByText("Facility A")).toBeInTheDocument();
     expect(screen.getByText("Facility B")).toBeInTheDocument();
     expect(screen.queryByText("Announced Facility")).not.toBeInTheDocument();
   });
 
+  it("filters search results by name and by operator, case-insensitively", () => {
+    render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
+
+    search("facility a");
+    expect(screen.getByText("Facility A")).toBeInTheDocument();
+    expect(screen.queryByText("Facility B")).not.toBeInTheDocument();
+
+    search("google");
+    expect(screen.getByText("Facility B")).toBeInTheDocument();
+    expect(screen.queryByText("Facility A")).not.toBeInTheDocument();
+
+    search("nonexistent");
+    expect(screen.getByText(/no matching facilities/i)).toBeInTheDocument();
+  });
+
   it("shows a hint instead of a table when fewer than 2 facilities are selected", () => {
     render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
     expect(screen.getByText(/select at least 2 facilities/i)).toBeInTheDocument();
 
-    fireEvent.click(screen.getByLabelText("Facility A"));
+    fireEvent.click(screen.getByText("Facility A"));
     expect(screen.getByText(/select at least 2 facilities/i)).toBeInTheDocument();
+  });
+
+  it("adds a chip and clears the search input when a result is clicked", () => {
+    render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
+
+    search("Facility A");
+    fireEvent.click(screen.getByText("Facility A"));
+
+    expect(screen.getByPlaceholderText(/search facilities/i)).toHaveValue("");
+    // Facility A is now a chip, and no longer in the search results.
+    expect(screen.queryByRole("button", { name: /^Facility A/ })).not.toBeInTheDocument();
+    expect(screen.getByLabelText("Remove Facility A")).toBeInTheDocument();
+  });
+
+  it("removes a chip when its × button is clicked", () => {
+    render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
+
+    fireEvent.click(screen.getByText("Facility A"));
+    fireEvent.click(screen.getByText("Facility B"));
+    expect(screen.getByRole("table")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByLabelText("Remove Facility A"));
+
+    expect(screen.queryByLabelText("Remove Facility A")).not.toBeInTheDocument();
+    expect(screen.getByText(/select at least 2 facilities/i)).toBeInTheDocument();
+    // Facility A is searchable/selectable again.
+    expect(screen.getByRole("button", { name: /Facility A/ })).toBeInTheDocument();
   });
 
   it("renders a comparison table once 2 facilities are selected", () => {
     render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
 
-    fireEvent.click(screen.getByLabelText("Facility A"));
-    fireEvent.click(screen.getByLabelText("Facility B"));
+    fireEvent.click(screen.getByText("Facility A"));
+    fireEvent.click(screen.getByText("Facility B"));
 
     expect(screen.queryByText(/select at least 2 facilities/i)).not.toBeInTheDocument();
     const table = screen.getByRole("table");
