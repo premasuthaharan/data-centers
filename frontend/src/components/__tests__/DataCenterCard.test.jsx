@@ -171,4 +171,37 @@ describe("DataCenterCard copy link", () => {
     expect(writeText).toHaveBeenCalledWith(expect.stringContaining("facility=dc-a"));
     await waitFor(() => expect(screen.getByText(/link copied/i)).toBeInTheDocument());
   });
+
+  it("includes the active scenario when copying the link", async () => {
+    window.history.pushState(null, "", "/?facility=dc-a");
+    const writeText = vi.fn(() => Promise.resolve());
+    vi.stubGlobal("navigator", { ...navigator, clipboard: { writeText } });
+
+    render(
+      <DataCenterCard
+        dc={makeDc()}
+        onClose={() => {}}
+        activePresetId="grid-decarbonization"
+        activeScenario={{ carbon_intensity_gco2_per_kwh: 50 }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /copy link/i }));
+
+    const copiedUrl = writeText.mock.calls[0][0];
+    expect(copiedUrl).toContain("facility=dc-a");
+    expect(copiedUrl).toContain("scenario=grid-decarbonization");
+  });
+
+  it("omits the scenario param when no scenario is active", async () => {
+    window.history.pushState(null, "", "/?facility=dc-a");
+    const writeText = vi.fn(() => Promise.resolve());
+    vi.stubGlobal("navigator", { ...navigator, clipboard: { writeText } });
+
+    render(<DataCenterCard dc={makeDc()} onClose={() => {}} />);
+
+    fireEvent.click(screen.getByRole("button", { name: /copy link/i }));
+
+    expect(writeText.mock.calls[0][0]).not.toContain("scenario=");
+  });
 });

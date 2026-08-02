@@ -84,6 +84,44 @@ describe("ScenarioPanel", () => {
     vi.unstubAllGlobals();
   });
 
+  it("copy link includes the selected facility id when one is provided", async () => {
+    mockFetchOnce(SCENARIO_RESPONSE);
+    window.history.pushState(null, "", "/");
+    const writeText = vi.fn(() => Promise.resolve());
+    vi.stubGlobal("navigator", { ...navigator, clipboard: { writeText } });
+
+    render(
+      <ScenarioPanel onClose={() => {}} onScenarioChange={() => {}} selectedFacilityId="dc-a" />
+    );
+    fireEvent.click(screen.getByText("Grid Decarbonization"));
+    await waitFor(() => expect(screen.getByText(/baseline → scenario/)).toBeInTheDocument());
+
+    fireEvent.click(screen.getByText(/copy link/i));
+
+    const copiedUrl = writeText.mock.calls[0][0];
+    expect(copiedUrl).toContain("scenario=grid-decarbonization");
+    expect(copiedUrl).toContain("facility=dc-a");
+
+    vi.unstubAllGlobals();
+  });
+
+  it("copy link omits the facility param when no facility is selected", async () => {
+    mockFetchOnce(SCENARIO_RESPONSE);
+    window.history.pushState(null, "", "/");
+    const writeText = vi.fn(() => Promise.resolve());
+    vi.stubGlobal("navigator", { ...navigator, clipboard: { writeText } });
+
+    render(<ScenarioPanel onClose={() => {}} onScenarioChange={() => {}} />);
+    fireEvent.click(screen.getByText("Grid Decarbonization"));
+    await waitFor(() => expect(screen.getByText(/baseline → scenario/)).toBeInTheDocument());
+
+    fireEvent.click(screen.getByText(/copy link/i));
+
+    expect(writeText.mock.calls[0][0]).not.toContain("facility=");
+
+    vi.unstubAllGlobals();
+  });
+
   it("reset clears the applied scenario and notifies the parent with null", async () => {
     mockFetchOnce(SCENARIO_RESPONSE);
     const onScenarioChange = vi.fn();

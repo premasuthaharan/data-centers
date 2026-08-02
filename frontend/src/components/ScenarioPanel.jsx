@@ -72,7 +72,7 @@ function TotalsRow({ label, baseline, scenario, unit, format }) {
 // highlight + totals) from a scenario App.jsx already applied on mount from
 // a shared link — otherwise the map/URL correctly reflect the scenario but
 // the panel itself looks blank/unapplied the first time it's opened.
-export default function ScenarioPanel({ onClose, onScenarioChange, initialScenarioData }) {
+export default function ScenarioPanel({ onClose, onScenarioChange, initialScenarioData, selectedFacilityId }) {
   const [activePresetId, setActivePresetId] = useState(() => initialScenarioData?.presetId ?? null);
   const [activeScenario, setActiveScenario] = useState(() => initialScenarioData?.scenario ?? null);
   const [status, setStatus] = useState("idle"); // idle | loading | error
@@ -128,11 +128,17 @@ export default function ScenarioPanel({ onClose, onScenarioChange, initialScenar
     }
     for (const [key, value] of params) url.searchParams.set(key, value);
 
+    if (selectedFacilityId) {
+      url.searchParams.set("facility", selectedFacilityId);
+    } else {
+      url.searchParams.delete("facility");
+    }
+
     navigator.clipboard.writeText(url.href).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     });
-  }, [activePresetId, activeScenario]);
+  }, [activePresetId, activeScenario, selectedFacilityId]);
 
   return (
     <div className="scenario-panel">
