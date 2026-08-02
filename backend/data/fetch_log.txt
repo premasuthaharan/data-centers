@@ -132,3 +132,142 @@ meta-montgomery/meta-cheyenne resolve correctly (not the Virgin Islands),
 (openai-stargate-abilene/crusoe-abilene-expansion; qts-richmond-2/
 qts-richmond-3), precision breakdown 34 address / 24 approximate /
 17 country / 0 failed.
+
+--- improve-facility-location-precision (2026-08-01) ---
+Fetching Epoch AI data centers CSV...
+Found 75 entries
+Loaded 17 manual location overrides
+[1/75] Geocoding: Colossus 2 (5420 Tulane Rd, Memphis, TN 38109)
+[2/75] Geocoding: Microsoft Fairwater Atlanta (1435 Hwy 54 W, Fayetteville, GA 30214)
+[3/75] Geocoding: Meta Prometheus (1 Community Cir, New Albany, OH 43054)
+  WARN: only resolved to 'approximate' precision (40.0811745, -82.8087864)
+[4/75] Geocoding: Anthropic-Amazon New Carlisle (55001 Larrison Blvd, New Carlisle, IN 46552)
+  WARN: only resolved to 'approximate' precision (41.7056871, -86.5098231)
+[5/75] Geocoding: OpenAI Stargate Abilene (5502 Spinks Rd, Abilene, TX 79601)
+[6/75] Geocoding: Microsoft Fairwater Wisconsin (4800 90th St, Mount Pleasant, WI 53403)
+[7/75] Geocoding: Google Columbus (5076 S High St, Columbus, OH 43207)
+[8/75] Geocoding: Google New Albany (1101 Beech Rd SW, New Albany, OH 43054)
+[9/75] Geocoding: Google Council Bluffs (East) (10410 Bunge Ave, Council Bluffs, IA 51503)
+[10/75] Geocoding: Google Lincoln (5475 Cloud Ct, Lincoln, NE 68514)
+[11/75] Geocoding: Google Bristow (13001 Rollins Ford Road, Bristow, VA 20136)
+  WARN: only resolved to 'approximate' precision (38.7311636, -77.5480241)
+[12/75] Geocoding: DayOne Nusajaya (override: Nusajaya Tech Park, Iskandar Puteri, Johor, Malaysia)
+[13/75] Geocoding: Colossus 1 (3231 Riverport Rd, Memphis, TN 38109)
+[14/75] Geocoding: Google Omaha (11110 State St, Omaha, NE 68142)
+[15/75] Geocoding: CoreWeave Denton TX (8171 Jim Christal Rd, Denton, TX 76207)
+[16/75] Geocoding: Google Kansas City East (override: 9501 NE Parvin Rd, Kansas City, Missouri, United States)
+[17/75] Geocoding: QTS Richmond 1 (6000 Technology Blvd, Sandston, VA 23150)
+[18/75] Geocoding: Meta Rosemount (1772-2396 145th St, Rosemount, MN 55068, USA)
+  WARN: only resolved to 'approximate' precision (44.7391873, -93.12611)
+[19/75] Geocoding: Amazon Madison Mega Site (override: Canton, Mississippi, United States)
+  WARN: only resolved to 'approximate' precision (32.612602, -90.0367512)
+[20/75] Geocoding: Microsoft Goodyear (14250 W Broadway Rd, Goodyear, AZ 85338)
+[21/75] Geocoding: Meta Jeffersonville (500 8th St, Jeffersonville, IN 47130, USA)
+  WARN: only resolved to 'approximate' precision (38.2770227, -85.7371604)
+[22/75] Geocoding: Google The Dalles (3500 River Rd, The Dalles, OR)
+[23/75] Geocoding: Google Midlothian (3250 Railport Parkway, Midlothian, TX 76065)
+[24/75] Geocoding: QTS Richmond 2 (6030–6070 Technology Blvd, Sandston, VA 23150)
+  WARN: only resolved to 'approximate' precision (37.5107225, -77.3115564)
+[25/75] Geocoding: QTS Richmond 3 (3525–3543 Portugee Rd, Sandston, VA 23150)
+  WARN: only resolved to 'approximate' precision (37.5107225, -77.3115564)
+[26/75] Geocoding: Meta Montgomery (Co Rd 42, Montgomery, AL 36105, USA)
+  WARN: only resolved to 'approximate' precision (32.3777111, -86.3090775)
+[27/75] Geocoding: Meta Kuna (override: 6990 W Kuna-Mora Rd, Kuna, Idaho, United States)
+[28/75] Geocoding: Meta Temple (2310 Eberhardt Rd, Temple, TX 76504)
+[29/75] Geocoding: Meta Cheyenne (Cheyenne, WY 82007, USA)
+  WARN: only resolved to 'approximate' precision (41.139981, -104.820246)
+[30/75] Geocoding: Amazon Ridgeland (1626 County Line Road Ridgeland, Mississippi)
+[31/75] Geocoding: Meta Aiken (7601 State Hwy 105, Trenton, SC 29847, USA)
+  WARN: only resolved to 'approximate' precision (33.7416558, -81.8423388)
+[32/75] Geocoding: Coreweave Helios (984 County Road 112, Afton, TX 79220)
+  WARN: only resolved to 'approximate' precision (33.7628599, -100.8168001)
+[33/75] Geocoding: Google Arcola (42575 Arcola Blvd, Sterling, VA 20166)
+  WARN: only resolved to 'approximate' precision (39.003685, -77.4083096)
+[34/75] Geocoding: Microsoft Project Osmium (5855 SW Kerry St, Cumming, IA 50061)
+  WARN: only resolved to 'approximate' precision (41.4833235, -93.7624442)
+[35/75] Geocoding: Google Storey County (override: 7400 USA Pkwy, Storey County, Nevada, United States)
+[36/75] Geocoding: Meta Eagle Mountain (1275 N Community Cir, Eagle Mountain, UT 84005)
+  WARN: only resolved to 'approximate' precision (40.3093488, -112.0119825)
+[37/75] Geocoding: Fluidstack Lake Mariner (7725 Lake Rd, Barker, NY 14012)
+[38/75] Geocoding: Google Lancaster (105 Whiley Rd, Lancaster, OH 43130)
+[39/75] Geocoding: Google Mesa (override: East Elliot Road, Mesa, Arizona, United States)
+  WARN: only resolved to 'approximate' precision (33.3498037, -111.5893804)
+[40/75] Geocoding: Google Waltham Cross (Land at Maxwell's Farm West, Great Cambridge Road, Cheshunt, EN8 8XH)
+  WARN: only resolved to 'approximate' precision (51.702052, -0.0335908)
+[41/75] Geocoding: Huawei Horinger (override: Horinger, Hohhot, Inner Mongolia, China)
+  WARN: only resolved to 'approximate' precision (40.2952478, 111.9044975)
+[42/75] Geocoding: VNET Bayin Ulanqab (override: Ulanqab, Inner Mongolia, China)
+  WARN: only resolved to 'approximate' precision (40.9902685, 113.1315646)
+[43/75] Geocoding: Google Red Oak (330 Austin Blvd, Red Oak, TX 75154)
+[44/75] Geocoding: Meta Gallatin (1 Meta Lp, Gallatin, TN 37066)
+  WARN: only resolved to 'approximate' precision (36.3883031, -86.4475898)
+[45/75] Geocoding: Meta Los Lunas (4250 Messenger Lp, Los Lunas, NM 87031)
+[46/75] Geocoding: CoreWeave Ellendale ND (9685 87th Ave SE, Ellendale, ND 58436)
+[47/75] Geocoding: CoreWeave Chester VA (1401 Meadowville Technology Parkway, Chester, VA)
+  WARN: only resolved to 'approximate' precision (37.3489475, -77.438379)
+[48/75] Geocoding: Oracle Batam (override: Nongsa Digital Park, Batam, Indonesia)
+[49/75] Geocoding: Google Papillion (override: 14706 Schram Rd, Papillion, Nebraska, United States)
+[50/75] Geocoding: CoreWeave Marble NC (155 Palmer Ln, Marble, NC 28905)
+[51/75] Geocoding: Microsoft SAT40 (15000 Lambda Drive, San Antonio, TX 78245)
+  WARN: only resolved to 'approximate' precision (29.4246002, -98.4951405)
+[52/75] Geocoding: STACK Infrastructure NVA02 (9590 Hornbaker Rd, Manassas, VA 20109)
+[53/75] Geocoding: Stream Phoenix (2950 S. Litchfield Road)
+[54/75] Geocoding: Microsoft SAT14 (3545 Wiseman Boulevard, San Antonio, TX 78251)
+[55/75] Geocoding: Vantage TX1 (14720 Omicron Dr, San Antonio, TX 78245)
+[56/75] Geocoding: CoreWeave Dalton 1 & 2 (2205 Industrial South Rd, Dalton, GA, 30721)
+[57/75] Geocoding: Alibaba Zhangbei (Alibaba Zhangbei Yun Calculation Data Center, Zhangbei County, Zhangjiakou, Hebei, China, 076471)
+  WARN: only resolved to 'approximate' precision (29.5424823, 87.6481318)
+[58/75] Geocoding: Start Campus Sines Data Campus (override: Sines, Setubal District, Portugal)
+  WARN: only resolved to 'approximate' precision (37.956549, -8.8689639)
+[59/75] Geocoding: Google Pryor (North) (4581 Webb St, Pryor, OK 74361)
+[60/75] Geocoding: CoreWeave Muskogee OK (1525 W 43rd St S, Muskogee, OK 74401, USA)
+  WARN: only resolved to 'approximate' precision (35.6630196, -95.3927706)
+[61/75] Geocoding: Crusoe Abilene Expansion (5502 Spinks Rd, Abilene, TX 79601)
+[62/75] Geocoding: Goodnight (10001 Lima Rd, Claude, TX 79019)
+  WARN: only resolved to 'approximate' precision (35.1081103, -101.362741)
+[63/75] Geocoding: Google Cedar Rapids (5800 EDGEWOOD RD SW CEDAR RAPIDS, IA 52404)
+[64/75] Geocoding: Google Fort Wayne (6015 Adams Center Road, Fort Wayne, IN 46806)
+[65/75] Geocoding: Meta Hyperion (Holly Ridge, LA 71269)
+[66/75] Geocoding: Meta Sarpy (14436-14998 Fairview Rd, Springfield, NE 68059, USA)
+  WARN: only resolved to 'approximate' precision (41.0818396, -96.1310942)
+[67/75] Geocoding: OpenAI Stargate Lordstown (2300 Hallock Young Rd, Warren, OH 44481)
+  WARN: only resolved to 'approximate' precision (39.4203978, -84.180897)
+[68/75] Geocoding: OpenAI Stargate Michigan (override: Saline Township, Michigan, United States)
+  WARN: only resolved to 'approximate' precision (42.1245153, -83.8385743)
+[69/75] Geocoding: OpenAI Stargate Milam (override: Cameron, Milam County, Texas, United States)
+  WARN: only resolved to 'approximate' precision (30.8532454, -96.9769304)
+[70/75] Geocoding: OpenAI Stargate New Mexico (override: Santa Teresa, New Mexico, United States)
+  WARN: only resolved to 'approximate' precision (31.8700346, -106.6865799)
+[71/75] Geocoding: OpenAI Stargate Shackelford (175 Private Road 1604, Abilene, TX 79601, Shackelford County)
+  WARN: only resolved to 'approximate' precision (32.44645, -99.7475905)
+[72/75] Geocoding: OpenAI Stargate UAE (override: Abu Dhabi, United Arab Emirates)
+  WARN: only resolved to 'approximate' precision (24.4538352, 54.3774014)
+[73/75] Geocoding: OpenAI Stargate Wisconsin (override: Port Washington, Wisconsin, United States)
+  WARN: only resolved to 'approximate' precision (43.3885538, -87.8692845)
+[74/75] Geocoding: QTS Cedar Rapids (6200 76th Ave SW, Fairfax, IA 52228)
+[75/75] Geocoding: Southgate Melbourne (override: Melbourne, Victoria, Australia)
+  WARN: only resolved to 'approximate' precision (-37.8142454, 144.9631732)
+Saved snapshot to data/snapshots/2026-08-01.json
+
+Done. Saved 75 data centers to data/datacenters.json
+  35 resolved at simplified-address ('approximate') precision only
+  0 resolved at country-level precision only
+  0 failed to geocode (lat/lng set to null)
+
+Verified: all 17 previously-country-precision facilities (see SOURCES.md
+"Manually-researched locations") now resolve via location_overrides.json
+to address/approximate precision — 0 facilities remain at country-level,
+down from 17. openai-stargate-new-mexico specifically now lands at
+(31.87, -106.69), inside Santa Teresa, NM, rather than the jittered US
+centroid. Re-ran a second consecutive time immediately after (not logged
+here) with identical results for all 17 — confirms the regression guard
+holds steady precision run-over-run rather than needing to intervene
+when Nominatim's results are already stable.
+
+Note: this run also caught and fixed a bug where location_overrides.json
+address strings (which already end in the country name, e.g. "Santa
+Teresa, New Mexico, United States") were being run through geocode()'s
+normal tiers, which append ", {country}" again — producing an
+unresolvable doubled-country query and silently falling through to
+country-tier for every override. Fixed by adding
+geocode_with_override(), which queries the override string directly.

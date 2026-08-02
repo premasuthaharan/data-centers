@@ -18,6 +18,13 @@ from snapshot_utils import prune_snapshots, write_snapshot
 
 EPOCH_CSV_URL = "https://epoch.ai/data/data_centers/data_centers.csv"
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
+LOCATION_OVERRIDES_PATH = "data/location_overrides.json"
+DATACENTERS_PATH = "data/datacenters.json"
+
+# Relative ordering of geocode_precision values, best first. Used by the
+# regression guard in main() to decide whether a freshly-generated record
+# is allowed to replace an existing one.
+PRECISION_RANK = {"address": 3, "approximate": 2, "country": 1, "failed": 0, None: 0}
 
 # Static carbon intensity (gCO2/kWh) and renewable % by country name or ISO2
 GRID_DATA = {
@@ -102,6 +109,56 @@ IMPACT_RATES = {
 DEFAULT_IMPACT_RATES = {"electricity_price_usd_per_kwh": 0.06, "water_liters_per_kwh": 3.0}
 
 
+def load_location_overrides(path: str = LOCATION_OVERRIDES_PATH) -> dict:
+    """Manually-researched locations for facilities the CSV's Address column
+    doesn't cover well, keyed by facility id. See SOURCES.md for provenance."""
+    try:
+        with open(path) as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
+
+
+def load_existing_datacenters(path: str = DATACENTERS_PATH) -> dict:
+    """Existing datacenters.json output, keyed by facility id, or {} on a
+    first-ever run where the file doesn't exist yet."""
+    try:
+        with open(path) as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        return {}
+    return {r["id"]: r for r in data.get("data_centers", [])}
+
+
+def apply_regression_guard(results: list[dict], existing_by_id: dict) -> list[dict]:
+    """Prevent a fresh geocode from overwriting an existing record with a
+    strictly worse geocode_precision (e.g. Nominatim briefly returning a
+    worse match than a prior run, or than a manual override). Freshly
+    generated data that matches or improves on the existing precision is
+    let through unchanged — this is a regression guard, not a freeze."""
+    guarded = []
+    for record in results:
+        existing = existing_by_id.get(record["id"])
+        if existing is not None:
+            existing_rank = PRECISION_RANK.get(existing.get("geocode_precision"), 0)
+            fresh_rank = PRECISION_RANK.get(record["geocode_precision"], 0)
+            if existing_rank > fresh_rank:
+                print(
+                    f"  REGRESSION PREVENTED for '{record['id']}': existing "
+                    f"precision '{existing.get('geocode_precision')}' is better than "
+                    f"fresh '{record['geocode_precision']}' — keeping existing location"
+                )
+                record = {
+                    **record,
+                    "address": existing.get("address"),
+                    "lat": existing.get("lat"),
+                    "lng": existing.get("lng"),
+                    "geocode_precision": existing.get("geocode_precision"),
+                }
+        guarded.append(record)
+    return guarded
+
+
 def fetch_csv(url: str) -> str:
     req = urllib.request.Request(url, headers={"User-Agent": "datacenter-mapper/1.0"})
     with urllib.request.urlopen(req, timeout=30) as resp:
@@ -178,6 +235,23 @@ def geocode(address: str, country: str) -> tuple[float, float, str] | None:
     return None
 
 
+def geocode_with_override(address: str, country: str, override: dict | None) -> tuple[float, float, str] | None:
+    """Like geocode(), but when a manual override is present, its `address`
+    is a complete, already-verified query string (see SOURCES.md) — querying
+    it through geocode()'s tiers would incorrectly append country again
+    (e.g. "Santa Teresa, New Mexico, United States, United States"), so it's
+    queried directly instead, tagged with the precision recorded alongside
+    it in location_overrides.json. Falls back to the normal CSV-address tiers
+    if the override string itself fails to resolve on a given run."""
+    if override:
+        result = _nominatim_query(override["address"])
+        time.sleep(1.1)
+        if result:
+            lat, lng = result
+            return lat, lng, override["geocode_precision"]
+    return geocode(address, country)
+
+
 def parse_float(val, default=None):
     try:
         return float(val)
@@ -220,6 +294,10 @@ def main():
     rows = list(reader)
     print(f"Found {len(rows)} entries")
 
+    overrides = load_location_overrides()
+    if overrides:
+        print(f"Loaded {len(overrides)} manual location overrides")
+
     results = []
     for i, row in enumerate(rows):
         name = (row.get("Name") or "").strip()
@@ -232,8 +310,17 @@ def main():
         if not name:
             continue
 
-        print(f"[{i+1}/{len(rows)}] Geocoding: {name} ({address or country})")
-        result = geocode(address, country)
+        dc_id = "".join(
+            c if c.isalnum() or c == "-" else "-"
+            for c in name.lower().replace(" ", "-")
+        )[:60]
+
+        override = overrides.get(dc_id)
+        if override:
+            print(f"[{i+1}/{len(rows)}] Geocoding: {name} (override: {override['address']})")
+        else:
+            print(f"[{i+1}/{len(rows)}] Geocoding: {name} ({address or country})")
+        result = geocode_with_override(address, country, override)
 
         if not result:
             print(f"  FAILED: could not geocode at any precision tier")
@@ -245,11 +332,6 @@ def main():
 
         grid = GRID_DATA.get(country, DEFAULT_GRID)
         rates = IMPACT_RATES.get(country, DEFAULT_IMPACT_RATES)
-
-        dc_id = "".join(
-            c if c.isalnum() or c == "-" else "-"
-            for c in name.lower().replace(" ", "-")
-        )[:60]
 
         if geocode_precision == "country" and lat is not None:
             lat, lng = _jitter_country_centroid(lat, lng, dc_id)
@@ -274,7 +356,10 @@ def main():
 
     check_geocode_failure_rate(results)
 
-    out_path = "data/datacenters.json"
+    existing_by_id = load_existing_datacenters()
+    results = apply_regression_guard(results, existing_by_id)
+
+    out_path = DATACENTERS_PATH
     generated_at = datetime.now(timezone.utc)
     output = {
         "generated_at": generated_at.isoformat(),

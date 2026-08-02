@@ -8,11 +8,16 @@ from fetch_data import (
     GRID_DATA,
     IMPACT_RATES,
     MAX_GEOCODE_FAILURE_RATE,
+    PRECISION_RANK,
     _jitter_country_centroid,
     _simplify_address,
+    apply_regression_guard,
     check_geocode_failure_rate,
     clean_owner,
     geocode,
+    geocode_with_override,
+    load_existing_datacenters,
+    load_location_overrides,
     parse_float,
 )
 from logic import haversine_km
@@ -188,6 +193,81 @@ class TestGeocode:
         assert calls == ["Atlantis"]
 
 
+# --- geocode_with_override ---
+
+class TestGeocodeWithOverride:
+    def test_no_override_falls_back_to_plain_geocode(self, monkeypatch):
+        import fetch_data
+        from fetch_data import geocode_with_override
+
+        monkeypatch.setattr(fetch_data, "_nominatim_query", lambda q: (1.0, 2.0))
+        monkeypatch.setattr(fetch_data.time, "sleep", lambda s: None)
+
+        result = geocode_with_override("123 Main St", "United States", None)
+        assert result == (1.0, 2.0, "address")
+
+    def test_override_queried_verbatim_without_appending_country_again(self, monkeypatch):
+        # Regression test: override addresses already end in the country name
+        # (e.g. "Santa Teresa, New Mexico, United States"); routing them
+        # through geocode()'s tiers would append ", {country}" a second time
+        # and break the match. geocode_with_override must query the override
+        # string exactly as recorded in location_overrides.json.
+        import fetch_data
+        from fetch_data import geocode_with_override
+
+        queries = []
+
+        def fake_query(q):
+            queries.append(q)
+            if q == "Santa Teresa, New Mexico, United States":
+                return (31.87, -106.68)
+            return None
+
+        monkeypatch.setattr(fetch_data, "_nominatim_query", fake_query)
+        monkeypatch.setattr(fetch_data.time, "sleep", lambda s: None)
+
+        override = {
+            "address": "Santa Teresa, New Mexico, United States",
+            "geocode_precision": "approximate",
+        }
+        result = geocode_with_override("", "United States", override)
+
+        assert result == (31.87, -106.68, "approximate")
+        assert queries == ["Santa Teresa, New Mexico, United States"]
+
+    def test_override_precision_field_is_used_verbatim(self, monkeypatch):
+        import fetch_data
+        from fetch_data import geocode_with_override
+
+        monkeypatch.setattr(fetch_data, "_nominatim_query", lambda q: (5.0, 6.0))
+        monkeypatch.setattr(fetch_data.time, "sleep", lambda s: None)
+
+        override = {"address": "Some Researched Place", "geocode_precision": "address"}
+        result = geocode_with_override("", "Wonderland", override)
+        assert result == (5.0, 6.0, "address")
+
+    def test_override_query_failure_falls_back_to_csv_address(self, monkeypatch):
+        import fetch_data
+        from fetch_data import geocode_with_override
+
+        queries = []
+
+        def fake_query(q):
+            queries.append(q)
+            if q == "Bad Override String":
+                return None
+            return (9.0, 9.0)
+
+        monkeypatch.setattr(fetch_data, "_nominatim_query", fake_query)
+        monkeypatch.setattr(fetch_data.time, "sleep", lambda s: None)
+
+        override = {"address": "Bad Override String", "geocode_precision": "approximate"}
+        result = geocode_with_override("123 Main St", "United States", override)
+
+        assert result == (9.0, 9.0, "address")
+        assert queries[0] == "Bad Override String"
+
+
 # --- check_geocode_failure_rate ---
 
 def _make_results(n_ok: int, n_failed: int) -> list[dict]:
@@ -262,3 +342,202 @@ class TestMainWritesSnapshot:
         snapshots_dir = tmp_path / "data" / "snapshots"
         snapshot_files = list(snapshots_dir.glob("*.json"))
         assert len(snapshot_files) == 1
+
+
+# --- load_location_overrides / load_existing_datacenters ---
+
+class TestLoadLocationOverrides:
+    def test_missing_file_returns_empty_dict(self, tmp_path):
+        assert load_location_overrides(str(tmp_path / "nope.json")) == {}
+
+    def test_loads_existing_file(self, tmp_path):
+        overrides_path = tmp_path / "location_overrides.json"
+        overrides_path.write_text(json.dumps({"some-id": {"address": "Some Place"}}))
+        assert load_location_overrides(str(overrides_path)) == {
+            "some-id": {"address": "Some Place"}
+        }
+
+
+class TestLoadExistingDatacenters:
+    def test_missing_file_returns_empty_dict(self, tmp_path):
+        assert load_existing_datacenters(str(tmp_path / "nope.json")) == {}
+
+    def test_loads_and_keys_by_id(self, tmp_path):
+        path = tmp_path / "datacenters.json"
+        path.write_text(json.dumps({
+            "data_centers": [
+                {"id": "facility-a", "geocode_precision": "address"},
+                {"id": "facility-b", "geocode_precision": "country"},
+            ]
+        }))
+        result = load_existing_datacenters(str(path))
+        assert set(result) == {"facility-a", "facility-b"}
+        assert result["facility-a"]["geocode_precision"] == "address"
+
+
+# --- apply_regression_guard ---
+
+class TestApplyRegressionGuard:
+    def test_preserves_existing_when_fresh_run_regresses(self):
+        fresh = [{
+            "id": "facility-a", "lat": 1.0, "lng": 1.0,
+            "geocode_precision": "country", "address": "",
+        }]
+        existing = {"facility-a": {
+            "lat": 9.0, "lng": 9.0, "geocode_precision": "address", "address": "9 Real St",
+        }}
+
+        guarded = apply_regression_guard(fresh, existing)
+
+        assert guarded[0]["lat"] == 9.0
+        assert guarded[0]["lng"] == 9.0
+        assert guarded[0]["geocode_precision"] == "address"
+        assert guarded[0]["address"] == "9 Real St"
+
+    def test_allows_improvement_over_existing(self):
+        fresh = [{
+            "id": "facility-a", "lat": 9.0, "lng": 9.0,
+            "geocode_precision": "address", "address": "9 Real St",
+        }]
+        existing = {"facility-a": {
+            "lat": 1.0, "lng": 1.0, "geocode_precision": "country", "address": "",
+        }}
+
+        guarded = apply_regression_guard(fresh, existing)
+
+        assert guarded[0]["lat"] == 9.0
+        assert guarded[0]["geocode_precision"] == "address"
+
+    def test_matching_precision_passes_fresh_through(self):
+        fresh = [{
+            "id": "facility-a", "lat": 5.0, "lng": 5.0,
+            "geocode_precision": "approximate", "address": "New City",
+        }]
+        existing = {"facility-a": {
+            "lat": 4.0, "lng": 4.0, "geocode_precision": "approximate", "address": "Old City",
+        }}
+
+        guarded = apply_regression_guard(fresh, existing)
+
+        assert guarded[0]["lat"] == 5.0
+        assert guarded[0]["address"] == "New City"
+
+    def test_id_not_in_existing_passes_through_unchanged(self):
+        fresh = [{
+            "id": "new-facility", "lat": 5.0, "lng": 5.0,
+            "geocode_precision": "country", "address": "",
+        }]
+
+        guarded = apply_regression_guard(fresh, existing_by_id={})
+
+        assert guarded == fresh
+
+    def test_precision_rank_orders_address_above_approximate_above_country_above_failed(self):
+        assert PRECISION_RANK["address"] > PRECISION_RANK["approximate"]
+        assert PRECISION_RANK["approximate"] > PRECISION_RANK["country"]
+        assert PRECISION_RANK["country"] > PRECISION_RANK["failed"]
+        assert PRECISION_RANK["failed"] == PRECISION_RANK[None]
+
+
+# --- main() with overrides and regression guard ---
+
+class TestMainWithOverridesAndRegressionGuard:
+    def test_override_is_applied_and_produces_expected_precision(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        (tmp_path / "data").mkdir()
+        (tmp_path / "data" / "location_overrides.json").write_text(json.dumps({
+            "test-dc": {
+                "address": "Researched Location, Somewhere",
+                "lat": 42.0,
+                "lng": -71.0,
+                "geocode_precision": "approximate",
+            }
+        }))
+        monkeypatch.setattr(fetch_data, "fetch_csv", lambda url: SAMPLE_CSV)
+        monkeypatch.setattr(fetch_data.time, "sleep", lambda s: None)
+
+        queries_seen = []
+
+        def fake_nominatim_query(query):
+            queries_seen.append(query)
+            if query == "Researched Location, Somewhere":
+                return (42.0, -71.0)
+            return (1.0, 2.0)
+
+        monkeypatch.setattr(fetch_data, "_nominatim_query", fake_nominatim_query)
+
+        fetch_data.main()
+
+        output = json.loads((tmp_path / "data" / "datacenters.json").read_text())
+        record = output["data_centers"][0]
+        assert record["id"] == "test-dc"
+        assert record["geocode_precision"] == "approximate"
+        assert record["lat"] == 42.0
+        assert record["lng"] == -71.0
+        # The override's researched address is what got queried directly, not
+        # run through geocode()'s tiers (which would incorrectly append country
+        # again onto an address string that already ends in a country name).
+        assert queries_seen[0] == "Researched Location, Somewhere"
+
+    def test_existing_better_precision_is_preserved_not_overwritten(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        (tmp_path / "data").mkdir()
+        (tmp_path / "data" / "datacenters.json").write_text(json.dumps({
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "data_centers": [{
+                "id": "test-dc",
+                "name": "Test DC",
+                "lat": 39.5,
+                "lng": -89.6,
+                "geocode_precision": "address",
+                "address": "1 Main St, Springfield, IL 62701",
+            }],
+        }))
+        monkeypatch.setattr(fetch_data, "fetch_csv", lambda url: SAMPLE_CSV)
+        # Simulate a fresh run that would only achieve country-level precision this time.
+        monkeypatch.setattr(fetch_data, "geocode", lambda address, country: (39.0, -98.0, "country"))
+
+        fetch_data.main()
+
+        output = json.loads((tmp_path / "data" / "datacenters.json").read_text())
+        record = output["data_centers"][0]
+        assert record["geocode_precision"] == "address"
+        assert record["lat"] == 39.5
+        assert record["lng"] == -89.6
+
+    def test_fresh_run_improving_on_existing_country_precision_does_update(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        (tmp_path / "data").mkdir()
+        (tmp_path / "data" / "datacenters.json").write_text(json.dumps({
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "data_centers": [{
+                "id": "test-dc",
+                "name": "Test DC",
+                "lat": 39.0,
+                "lng": -98.0,
+                "geocode_precision": "country",
+                "address": "",
+            }],
+        }))
+        monkeypatch.setattr(fetch_data, "fetch_csv", lambda url: SAMPLE_CSV)
+        monkeypatch.setattr(fetch_data, "geocode", lambda address, country: (39.5, -89.6, "address"))
+
+        fetch_data.main()
+
+        output = json.loads((tmp_path / "data" / "datacenters.json").read_text())
+        record = output["data_centers"][0]
+        assert record["geocode_precision"] == "address"
+        assert record["lat"] == 39.5
+        assert record["lng"] == -89.6
+
+    def test_first_ever_run_with_no_existing_datacenters_json_does_not_error(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        (tmp_path / "data").mkdir()
+        assert not (tmp_path / "data" / "datacenters.json").exists()
+        monkeypatch.setattr(fetch_data, "fetch_csv", lambda url: SAMPLE_CSV)
+        monkeypatch.setattr(fetch_data, "geocode", lambda address, country: (1.0, 2.0, "address"))
+
+        fetch_data.main()
+
+        output = json.loads((tmp_path / "data" / "datacenters.json").read_text())
+        assert output["data_centers"][0]["geocode_precision"] == "address"
