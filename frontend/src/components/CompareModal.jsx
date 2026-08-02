@@ -1,12 +1,12 @@
 import { useState, useMemo } from "react";
 import { fmt } from "./formatters";
 
-const WATER_COLORS = { low: "#22c55e", moderate: "#f59e0b", high: "#f97316", critical: "#ef4444" };
 const WATER_SEVERITY_RANK = { low: 0, moderate: 1, high: 2, critical: 3 };
 
 // rawGet feeds the per-row best/worst comparison; lowerIsBetter picks the
 // direction ("more renewables" is better, "more CO2" is worse). Rows
-// without rawGet (e.g. Operator) aren't comparable and skip highlighting.
+// without rawGet skip highlighting entirely: Operator isn't comparable,
+// and Power is deliberately left neutral — facility size isn't "worse."
 const ROWS = [
   { label: "Operator", get: (dc) => dc.operator ?? "—" },
   { label: "Power", get: (dc) => (dc.power_mw ? `${dc.power_mw.toLocaleString()} MW` : "—") },
@@ -37,14 +37,12 @@ const ROWS = [
   {
     label: "Water withdrawal",
     get: (dc) => fmt(dc.impact.water.daily_withdrawal_mgd, "MGD"),
-    color: (dc) => WATER_COLORS[dc.impact.water.severity],
     rawGet: (dc) => dc.impact.water.daily_withdrawal_mgd,
     lowerIsBetter: true,
   },
   {
     label: "Water severity",
     get: (dc) => dc.impact.water.severity ?? "—",
-    color: (dc) => WATER_COLORS[dc.impact.water.severity],
     rawGet: (dc) => WATER_SEVERITY_RANK[dc.impact.water.severity] ?? 0,
     lowerIsBetter: true,
   },
@@ -185,7 +183,6 @@ export default function CompareModal({ datacenters, onClose }) {
                           <td
                             key={dc.id}
                             className={marker ? `compare-cell--${marker}` : undefined}
-                            style={row.color ? { color: row.color(dc) } : undefined}
                           >
                             {marker === "best" && <span className="compare-cell-marker" aria-label="Best">▾ </span>}
                             {marker === "worst" && <span className="compare-cell-marker" aria-label="Worst">▴ </span>}
