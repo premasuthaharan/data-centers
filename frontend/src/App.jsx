@@ -38,67 +38,76 @@ export default function App() {
   const [scenarioData, setScenarioData] = useState(null);
   const [focusedRegion, setFocusedRegion] = useState(null);
 
-  useEffect(() => {
-    // Captured before this data loads so a shared-link facility opens once
-    // the list arrives, without racing the URL-sync effect below (which
-    // would otherwise strip the query param on its own first run).
-    const sharedFacilityId = new URLSearchParams(window.location.search).get("facility");
-
-    fetch(`${API}/api/datacenters`)
-      .then((r) => r.json())
-      .then((data) => {
-        setDatacenters(data.data_centers);
-        setGeneratedAt(data.generated_at);
-        if (sharedFacilityId && data.data_centers.some((dc) => dc.id === sharedFacilityId)) {
-          setSelectedId(sharedFacilityId);
-          setActivePanel("detail");
-        }
-      })
-      .catch((e) => setError(e.message))
-      .finally(() => setLoading(false));
-  }, []);
-
-  // True once the initial URL-decode attempt below has settled (whether or
-  // not it found/applied a scenario). The scenario URL-sync effect must not
-  // run until this flips true, or it would strip a shared ?scenario= param
-  // from the address bar while the initial POST /api/scenario is still
-  // in flight (scenarioData is still null at that point).
+  // True once the initial mount-time URL-decode below has settled (whether
+  // or not it found/applied a scenario). The scenario URL-sync effect must
+  // not run until this flips true, or it would strip a shared ?scenario=
+  // param from the address bar while the initial POST /api/scenario is
+  // still in flight (scenarioData is still null at that point).
   const [scenarioUrlHydrated, setScenarioUrlHydrated] = useState(false);
 
-  // On mount, check for a shared scenario in the URL (?scenario=<presetId>
-  // or ?scenario=custom&renewable_pct=...&pue=...). If present, re-apply it
-  // via POST /api/scenario and open the scenario panel pre-populated, so a
-  // shared link reproduces what the sender saw instead of the default
-  // baseline map. A preset id resolves to its overrides via PRESETS; a
-  // malformed/unknown preset id or empty custom params decodes to null and
-  // is silently ignored (falls back to baseline).
+  // Captured once (not re-read inside the effect below) so React 18/19
+  // StrictMode's double-invocation of mount effects can't race against the
+  // URL-sync effects further down, which rewrite window.location as soon as
+  // the first invocation's state settles — a second read at that point
+  // could see a ?facility=/?scenario= the sync effects already stripped.
+  const [initialParams] = useState(() => new URLSearchParams(window.location.search));
+
+  // On mount, resolve ?facility=<id> and ?scenario=<presetId|custom&...>
+  // together so a link carrying both settles once, on first paint, instead
+  // of the facility card flashing baseline-then-scenario: GET /api/datacenters
+  // and (if a scenario param decodes) POST /api/scenario are kicked off in
+  // parallel; once both resolve, selectedId + scenarioData are set together
+  // before activePanel, so DataCenterCard never renders with scenarioDc
+  // still undefined for a facility that should have deltas. activePanel
+  // becomes 'detail' when a facility id is present (with or without a
+  // scenario) and 'scenario' when only a scenario is present, matching
+  // what the sender was looking at when they copied the link.
   useEffect(() => {
-    const decoded = decodeScenarioParams(new URLSearchParams(window.location.search));
+    const sharedFacilityId = initialParams.get("facility");
+
+    const decoded = decodeScenarioParams(initialParams);
     const presetId = decoded?.presetId;
-    const scenario = presetId
-      ? PRESETS.find((p) => p.id === presetId)?.scenario
-      : decoded?.scenario;
+    const preset = presetId ? PRESETS.find((p) => p.id === presetId) : null;
+    const scenario = presetId ? preset?.scenario : decoded?.scenario;
 
-    if (!scenario) {
+    const datacentersPromise = fetch(`${API}/api/datacenters`)
+      .then((r) => r.json())
+      .catch((e) => {
+        setError(e.message);
+        return null;
+      });
+
+    const scenarioPromise = scenario
+      ? fetch(`${API}/api/scenario`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ scenario }),
+        })
+          .then((r) => (r.ok ? r.json() : null))
+          .then((body) => (body ? { ...body, presetId, presetLabel: preset?.label, scenario } : null))
+          .catch(() => null)
+      : Promise.resolve(null);
+
+    Promise.all([datacentersPromise, scenarioPromise]).then(([data, appliedScenario]) => {
+      if (data) {
+        setDatacenters(data.data_centers);
+        setGeneratedAt(data.generated_at);
+      }
+      if (appliedScenario) setScenarioData(appliedScenario);
+
+      const facilityFound =
+        sharedFacilityId && data?.data_centers.some((dc) => dc.id === sharedFacilityId);
+      if (facilityFound) {
+        setSelectedId(sharedFacilityId);
+        setActivePanel("detail");
+      } else if (appliedScenario) {
+        setActivePanel("scenario");
+      }
+
+      setLoading(false);
       setScenarioUrlHydrated(true);
-      return;
-    }
-
-    fetch(`${API}/api/scenario`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ scenario }),
-    })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((body) => {
-        if (body) {
-          setScenarioData({ ...body, presetId, scenario });
-          setActivePanel("scenario");
-        }
-      })
-      .catch(() => {})
-      .finally(() => setScenarioUrlHydrated(true));
-  }, []);
+    });
+  }, [initialParams]);
 
   const handleSelect = useCallback((id) => {
     setSelectedId((prev) => (prev === id ? null : id));
@@ -278,6 +287,8 @@ export default function App() {
             dc={selectedDC}
             scenarioDc={scenarioDC}
             scenarioLabel={scenarioData?.presetLabel}
+            activePresetId={scenarioData?.presetId}
+            activeScenario={scenarioData?.scenario}
             onClose={handleClose}
           />
         )}
@@ -297,6 +308,7 @@ export default function App() {
             onClose={closeOverlayPanel}
             onScenarioChange={setScenarioData}
             initialScenarioData={scenarioData}
+            selectedFacilityId={selectedId}
           />
         )}
       </div>
