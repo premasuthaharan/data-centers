@@ -58,7 +58,10 @@ describe("ScenarioPanel", () => {
         body: JSON.stringify({ scenario: { carbon_intensity_gco2_per_kwh: 50 } }),
       })
     );
-    expect(onScenarioChange).toHaveBeenCalledWith(SCENARIO_RESPONSE);
+    expect(onScenarioChange).toHaveBeenCalledWith({
+      ...SCENARIO_RESPONSE,
+      presetLabel: "Grid Decarbonization",
+    });
   });
 
   it("reset clears the applied scenario and notifies the parent with null", async () => {

@@ -74,7 +74,7 @@ export default function ScenarioPanel({ onClose, onScenarioChange }) {
   const [data, setData] = useState(null);
 
   const applyScenario = useCallback(
-    async (presetId, scenario) => {
+    async (presetId, scenario, presetLabel) => {
       setStatus("loading");
       setError(null);
       try {
@@ -88,7 +88,11 @@ export default function ScenarioPanel({ onClose, onScenarioChange }) {
         setData(body);
         setActivePresetId(presetId);
         setStatus("idle");
-        onScenarioChange?.(body);
+        // presetLabel is attached here (rather than in the API response)
+        // so other consumers of scenarioData — e.g. DataCenterCard's
+        // "Under: <label>" badge — can show which policy is active without
+        // a backend change.
+        onScenarioChange?.({ ...body, presetLabel });
       } catch (e) {
         setError(e.message);
         setStatus("error");
@@ -123,7 +127,7 @@ export default function ScenarioPanel({ onClose, onScenarioChange }) {
             className={
               "scenario-preset-btn" + (activePresetId === preset.id ? " scenario-preset-btn--active" : "")
             }
-            onClick={() => applyScenario(preset.id, preset.scenario)}
+            onClick={() => applyScenario(preset.id, preset.scenario, preset.label)}
             disabled={status === "loading"}
           >
             <span className="scenario-preset-label">{preset.label}</span>

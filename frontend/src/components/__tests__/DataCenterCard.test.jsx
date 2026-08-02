@@ -65,6 +65,81 @@ describe("DataCenterCard", () => {
   });
 });
 
+function makeScenarioDc(overrides = {}) {
+  return makeDc({
+    impact: {
+      radius_km: 50,
+      data_status: "confirmed",
+      electricity: { annual_kwh: 600_000_000, price_lift_pct: 5.5, homes_powered: 57_143 },
+      carbon: { annual_co2_tonnes: 30_000, cars_equivalent: 6_522, renewable_pct: 100 },
+      water: { daily_withdrawal_mgd: 1.52, severity: "moderate", households_equivalent: 5067 },
+      land: { footprint_m2: 10_000, waste_heat_mw: 30 },
+      ...overrides.impact,
+    },
+    ...overrides,
+  });
+}
+
+describe("DataCenterCard with an active scenario", () => {
+  it("renders baseline-only (no deltas, no badge) when scenarioDc is absent", () => {
+    render(<DataCenterCard dc={makeDc()} onClose={() => {}} />);
+
+    expect(screen.queryByText(/Under:/)).not.toBeInTheDocument();
+    expect(screen.queryByText("→")).not.toBeInTheDocument();
+  });
+
+  it("shows the scenario badge with the preset label", () => {
+    const scenarioDc = makeScenarioDc();
+    render(
+      <DataCenterCard
+        dc={makeDc()}
+        scenarioDc={scenarioDc}
+        scenarioLabel="Grid Decarbonization"
+        onClose={() => {}}
+      />
+    );
+
+    expect(screen.getByText(/Under: Grid Decarbonization/)).toBeInTheDocument();
+  });
+
+  it("falls back to a generic badge label when scenarioLabel is not provided", () => {
+    const scenarioDc = makeScenarioDc();
+    render(<DataCenterCard dc={makeDc()} scenarioDc={scenarioDc} onClose={() => {}} />);
+
+    expect(screen.getByText(/Under: active scenario/)).toBeInTheDocument();
+  });
+
+  it("renders baseline → scenario for a changed field (CO2 dropped)", () => {
+    const scenarioDc = makeScenarioDc();
+    render(<DataCenterCard dc={makeDc()} scenarioDc={scenarioDc} onClose={() => {}} />);
+
+    expect(screen.getByText("300,000 t")).toBeInTheDocument();
+    expect(screen.getByText("30,000 t")).toBeInTheDocument();
+  });
+
+  it("does not render a delta arrow for an unchanged field", () => {
+    // Water is identical between baseline and scenario in this fixture.
+    const scenarioDc = makeScenarioDc();
+    render(<DataCenterCard dc={makeDc()} scenarioDc={scenarioDc} onClose={() => {}} />);
+
+    // Only one "1.52 MGD" should appear (baseline), not a baseline+scenario pair.
+    expect(screen.getAllByText("1.52 MGD")).toHaveLength(1);
+  });
+
+  it("colors an improved value (lower CO2) as down and a worsened value correctly", () => {
+    const scenarioDc = makeScenarioDc();
+    const { container } = render(<DataCenterCard dc={makeDc()} scenarioDc={scenarioDc} onClose={() => {}} />);
+
+    const co2Scenario = screen.getByText("30,000 t");
+    expect(co2Scenario.className).toContain("scenario-totals-scenario--down");
+
+    // Grid renewables 22% -> 100% is an improvement (lowerIsBetter=false),
+    // so it should also render as "down" (green) despite the value rising.
+    const renewablesScenario = screen.getByText("100%");
+    expect(renewablesScenario.className).toContain("scenario-totals-scenario--down");
+  });
+});
+
 describe("DataCenterCard copy link", () => {
   it("copies the current facility's shareable URL to the clipboard", async () => {
     window.history.pushState(null, "", "/?facility=dc-a");
