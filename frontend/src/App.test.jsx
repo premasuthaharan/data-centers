@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import App from "./App";
+import { resolveInitialTheme } from "./theme";
 
 vi.mock("./components/Map", () => ({
   default: ({ selectedId }) => <div data-testid="mock-map" data-selected={selectedId ?? ""} />,
@@ -23,7 +24,21 @@ beforeEach(() => {
 afterEach(() => {
   vi.unstubAllGlobals();
   window.history.pushState(null, "", "/");
+  document.documentElement.removeAttribute("data-theme");
+  localStorage.clear();
 });
+
+function mockMatchMedia(prefersLight) {
+  vi.stubGlobal(
+    "matchMedia",
+    vi.fn((query) => ({
+      matches: query === "(prefers-color-scheme: light)" ? prefersLight : false,
+      media: query,
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    }))
+  );
+}
 
 describe("App methodology panel", () => {
   it("opens the methodology panel when the info button is clicked", async () => {
@@ -84,5 +99,65 @@ describe("App URL sync", () => {
     expect(screen.getByTestId("mock-map")).toHaveAttribute("data-selected", "");
     expect(screen.queryByText("Facility A")).not.toBeInTheDocument();
     expect(screen.queryByText("Facility B")).not.toBeInTheDocument();
+  });
+});
+
+describe("resolveInitialTheme", () => {
+  it("prefers an explicit data-theme attribute already set on <html>", () => {
+    document.documentElement.setAttribute("data-theme", "light");
+    localStorage.setItem("theme", "dark");
+    mockMatchMedia(false);
+
+    expect(resolveInitialTheme()).toBe("light");
+  });
+
+  it("falls back to a stored localStorage preference when data-theme is unset", () => {
+    localStorage.setItem("theme", "light");
+    mockMatchMedia(false);
+
+    expect(resolveInitialTheme()).toBe("light");
+  });
+
+  it("falls back to prefers-color-scheme when nothing is stored", () => {
+    mockMatchMedia(true);
+
+    expect(resolveInitialTheme()).toBe("light");
+  });
+
+  it("defaults to dark when nothing is stored and the OS prefers dark", () => {
+    mockMatchMedia(false);
+
+    expect(resolveInitialTheme()).toBe("dark");
+  });
+});
+
+describe("App theme toggle", () => {
+  it("flips data-theme on <html> and persists the choice to localStorage", async () => {
+    mockMatchMedia(false);
+    render(<App />);
+    await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+    expect(document.documentElement.getAttribute("data-theme")).toBe("dark");
+
+    fireEvent.click(screen.getByLabelText("Switch to light mode"));
+
+    expect(document.documentElement.getAttribute("data-theme")).toBe("light");
+    expect(localStorage.getItem("theme")).toBe("light");
+
+    fireEvent.click(screen.getByLabelText("Switch to dark mode"));
+
+    expect(document.documentElement.getAttribute("data-theme")).toBe("dark");
+    expect(localStorage.getItem("theme")).toBe("dark");
+  });
+
+  it("initializes from a stored light preference", async () => {
+    localStorage.setItem("theme", "light");
+    mockMatchMedia(false);
+
+    render(<App />);
+    await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+
+    expect(document.documentElement.getAttribute("data-theme")).toBe("light");
+    expect(screen.getByLabelText("Switch to dark mode")).toBeInTheDocument();
   });
 });

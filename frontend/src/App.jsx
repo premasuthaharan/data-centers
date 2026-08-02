@@ -6,6 +6,7 @@ import ScenarioPanel from "./components/ScenarioPanel";
 import CompareModal from "./components/CompareModal";
 import MethodologyPanel from "./components/MethodologyPanel";
 import RegionScorecard from "./components/RegionScorecard";
+import { resolveInitialTheme } from "./theme";
 import "./App.css";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
@@ -17,6 +18,17 @@ export default function App() {
   const [selectedId, setSelectedId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [theme, setTheme] = useState(resolveInitialTheme);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = useCallback(() => {
+    setTheme((t) => (t === "dark" ? "light" : "dark"));
+  }, []);
 
   // activePanel controls which overlay panel is open. selectedId is kept
   // separate since the detail panel can open from multiple places (marker
@@ -115,10 +127,19 @@ export default function App() {
         onSelectDatacenter={handleSelect}
         colorMode={colorMode}
         focusRegion={focusedRegion}
+        theme={theme}
       />
 
       {/* Top-left title overlay */}
       <div className="map-overlay-title">
+        <button
+          className="theme-toggle-btn"
+          onClick={toggleTheme}
+          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          {theme === "dark" ? "☀" : "☾"}
+        </button>
         <button
           className="info-btn"
           onClick={openMethodologyPanel}
