@@ -7,7 +7,6 @@ const WATER_LABELS = { low: "Low stress", moderate: "Moderate stress", high: "Hi
 const WATER_SEVERITY_RANK = { low: 0, moderate: 1, high: 2, critical: 3 };
 const WATER_SEVERITY_BY_RANK = ["low", "moderate", "high", "critical"];
 const PRECISION_WARNINGS = {
-  approximate: "Location is approximate (city/region-level geocode)",
   country: "Location is approximate (country-level geocode only)",
   failed: "Location unknown — could not be geocoded",
 };
@@ -22,13 +21,13 @@ function SectionHeader({ children }) {
 // scenario convention. Only rendered when scenarioValue differs from value,
 // so fields a scenario doesn't touch stay plain rather than showing a
 // same-to-same arrow.
-function StatRow({ label, value, format, sub, accent, scenarioValue, lowerIsBetter = true }) {
+function StatRow({ label, value, format, sub, accent, scenarioValue, lowerIsBetter = true, labelTitle }) {
   const fmtVal = format ?? ((n) => fmt(n));
   const changed = scenarioValue != null && scenarioValue !== value;
   const improved = changed && (lowerIsBetter ? scenarioValue < value : scenarioValue > value);
   return (
     <div className="stat-row">
-      <span className="stat-label">{label}</span>
+      <span className="stat-label" title={labelTitle}>{label}</span>
       <span className="stat-value" style={accent ? { color: accent } : undefined}>
         {fmtVal(value)}
         {sub && <span className="stat-sub"> {sub}</span>}
@@ -205,6 +204,7 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose,
           />
           <StatRow
             label="Grid renewables"
+            labelTitle="Country-level average, not measured per facility"
             value={carbon.renewable_pct}
             scenarioValue={sCarbon?.renewable_pct}
             format={(n) => (n != null ? `${n}%` : "—")}

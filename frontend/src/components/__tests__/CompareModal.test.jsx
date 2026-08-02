@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import CompareModal from "../CompareModal";
 
@@ -35,18 +35,46 @@ const DATACENTERS = [
   }),
 ];
 
+function focusSearch() {
+  fireEvent.focus(screen.getByPlaceholderText(/search facilities/i));
+}
+
 function search(text) {
-  fireEvent.change(screen.getByPlaceholderText(/search facilities/i), {
-    target: { value: text },
-  });
+  const input = screen.getByPlaceholderText(/search facilities/i);
+  fireEvent.focus(input);
+  fireEvent.change(input, { target: { value: text } });
 }
 
 describe("CompareModal", () => {
-  it("lists only non-announced facilities as search results", () => {
+  it("hides the search results dropdown until the search input is focused", () => {
     render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
+    expect(screen.queryByText("Facility A")).not.toBeInTheDocument();
+    expect(screen.queryByText("Facility B")).not.toBeInTheDocument();
+
+    focusSearch();
     expect(screen.getByText("Facility A")).toBeInTheDocument();
     expect(screen.getByText("Facility B")).toBeInTheDocument();
     expect(screen.queryByText("Announced Facility")).not.toBeInTheDocument();
+  });
+
+  it("hides the results dropdown again on blur", async () => {
+    render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
+    const input = screen.getByPlaceholderText(/search facilities/i);
+
+    fireEvent.focus(input);
+    expect(screen.getByText("Facility A")).toBeInTheDocument();
+
+    fireEvent.blur(input);
+    await waitFor(() => {
+      expect(screen.queryByText("Facility A")).not.toBeInTheDocument();
+    });
+  });
+
+  it("keeps results visible while a non-empty query is present, even without focus", () => {
+    render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
+    search("Facility A");
+    fireEvent.blur(screen.getByPlaceholderText(/search facilities/i));
+    expect(screen.getByText("Facility A")).toBeInTheDocument();
   });
 
   it("filters search results by name and by operator, case-insensitively", () => {
@@ -68,6 +96,7 @@ describe("CompareModal", () => {
     render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
     expect(screen.getByText(/select at least 2 facilities/i)).toBeInTheDocument();
 
+    focusSearch();
     fireEvent.click(screen.getByText("Facility A"));
     expect(screen.getByText(/select at least 2 facilities/i)).toBeInTheDocument();
   });
@@ -87,7 +116,9 @@ describe("CompareModal", () => {
   it("removes a chip when its × button is clicked", () => {
     render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
 
+    focusSearch();
     fireEvent.click(screen.getByText("Facility A"));
+    focusSearch();
     fireEvent.click(screen.getByText("Facility B"));
     expect(screen.getByRole("table")).toBeInTheDocument();
 
@@ -96,13 +127,16 @@ describe("CompareModal", () => {
     expect(screen.queryByLabelText("Remove Facility A")).not.toBeInTheDocument();
     expect(screen.getByText(/select at least 2 facilities/i)).toBeInTheDocument();
     // Facility A is searchable/selectable again.
+    focusSearch();
     expect(screen.getByRole("button", { name: /Facility A/ })).toBeInTheDocument();
   });
 
   it("renders a comparison table once 2 facilities are selected", () => {
     render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
 
+    focusSearch();
     fireEvent.click(screen.getByText("Facility A"));
+    focusSearch();
     fireEvent.click(screen.getByText("Facility B"));
 
     expect(screen.queryByText(/select at least 2 facilities/i)).not.toBeInTheDocument();
@@ -130,5 +164,53 @@ describe("CompareModal", () => {
 
     fireEvent.click(screen.getByText("Compare Facilities"));
     expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it("marks the better and worse cell in a row where values differ", () => {
+    const datacenters = [
+      makeDc("dc-a", "Facility A", {
+        impact: {
+          electricity: { annual_kwh: 900_000_000, price_lift_pct: 5.5 },
+          carbon: { annual_co2_tonnes: 100_000, renewable_pct: 22 },
+          water: { daily_withdrawal_mgd: 1.5, severity: "moderate" },
+          land: { waste_heat_mw: 30 },
+        },
+      }),
+      makeDc("dc-b", "Facility B", {
+        impact: {
+          electricity: { annual_kwh: 900_000_000, price_lift_pct: 5.5 },
+          carbon: { annual_co2_tonnes: 500_000, renewable_pct: 22 },
+          water: { daily_withdrawal_mgd: 1.5, severity: "moderate" },
+          land: { waste_heat_mw: 30 },
+        },
+      }),
+    ];
+    render(<CompareModal datacenters={datacenters} onClose={() => {}} />);
+
+    focusSearch();
+    fireEvent.click(screen.getByText("Facility A"));
+    focusSearch();
+    fireEvent.click(screen.getByText("Facility B"));
+
+    const co2Row = screen.getByText("Annual CO₂").closest("tr");
+    const cells = co2Row.querySelectorAll("td");
+    expect(cells[0]).toHaveClass("compare-cell--best");
+    expect(cells[1]).toHaveClass("compare-cell--worst");
+  });
+
+  it("does not mark a row where every selected facility has the same value", () => {
+    render(<CompareModal datacenters={DATACENTERS} onClose={() => {}} />);
+
+    focusSearch();
+    fireEvent.click(screen.getByText("Facility A"));
+    focusSearch();
+    fireEvent.click(screen.getByText("Facility B"));
+
+    // Both DATACENTERS entries share renewable_pct: 22 — no winner to mark.
+    const renewablesRow = screen.getByText("Grid renewables").closest("tr");
+    for (const cell of renewablesRow.querySelectorAll("td")) {
+      expect(cell).not.toHaveClass("compare-cell--best");
+      expect(cell).not.toHaveClass("compare-cell--worst");
+    }
   });
 });

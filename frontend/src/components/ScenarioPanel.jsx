@@ -167,22 +167,21 @@ export default function ScenarioPanel({ onClose, onScenarioChange, initialScenar
         ))}
       </div>
 
-      {activePresetId && (
-        <div className="scenario-active-actions">
-          <button className="scenario-copy-link-btn" onClick={copyLink} disabled={status === "loading"}>
-            {copied ? "✓ Link copied" : "🔗 Copy link"}
-          </button>
-          <button className="scenario-reset-btn" onClick={reset} disabled={status === "loading"}>
-            Reset to baseline
-          </button>
-        </div>
-      )}
-
       {status === "loading" && <div className="scenario-status">Applying scenario…</div>}
       {status === "error" && <div className="scenario-status scenario-status--error">⚠ {error}</div>}
 
       {data && (
         <div className="scenario-totals">
+          {activePresetId && (
+            <div className="scenario-active-actions">
+              <button className="scenario-copy-link-btn" onClick={copyLink} disabled={status === "loading"}>
+                {copied ? "✓ Link copied" : "🔗 Copy link"}
+              </button>
+              <button className="scenario-reset-btn" onClick={reset} disabled={status === "loading"}>
+                Reset to baseline
+              </button>
+            </div>
+          )}
           <div className="scenario-totals-heading">
             {data.baseline_totals.facility_count} facilities · baseline → scenario
           </div>
