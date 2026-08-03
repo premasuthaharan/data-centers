@@ -21,29 +21,29 @@
 
 ## 3. Embed view
 
-- [ ] 3.1 Decide embed mechanism: `?embed=<id>` mode on the existing
+- [x] 3.1 Decide embed mechanism: `?embed=<id>` mode on the existing
       `App.jsx` shell (recommended, consistent with existing
       `?facility=`/`?scenario=` handling) vs. a new route — confirm
       before building
-- [ ] 3.2 Stripped-down render: `DataCenterCard`'s stat display reused,
+- [x] 3.2 Stripped-down render: `DataCenterCard`'s stat display reused,
       with close button, copy-link button, and detail-panel-wrapper
       animation omitted for the embed context
-- [ ] 3.3 Confirm/adjust response headers so the embed view can be framed
+- [x] 3.3 Confirm/adjust response headers so the embed view can be framed
       (no `X-Frame-Options: DENY` on that path)
-- [ ] 3.4 Frontend tests for the embed render path
+- [x] 3.4 Frontend tests for the embed render path
 
 ## 4. Copy embed code
 
-- [ ] 4.1 `DataCenterCard.jsx`: new "Copy embed code" button near the
+- [x] 4.1 `DataCenterCard.jsx`: new "Copy embed code" button near the
       existing "Copy link" button, copying an `<iframe src="...">` snippet
       for the facility
-- [ ] 4.2 Frontend test: embed code copy produces the correct iframe
+- [x] 4.2 Frontend test: embed code copy produces the correct iframe
       snippet for a given facility id
 
 ## 5. Verification
 
-- [ ] 5.1 `cd backend && python3 -m pytest` passes
-- [ ] 5.2 `cd frontend && npm test` passes
+- [x] 5.1 `cd backend && python3 -m pytest` passes
+- [x] 5.2 `cd frontend && npm test` passes
 - [ ] 5.3 Manual: export CSV with and without an active scenario/region
       focus, confirm contents match what's on screen
 - [ ] 5.4 Manual: copy embed code, paste the iframe snippet into a plain
