@@ -49,6 +49,26 @@ def impact_radius_km(power_mw: float | None) -> float:
 UTILIZATION_FACTOR = 0.8
 PUE = 1.3
 
+# --- Policy scenario constants ---
+# See SOURCES.md ("Cost allocation reform markup", "Tax incentive rollback
+# rates") for how these were derived.
+COST_ALLOCATION_THRESHOLD_MW = 100
+COST_ALLOCATION_MARKUP_PCT = 15
+
+# Per-country estimate of how much a facility's effective electricity cost is
+# currently reduced by state/local tax abatements (sales/property tax
+# exemptions on data center equipment). Internal heuristic, not sourced
+# per-facility — see SOURCES.md.
+TAX_INCENTIVE_RATES = {
+    "United States": 0.12,
+    "Ireland": 0.10,
+    "Singapore": 0.08,
+    "China": 0.10,
+    "Malaysia": 0.10,
+    "United Arab Emirates": 0.15,
+}
+DEFAULT_TAX_INCENTIVE_PCT = 0.08
+
 
 def compute_impact(
     dc: dict,
@@ -134,6 +154,25 @@ def compute_impact(
     # Shares the PUE constant above with annual_kwh so the two stay consistent.
     waste_heat_mw = round(power_mw * (pue - 1), 1) if power_mw else 0
 
+    # --- Effective electricity price: cost allocation + tax incentive rollback ---
+    effective_price = (
+        overrides.get("electricity_price_usd_per_kwh")
+        or dc.get("electricity_price_usd_per_kwh")
+        or 0.06
+    )
+    # Cost allocation reform: large facilities (>= COST_ALLOCATION_THRESHOLD_MW)
+    # pay a markup reflecting their own grid-interconnection costs instead of
+    # having them socialized across residential ratepayers; see SOURCES.md
+    # ("Cost allocation reform markup").
+    if overrides.get("cost_allocation_reform") and power_mw >= COST_ALLOCATION_THRESHOLD_MW:
+        effective_price *= 1 + COST_ALLOCATION_MARKUP_PCT / 100
+    # Tax incentive rollback: removes the per-country estimated tax-abatement
+    # discount from the effective price; see SOURCES.md ("Tax incentive
+    # rollback rates").
+    if overrides.get("tax_incentive_rollback"):
+        incentive_pct = TAX_INCENTIVE_RATES.get(dc.get("country"), DEFAULT_TAX_INCENTIVE_PCT)
+        effective_price *= 1 + incentive_pct
+
     return {
         # Map geometry
         "radius_km": impact_radius_km(power_mw),
@@ -146,15 +185,10 @@ def compute_impact(
             # 10,500 kWh/home/year: EIA average US household consumption; see SOURCES.md
             "homes_powered": round(annual_kwh / 10_500),
             # Per-country electricity price, falling back to the global
-            # default for records that predate per-country rates; see
-            # SOURCES.md ("Electricity price")
-            "annual_cost_millions_usd": round(
-                (annual_kwh * (
-                    overrides.get("electricity_price_usd_per_kwh")
-                    or dc.get("electricity_price_usd_per_kwh")
-                    or 0.06
-                )) / 1_000_000, 1
-            ),
+            # default for records that predate per-country rates, then
+            # adjusted for cost-allocation/tax-incentive scenario overrides;
+            # see SOURCES.md ("Electricity price")
+            "annual_cost_millions_usd": round((annual_kwh * effective_price) / 1_000_000, 1),
         },
         # Water
         "water": {

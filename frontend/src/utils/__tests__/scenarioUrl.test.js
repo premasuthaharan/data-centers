@@ -38,6 +38,16 @@ describe("encodeScenarioParams / decodeScenarioParams round-trip", () => {
     expect(params.has("pue")).toBe(false);
     expect(params.get("renewable_pct")).toBe("50");
   });
+
+  it("round-trips boolean overrides (cost allocation reform, tax incentive rollback)", () => {
+    const scenario = { cost_allocation_reform: true, tax_incentive_rollback: true };
+    const params = encodeScenarioParams(null, scenario);
+    expect(params.get("cost_allocation_reform")).toBe("true");
+    expect(params.get("tax_incentive_rollback")).toBe("true");
+
+    const decoded = decodeScenarioParams(params);
+    expect(decoded).toEqual({ presetId: null, scenario });
+  });
 });
 
 describe("decodeScenarioParams malformed input", () => {
