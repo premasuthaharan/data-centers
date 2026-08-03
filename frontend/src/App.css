@@ -98,7 +98,7 @@
   border: 1px solid var(--bg-glass-hairline);
   border-radius: 12px;
   padding: 16px 20px;
-  max-width: 340px;
+  max-width: 620px;
 }
 
 .info-btn,
@@ -161,7 +161,8 @@
 
 .app-actions {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-top: 12px;
 }
 
@@ -169,11 +170,12 @@
   background: var(--bg-card);
   border: 1px solid var(--border-default);
   border-radius: 8px;
-  padding: 6px 10px;
+  padding: 7px 14px;
   font-size: 11px;
   font-weight: 600;
   color: var(--text-primary);
   cursor: pointer;
+  white-space: nowrap;
   transition: border-color 0.15s;
 }
 
