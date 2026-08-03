@@ -98,7 +98,7 @@
   border: 1px solid var(--bg-glass-hairline);
   border-radius: 12px;
   padding: 16px 20px;
-  max-width: 340px;
+  max-width: 620px;
 }
 
 .info-btn,
@@ -161,7 +161,8 @@
 
 .app-actions {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-top: 12px;
 }
 
@@ -169,11 +170,12 @@
   background: var(--bg-card);
   border: 1px solid var(--border-default);
   border-radius: 8px;
-  padding: 6px 10px;
+  padding: 7px 14px;
   font-size: 11px;
   font-weight: 600;
   color: var(--text-primary);
   cursor: pointer;
+  white-space: nowrap;
   transition: border-color 0.15s;
 }
 
@@ -310,8 +312,13 @@
   color: #a5b4fc;
 }
 
-.dc-copy-link-btn {
+.dc-detail-actions {
+  display: flex;
+  gap: 8px;
   margin-top: 10px;
+}
+
+.dc-copy-link-btn {
   background: var(--bg-card);
   border: 1px solid var(--border-default);
   border-radius: 8px;
@@ -325,6 +332,24 @@
 
 .dc-copy-link-btn:hover {
   border-color: var(--accent);
+}
+
+/* ── Embed view (standalone, no slide-in wrapper) ── */
+.dc-detail-panel--embed {
+  border-left: none;
+  width: 100vw;
+  height: 100vh;
+}
+
+.embed-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-panel);
+  color: var(--text-secondary);
+  font-size: 13px;
 }
 
 /* ── Stat chips ── */

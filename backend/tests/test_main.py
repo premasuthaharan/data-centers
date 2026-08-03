@@ -29,6 +29,24 @@ class TestGetAll:
         assert all("impact" in dc for dc in body["data_centers"])
 
 
+# --- GET /api/datacenters/{facility_id} ---
+
+class TestGetOne:
+    def test_valid_id_returns_the_facility_with_impact(self, client):
+        resp = client.get("/api/datacenters/confirmed-dc")
+
+        assert resp.status_code == 200
+        body = resp.json()
+        assert body["id"] == "confirmed-dc"
+        assert body["name"] == "Confirmed DC"
+        assert "impact" in body
+
+    def test_unknown_id_returns_404(self, client):
+        resp = client.get("/api/datacenters/does-not-exist")
+
+        assert resp.status_code == 404
+
+
 # --- GET /api/regions ---
 
 class TestGetRegions:

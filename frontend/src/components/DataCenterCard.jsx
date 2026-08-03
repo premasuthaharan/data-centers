@@ -61,7 +61,7 @@ function ImpactBlock({ title, color, icon, children }) {
   );
 }
 
-export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose, activePresetId, activeScenario }) {
+export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose, activePresetId, activeScenario, embed = false }) {
   const impact = dc.impact || {};
   const elec = impact.electricity || {};
   const water = impact.water || {};
@@ -81,6 +81,7 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose,
   const precisionWarning = PRECISION_WARNINGS[dc.geocode_precision];
 
   const [copied, setCopied] = useState(false);
+  const [embedCopied, setEmbedCopied] = useState(false);
 
   const copyLink = useCallback(() => {
     const url = new URL(window.location.href);
@@ -98,9 +99,20 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose,
     });
   }, [dc.id, activePresetId, activeScenario]);
 
+  const copyEmbedCode = useCallback(() => {
+    const url = new URL(window.location.href);
+    url.search = `?embed=${dc.id}`;
+    const snippet = `<iframe src="${url.href}" width="360" height="640" frameborder="0"></iframe>`;
+
+    navigator.clipboard.writeText(snippet).then(() => {
+      setEmbedCopied(true);
+      setTimeout(() => setEmbedCopied(false), 1500);
+    });
+  }, [dc.id]);
+
   return (
-    <div className="dc-detail-panel">
-      <button className="dc-close-btn" onClick={onClose} aria-label="Close">✕</button>
+    <div className={"dc-detail-panel" + (embed ? " dc-detail-panel--embed" : "")}>
+      {!embed && <button className="dc-close-btn" onClick={onClose} aria-label="Close">✕</button>}
 
       <div className="dc-detail-header">
         <div className="dc-detail-name">{dc.name}</div>
@@ -114,9 +126,16 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose,
             🧭 Under: {scenarioLabel ?? "active scenario"}
           </div>
         )}
-        <button className="dc-copy-link-btn" onClick={copyLink}>
-          {copied ? "✓ Link copied" : "🔗 Copy link"}
-        </button>
+        {!embed && (
+          <div className="dc-detail-actions">
+            <button className="dc-copy-link-btn" onClick={copyLink}>
+              {copied ? "✓ Link copied" : "🔗 Copy link"}
+            </button>
+            <button className="dc-copy-link-btn" onClick={copyEmbedCode}>
+              {embedCopied ? "✓ Embed code copied" : "🧩 Copy embed code"}
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="dc-detail-stats">
