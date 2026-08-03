@@ -77,6 +77,22 @@ internal heuristic rather than implied to be industry fact.
   facility-level water withdrawal. Countries not in the table use the
   3.0 L/kWh default above, unchanged from the prior global constant.
 
+### State water stress category (`STATE_WATER_STRESS` in `logic.py`)
+- **Used in:** `water.stress_category` in `compute_impact`'s output — a
+  categorical badge (e.g. "extremely high") shown alongside a facility's
+  own water withdrawal figures in the UI, distinct from `water_severity`
+  (which is derived from the facility's own MGD, not regional context).
+- **Status:** Internal categorical judgment per state, not a precise
+  per-state statistic. Same sourcing approach as "Per-country water
+  intensity" above.
+- **Context:** Labels ("low", "moderate", "high", "extremely high") follow
+  WRI Aqueduct's own category naming as informal guidance for each state's
+  general baseline water stress (arid Southwest states like AZ/NM/CA/NV
+  rated "extremely high"; wetter Midwest/Northeast states like IA/OH/NY
+  rated "low"), not a lookup against Aqueduct's precise numeric index.
+  Only covers states with facilities in the current dataset — states not
+  listed return `None` (unavailable), not a default/estimated category.
+
 ### Water severity thresholds (1 / 5 / 15 MGD → low/moderate/high/critical)
 - **Used in:** `water_severity` (`logic.py:51-58`)
 - **Status:** Internal heuristic, not externally sourced. **No EPA baseline
@@ -209,6 +225,50 @@ internal heuristic rather than implied to be industry fact.
   current national average when a facility's actual renewable mix is
   unknown.
 
+### Cost allocation reform markup = 15% for facilities ≥100MW
+- **Used in:** `effective_price` when `cost_allocation_reform` scenario
+  override is set (`logic.py`, `compute_impact`).
+- **Status:** Internal heuristic, not externally sourced.
+- **Context:** Reflects real, recurring bill language (federal HB9655 "FAIR
+  Data Act"; Michigan SB1047; New Jersey A796 and S731; North Carolina S730
+  "Ratepayer Protection Act"; California SB1168 — all found via
+  [trackpolicy.org's bill tracker](https://trackpolicy.org/bills), accessed
+  2026-08-02) that requires utilities to bill large-load customers like data
+  centers via a separate rate class or cost-recovery mechanism, rather than
+  spreading grid-interconnection costs across all ratepayers. None of these
+  bills specify a numeric surcharge — they establish the *mechanism*
+  (separate rate class / cost-recovery rule), leaving the actual rate to
+  utility commission proceedings. 15% is an internal planning estimate for
+  "what a facility would pay if it fully bore its own interconnection cost
+  instead of it being socialized," not a value taken from any specific
+  tariff. The 100MW threshold reuses the existing electricity-price-lift
+  formula's anchor (see "Grid price lift severity thresholds" above) as the
+  point at which a facility's grid impact becomes large enough to be a
+  plausible target for this kind of rate-class carve-out.
+
+### Tax incentive rollback rates (`TAX_INCENTIVE_RATES` in `logic.py`)
+- **Used in:** `effective_price` when `tax_incentive_rollback` scenario
+  override is set (`logic.py`, `compute_impact`).
+- **Status:** Internal heuristic per country, not externally sourced per
+  facility or per country.
+- **Context:** Reflects a real, recurring bill pattern — multiple
+  Pennsylvania bills (HB2198, HB2532, SB1344) repeal the same data-center
+  equipment sales-tax exemption program, and Ohio HB957 ends new sales tax
+  exemptions for data centers outright (via
+  [trackpolicy.org's bill tracker](https://trackpolicy.org/bills), accessed
+  2026-08-02). No per-facility or even per-state tax abatement *value* is
+  published anywhere in the source data (trackpolicy.org tracks bill text,
+  not incentive dollar amounts; Epoch AI doesn't track incentives at all),
+  so this models "how much would removing a typical abatement raise a
+  facility's effective cost" as a rough per-country percentage uplift
+  applied to electricity price, not a real fiscal estimate. 12% for the
+  United States (where sales/property tax abatement programs for data
+  centers are most widely reported) is the largest value in the table; other
+  listed countries use progressively rounder, more speculative estimates.
+  Countries outside the table use `DEFAULT_TAX_INCENTIVE_PCT` (8%).
+  Treat this scenario's cost delta as illustrative of the *direction and
+  rough scale* of a tax rollback, not a specific fiscal projection.
+
 ### Country land area (`COUNTRY_AREA_KM2` in `logic.py`)
 - **Used in:** `region_area_km2()`, which powers the "per km²" normalized
   view in the region scorecard (`GET /api/regions` → `area_km2`). Not used
@@ -222,6 +282,20 @@ internal heuristic rather than implied to be industry fact.
   country set as `GRID_DATA`/`IMPACT_RATES` in `fetch_data.py`; countries
   outside this table have no per-km² view (the scorecard falls back to
   per-facility or total).
+
+### Grid renewables ranking (`COUNTRY_RENEWABLE_PCT` in `logic.py`)
+- **Used in:** `grid_context()`, which powers the "greener than N of M
+  tracked grids" comparison line in the facility detail panel.
+- **Status:** Duplicates `GRID_DATA`'s `renewable_pct` values from
+  `fetch_data.py` — same source/status as that table, not an independently
+  derived figure. Kept as a separate table because `logic.py` (imported by
+  the FastAPI app) must not import `fetch_data.py` (a standalone CLI
+  script with network/CSV dependencies); if `GRID_DATA`'s renewable_pct
+  values are updated, this table should be updated to match.
+- **Context:** Covers the same ~33-country set `fetch_data.py` can geocode
+  into, not just countries currently represented in `datacenters.json`, so
+  ranking reflects the full tracked universe rather than whatever
+  countries happen to have facilities today.
 
 ### Manually-researched locations (`backend/data/location_overrides.json`)
 - **Used in:** `fetch_data.py` `main()` — checked per-record before the CSV
@@ -346,3 +420,5 @@ Every numeric constant referenced in `compute_impact()` is covered above:
 - [x] 4.6 tonnes CO2/car/year
 - [x] 450 gCO2/kWh default carbon intensity
 - [x] 25% default renewable percentage
+- [x] Cost allocation reform markup (15% at ≥100MW)
+- [x] Tax incentive rollback rates (`TAX_INCENTIVE_RATES`)

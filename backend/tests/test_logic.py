@@ -9,12 +9,16 @@ from logic import (
     aggregate_impact,
     all_datacenters_with_impact,
     compute_impact,
+    compute_peer_contexts,
+    extract_us_state,
     get_dataset_metadata,
+    grid_context,
     haversine_km,
     impact_radius_km,
     load_datacenters,
     nearest_datacenters,
     regions_with_aggregate_impact,
+    water_stress_category,
 )
 
 
@@ -332,6 +336,54 @@ class TestComputeImpact:
         assert scenario["land"]["waste_heat_mw"] == baseline["land"]["waste_heat_mw"]
 
 
+# --- Policy scenario mechanics: cost allocation, tax incentive, moratorium ---
+
+class TestCostAllocationReform:
+    def test_raises_cost_for_large_facility(self):
+        dc = {"power_mw": 200.0, "electricity_price_usd_per_kwh": 0.083}
+        baseline = compute_impact(dc)
+        scenario = compute_impact(dc, overrides={"cost_allocation_reform": True})
+        assert scenario["electricity"]["annual_cost_millions_usd"] > baseline["electricity"]["annual_cost_millions_usd"]
+
+    def test_no_effect_below_threshold(self):
+        dc = {"power_mw": 50.0, "electricity_price_usd_per_kwh": 0.083}
+        baseline = compute_impact(dc)
+        scenario = compute_impact(dc, overrides={"cost_allocation_reform": True})
+        assert scenario["electricity"]["annual_cost_millions_usd"] == baseline["electricity"]["annual_cost_millions_usd"]
+
+    def test_no_effect_when_not_enabled(self):
+        dc = {"power_mw": 200.0, "electricity_price_usd_per_kwh": 0.083}
+        baseline = compute_impact(dc)
+        scenario = compute_impact(dc, overrides={})
+        assert scenario["electricity"]["annual_cost_millions_usd"] == baseline["electricity"]["annual_cost_millions_usd"]
+
+
+class TestTaxIncentiveRollback:
+    def test_raises_cost_using_country_rate(self):
+        dc = {"power_mw": 100.0, "country": "United States", "electricity_price_usd_per_kwh": 0.083}
+        baseline = compute_impact(dc)
+        scenario = compute_impact(dc, overrides={"tax_incentive_rollback": True})
+        assert scenario["electricity"]["annual_cost_millions_usd"] == pytest.approx(
+            baseline["electricity"]["annual_cost_millions_usd"] * 1.12, abs=0.1
+        )
+
+    def test_unknown_country_uses_default_rate(self):
+        dc = {"power_mw": 100.0, "country": "Nowhereland", "electricity_price_usd_per_kwh": 0.083}
+        baseline = compute_impact(dc)
+        scenario = compute_impact(dc, overrides={"tax_incentive_rollback": True})
+        assert scenario["electricity"]["annual_cost_millions_usd"] == pytest.approx(
+            baseline["electricity"]["annual_cost_millions_usd"] * 1.08, abs=0.1
+        )
+
+    def test_stacks_with_cost_allocation_reform(self):
+        dc = {"power_mw": 200.0, "country": "United States", "electricity_price_usd_per_kwh": 0.083}
+        baseline = compute_impact(dc)
+        both = compute_impact(dc, overrides={"cost_allocation_reform": True, "tax_incentive_rollback": True})
+        only_tax = compute_impact(dc, overrides={"tax_incentive_rollback": True})
+        assert both["electricity"]["annual_cost_millions_usd"] > only_tax["electricity"]["annual_cost_millions_usd"]
+        assert both["electricity"]["annual_cost_millions_usd"] > baseline["electricity"]["annual_cost_millions_usd"]
+
+
 # --- aggregate_impact ---
 
 class TestAggregateImpact:
@@ -516,6 +568,109 @@ class TestAllDatacentersWithImpact:
             assert enriched["id"] == original["id"]
             assert "impact" in enriched
             assert "radius_km" in enriched["impact"]
+
+    def test_peer_context_water_stress_and_grid_context_attached(
+        self, datacenters_json_file, monkeypatch, reset_logic_cache
+    ):
+        import logic
+
+        monkeypatch.setattr(logic, "_DATA_PATH", datacenters_json_file)
+        result = all_datacenters_with_impact()
+        by_id = {dc["id"]: dc for dc in result}
+
+        # confirmed-dc: Springfield, IL -> state resolves; IL isn't in the
+        # curated stress table, so the category is cleanly omitted.
+        confirmed = by_id["confirmed-dc"]
+        assert confirmed["impact"]["peer_context"] is not None
+        assert confirmed["impact"]["peer_context"]["region_label"] == "IL"
+        assert confirmed["impact"]["water"]["stress_category"] is None
+        assert confirmed["impact"]["carbon"]["grid_context"] is not None
+
+        # announced-dc: Ireland, empty address -> no US state, falls back to country region.
+        announced = by_id["announced-dc"]
+        assert announced["impact"]["peer_context"]["region_label"] == "Ireland"
+        assert announced["impact"]["water"]["stress_category"] is None
+
+        # far-dc: Australia, non-US address -> no state, water stress unavailable.
+        far = by_id["far-dc"]
+        assert far["impact"]["water"]["stress_category"] is None
+
+
+# --- extract_us_state ---
+
+class TestExtractUsState:
+    def test_extracts_state_from_city_state_zip(self):
+        assert extract_us_state("1 Main St, Springfield, IL 62701", "United States") == "IL"
+
+    def test_extracts_state_from_full_state_name(self):
+        assert extract_us_state("7400 USA Pkwy, Storey County, Nevada, United States", "United States") == "NV"
+
+    def test_non_us_country_returns_none(self):
+        assert extract_us_state("1 Remote Rd, Perth WA", "Australia") is None
+
+    def test_empty_address_returns_none(self):
+        assert extract_us_state("", "United States") is None
+
+    def test_unparseable_address_returns_none(self):
+        assert extract_us_state("2950 S. Litchfield Road", "United States") is None
+
+
+# --- water_stress_category ---
+
+class TestWaterStressCategory:
+    def test_known_state_returns_category(self):
+        assert water_stress_category("AZ") == "extremely high"
+
+    def test_state_not_in_table_returns_none(self):
+        assert water_stress_category("HI") is None
+
+    def test_none_state_returns_none(self):
+        assert water_stress_category(None) is None
+
+
+# --- grid_context ---
+
+class TestGridContext:
+    def test_known_country_returns_rank_and_percentile(self):
+        ctx = grid_context("Norway")
+        assert ctx is not None
+        assert ctx["rank"] == 1
+        assert ctx["greener_than_pct"] == 100
+
+    def test_lowest_renewable_country_ranks_last(self):
+        ctx = grid_context("Singapore")
+        assert ctx["rank"] == ctx["total_tracked"]
+        assert ctx["greener_than_pct"] == 0
+
+    def test_untracked_country_returns_none(self):
+        assert grid_context("Atlantis") is None
+
+
+# --- compute_peer_contexts ---
+
+class TestComputePeerContexts:
+    def test_percentiles_computed_across_full_population(self, fixture_dataset):
+        centers = [{**dc, "impact": compute_impact(dc)} for dc in fixture_dataset["data_centers"]]
+        contexts = compute_peer_contexts(centers)
+
+        assert set(contexts.keys()) == {"confirmed-dc", "announced-dc", "far-dc"}
+        # announced-dc has power_mw=None -> zero impact -> lowest percentile.
+        assert contexts["announced-dc"]["water_percentile"] == 0
+
+    def test_region_rank_groups_by_state_when_resolvable(self, fixture_dataset):
+        centers = [{**dc, "impact": compute_impact(dc)} for dc in fixture_dataset["data_centers"]]
+        contexts = compute_peer_contexts(centers)
+
+        # Only one US facility in the fixture -> alone in its state group.
+        assert contexts["confirmed-dc"]["region_label"] == "IL"
+        assert contexts["confirmed-dc"]["water_rank_in_region"] == 1
+        assert contexts["confirmed-dc"]["facilities_in_region"] == 1
+
+    def test_region_falls_back_to_country_when_state_unresolvable(self, fixture_dataset):
+        centers = [{**dc, "impact": compute_impact(dc)} for dc in fixture_dataset["data_centers"]]
+        contexts = compute_peer_contexts(centers)
+
+        assert contexts["far-dc"]["region_label"] == "Australia"
 
 
 # --- nearest_datacenters ---

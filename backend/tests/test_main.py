@@ -29,6 +29,24 @@ class TestGetAll:
         assert all("impact" in dc for dc in body["data_centers"])
 
 
+# --- GET /api/datacenters/{facility_id} ---
+
+class TestGetOne:
+    def test_valid_id_returns_the_facility_with_impact(self, client):
+        resp = client.get("/api/datacenters/confirmed-dc")
+
+        assert resp.status_code == 200
+        body = resp.json()
+        assert body["id"] == "confirmed-dc"
+        assert body["name"] == "Confirmed DC"
+        assert "impact" in body
+
+    def test_unknown_id_returns_404(self, client):
+        resp = client.get("/api/datacenters/does-not-exist")
+
+        assert resp.status_code == 404
+
+
 # --- GET /api/regions ---
 
 class TestGetRegions:
@@ -254,6 +272,27 @@ class TestScenario:
         assert resp.status_code == 200
         body = resp.json()
         assert body["scenario_totals"]["annual_kwh"] < body["baseline_totals"]["annual_kwh"]
+
+    def test_cost_allocation_reform_raises_total_cost(self, client):
+        resp = client.post("/api/scenario", json={"scenario": {"cost_allocation_reform": True}})
+
+        assert resp.status_code == 200
+        body = resp.json()
+        assert (
+            body["scenario_totals"]["annual_cost_millions_usd"]
+            > body["baseline_totals"]["annual_cost_millions_usd"]
+        )
+
+    def test_tax_incentive_rollback_raises_total_cost(self, client):
+        resp = client.post("/api/scenario", json={"scenario": {"tax_incentive_rollback": True}})
+
+        assert resp.status_code == 200
+        body = resp.json()
+        assert (
+            body["scenario_totals"]["annual_cost_millions_usd"]
+            > body["baseline_totals"]["annual_cost_millions_usd"]
+        )
+
 
 
 # --- CORS origin parsing ---
