@@ -1288,9 +1288,6 @@
 .facility-search-result-btn {
   width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
   text-align: left;
   background: var(--bg-card);
   border: 1px solid var(--border-default);
@@ -1305,14 +1302,12 @@
 }
 
 .facility-search-result-name {
+  flex: 1;
+  display: flex;
+  align-items: center;
   font-size: 12px;
   font-weight: 700;
   color: var(--text-heading);
-}
-
-.facility-search-result-operator {
-  font-size: 13px;
-  color: var(--text-secondary);
 }
 
 .facility-search-empty {

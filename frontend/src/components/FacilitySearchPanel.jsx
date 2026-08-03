@@ -85,7 +85,6 @@ export default function FacilitySearchPanel({ datacenters, onSelect, onClose }) 
                 onClick={() => onSelect(dc.id)}
               >
                 <span className="facility-search-result-name">{dc.name}</span>
-                <span className="facility-search-result-operator">{dc.operator ?? "—"}</span>
               </button>
             </li>
           ))}
