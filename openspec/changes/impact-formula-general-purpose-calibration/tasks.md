@@ -38,9 +38,9 @@
 
 ## 3. Documentation
 
-- [ ] 3.1 Update `SOURCES.md`'s "Utilization factor" and "PUE" sections
+- [x] 3.1 Update `SOURCES.md`'s "Utilization factor" and "PUE" sections
       with the new per-category values, derivation, and citations
-- [ ] 3.2 Update `SOURCES.md`'s "Grid price lift severity thresholds" and
+- [x] 3.2 Update `SOURCES.md`'s "Grid price lift severity thresholds" and
       "Water severity thresholds" sections with the new boundaries and
       the full-318-entry distribution they were tuned against
 
