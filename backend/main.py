@@ -82,6 +82,8 @@ class ScenarioOverrides(BaseModel):
     carbon_intensity_gco2_per_kwh: float | None = None
     water_liters_per_kwh: float | None = None
     pue: float | None = None
+    cost_allocation_reform: bool | None = None
+    tax_incentive_rollback: bool | None = None
 
 
 class ScenarioRequest(BaseModel):

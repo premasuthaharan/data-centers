@@ -255,6 +255,27 @@ class TestScenario:
         body = resp.json()
         assert body["scenario_totals"]["annual_kwh"] < body["baseline_totals"]["annual_kwh"]
 
+    def test_cost_allocation_reform_raises_total_cost(self, client):
+        resp = client.post("/api/scenario", json={"scenario": {"cost_allocation_reform": True}})
+
+        assert resp.status_code == 200
+        body = resp.json()
+        assert (
+            body["scenario_totals"]["annual_cost_millions_usd"]
+            > body["baseline_totals"]["annual_cost_millions_usd"]
+        )
+
+    def test_tax_incentive_rollback_raises_total_cost(self, client):
+        resp = client.post("/api/scenario", json={"scenario": {"tax_incentive_rollback": True}})
+
+        assert resp.status_code == 200
+        body = resp.json()
+        assert (
+            body["scenario_totals"]["annual_cost_millions_usd"]
+            > body["baseline_totals"]["annual_cost_millions_usd"]
+        )
+
+
 
 # --- CORS origin parsing ---
 # main.py reads ALLOWED_ORIGINS at import time, so this is tested by
