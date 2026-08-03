@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { fmt } from "./formatters";
+import { searchFacilities } from "../utils/facilitySearch";
 
 const WATER_SEVERITY_RANK = { low: 0, moderate: 1, high: 2, critical: 3 };
 
@@ -99,12 +100,8 @@ export default function CompareModal({ datacenters, onClose }) {
   const selected = comparable.filter((dc) => selectedIds.includes(dc.id));
 
   const searchResults = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return comparable.filter((dc) => {
-      if (selectedIds.includes(dc.id)) return false;
-      if (!q) return true;
-      return dc.name.toLowerCase().includes(q) || (dc.operator ?? "").toLowerCase().includes(q);
-    });
+    const unselected = comparable.filter((dc) => !selectedIds.includes(dc.id));
+    return searchFacilities(unselected, query);
   }, [comparable, selectedIds, query]);
 
   const add = (id) => {

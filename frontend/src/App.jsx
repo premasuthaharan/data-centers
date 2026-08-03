@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useMemo } from "react";
 import Map from "./components/Map";
 import DataCenterCard from "./components/DataCenterCard";
 import NearMePanel from "./components/NearMePanel";
+import FacilitySearchPanel from "./components/FacilitySearchPanel";
 import ScenarioPanel, { PRESETS } from "./components/ScenarioPanel";
 import CompareModal from "./components/CompareModal";
 import MethodologyPanel from "./components/MethodologyPanel";
@@ -130,6 +131,19 @@ export default function App() {
     setSelectedId(null);
     setActivePanel(null);
   }, []);
+
+  // Facility search is a self-contained overlay (like NearMePanel), not a
+  // value of activePanel — the two are peer "find a facility" affordances
+  // that can be triggered independently of whatever detail/scenario/compare
+  // panel happens to be open.
+  const [searchOpen, setSearchOpen] = useState(false);
+  const handleSearchSelect = useCallback(
+    (id) => {
+      handleSelect(id);
+      setSearchOpen(false);
+    },
+    [handleSelect]
+  );
 
   // Keep the URL in sync with the open detail card so it's always
   // shareable, without triggering a page reload or extra history entries
@@ -350,7 +364,25 @@ export default function App() {
         </div>
       </div>
 
-      <NearMePanel onFlyTo={handleSelect} />
+      <div className="facility-finder-cluster">
+        <button
+          className="facility-search-trigger"
+          onClick={() => setSearchOpen(true)}
+          aria-label="Search for a facility by name or operator"
+          title="Search for a facility"
+        >
+          🔍
+        </button>
+        <NearMePanel onFlyTo={handleSelect} />
+      </div>
+
+      {searchOpen && (
+        <FacilitySearchPanel
+          datacenters={scopedDatacenters}
+          onSelect={handleSearchSelect}
+          onClose={() => setSearchOpen(false)}
+        />
+      )}
 
       {/* Legend overlay */}
       <div className="map-legend">
