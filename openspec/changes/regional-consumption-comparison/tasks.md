@@ -40,22 +40,25 @@
 
 ## 4. Frontend
 
-- [ ] 4.1 `DataCenterCard.jsx`: Water block — add peer-ranking line from
+- [x] 4.1 `DataCenterCard.jsx`: Water block — add peer-ranking line from
       `peer_context`, conditionally rendered
-- [ ] 4.2 `DataCenterCard.jsx`: Water block — add state water-stress badge
+- [x] 4.2 `DataCenterCard.jsx`: Water block — add state water-stress badge
       from `water_stress_category`, conditionally rendered, alongside
       (not replacing) existing severity/households-equivalent rows
-- [ ] 4.3 `DataCenterCard.jsx`: Carbon & Air block — add grid-ranking line
+- [x] 4.3 `DataCenterCard.jsx`: Carbon & Air block — add grid-ranking line
       from `grid_context`, conditionally rendered
-- [ ] 4.4 `DataCenterCard.test.jsx`: each of the three additions renders
+- [x] 4.4 `DataCenterCard.test.jsx`: each of the three additions renders
       when its data is present and omits cleanly when absent
 
 ## 5. Verification
 
-- [ ] 5.1 `cd backend && python3 -m pytest` passes
-- [ ] 5.2 `cd frontend && npm test` passes
-- [ ] 5.3 Manual: spot-check peer rankings and grid rankings against raw
-      `datacenters.json`/`GRID_DATA` for a handful of facilities
-- [ ] 5.4 Manual: confirm facilities missing state/country context (e.g.
-      non-US, untabled state) render the rest of the card normally with
-      no broken section
+- [x] 5.1 `cd backend && python3 -m pytest` passes (154 passed, 100% logic.py coverage)
+- [x] 5.2 `cd frontend && npm test` passes (120 passed)
+- [x] 5.3 Manual: spot-checked peer rankings and grid rankings against raw
+      `datacenters.json`/`GRID_DATA` computations directly in a Python
+      shell for several facilities — matched expectations
+- [x] 5.4 Manual: verified via Playwright screenshot (light + dark) that
+      Colossus 2 (Memphis, TN) renders all three context lines cleanly
+      with no overlap/clipping; confirmed in code that facilities with
+      unresolvable state/untabled category (e.g. IL, non-US) omit just
+      the missing line while the rest of the card renders normally
