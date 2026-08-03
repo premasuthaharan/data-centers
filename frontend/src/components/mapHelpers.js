@@ -6,11 +6,19 @@ const OPERATOR_COLORS = {
   Apple:     "#888888",
 };
 
-export function operatorColor(operator = "") {
+// General-purpose facilities (colocation, enterprise, regional cloud AZs —
+// not dedicated frontier-AI-lab campuses) get their own color regardless of
+// operator, so they read as a distinct category rather than blending into
+// "Other" alongside genuinely uncategorized frontier operators.
+const GENERAL_PURPOSE_COLOR = "#0d9488";
+const OTHER_COLOR = "#9333ea";
+
+export function operatorColor(operator = "", category) {
+  if (category === "general-purpose") return GENERAL_PURPOSE_COLOR;
   for (const [key, color] of Object.entries(OPERATOR_COLORS)) {
     if (operator.includes(key)) return color;
   }
-  return "#9333ea";
+  return OTHER_COLOR;
 }
 
 const WATER_SEVERITY_COLORS = {
@@ -30,7 +38,7 @@ export function waterSeverityColor(severity) {
 // one of the few impact fields with an established color scale).
 export function markerColor(dc, colorMode = "operator") {
   if (colorMode === "water") return waterSeverityColor(dc.impact?.water?.severity);
-  return operatorColor(dc.operator);
+  return operatorColor(dc.operator, dc.category);
 }
 
 // Convert km radius to approximate degrees longitude at a given latitude

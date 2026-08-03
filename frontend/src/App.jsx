@@ -22,6 +22,18 @@ export default function App() {
 
   const [theme, setTheme] = useState(resolveInitialTheme);
 
+  // "all" shows every facility; "frontier-ai" shows only dedicated
+  // frontier-AI-lab training campuses (the original Epoch AI-sourced set
+  // plus a handful of trackpolicy.org "researched" entries confirmed to be
+  // frontier-lab campuses — see backend data). Persisted like theme so a
+  // returning visitor's chosen scope sticks.
+  const [categoryFilter, setCategoryFilter] = useState(
+    () => localStorage.getItem("categoryFilter") || "all"
+  );
+  useEffect(() => {
+    localStorage.setItem("categoryFilter", categoryFilter);
+  }, [categoryFilter]);
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
@@ -165,12 +177,40 @@ export default function App() {
     setFocusedRegion(region.region);
   }, []);
 
-  // "Current view" today is either all facilities or the focusedRegion
-  // subset (from the region scorecard) — there's no general filter system
-  // yet, so export scope mirrors exactly what the map is showing.
+  const selectedDC = datacenters.find((dc) => dc.id === selectedId) ?? null;
+  // The scenario-recomputed record for the selected facility, if a scenario
+  // is active and this facility is within its scope (POST /api/scenario's
+  // facility_ids, when used — currently always all facilities since
+  // ScenarioPanel doesn't scope by id). undefined when no scenario is
+  // active or the facility falls outside scope, which DataCenterCard treats
+  // as "render baseline only".
+  const scenarioDC = scenarioData?.data_centers.find((dc) => dc.id === selectedId);
+
+  // While a scenario is active, the map renders scenario-recomputed
+  // facilities colored by water severity instead of operator brand color,
+  // so applying a policy is visibly different from the baseline map.
+  const scopedDatacenters = useMemo(
+    () =>
+      categoryFilter === "all"
+        ? datacenters
+        : datacenters.filter((dc) => dc.category === categoryFilter),
+    [datacenters, categoryFilter]
+  );
+  const mapDatacenters = scenarioData
+    ? scenarioData.data_centers.filter(
+        (dc) => categoryFilter === "all" || dc.category === categoryFilter
+      )
+    : scopedDatacenters;
+  const colorMode = scenarioData ? "water" : "operator";
+
+  // "Current view" is mapDatacenters (category-filtered, and
+  // scenario-recomputed when a scenario is active), further narrowed by
+  // focusedRegion (from the region scorecard) — export scope mirrors
+  // exactly what the map is showing.
   const exportCSV = useCallback(() => {
-    const source = scenarioData ? scenarioData.data_centers : datacenters;
-    const rows = focusedRegion ? source.filter((dc) => dc.country === focusedRegion) : source;
+    const rows = focusedRegion
+      ? mapDatacenters.filter((dc) => dc.country === focusedRegion)
+      : mapDatacenters;
 
     const columns = [
       ["Name", (dc) => dc.name],
@@ -207,22 +247,7 @@ export default function App() {
     a.download = focusedRegion ? `data-centers-${focusedRegion}.csv` : "data-centers.csv";
     a.click();
     URL.revokeObjectURL(url);
-  }, [datacenters, scenarioData, focusedRegion]);
-
-  const selectedDC = datacenters.find((dc) => dc.id === selectedId) ?? null;
-  // The scenario-recomputed record for the selected facility, if a scenario
-  // is active and this facility is within its scope (POST /api/scenario's
-  // facility_ids, when used — currently always all facilities since
-  // ScenarioPanel doesn't scope by id). undefined when no scenario is
-  // active or the facility falls outside scope, which DataCenterCard treats
-  // as "render baseline only".
-  const scenarioDC = scenarioData?.data_centers.find((dc) => dc.id === selectedId);
-
-  // While a scenario is active, the map renders scenario-recomputed
-  // facilities colored by water severity instead of operator brand color,
-  // so applying a policy is visibly different from the baseline map.
-  const mapDatacenters = scenarioData ? scenarioData.data_centers : datacenters;
-  const colorMode = scenarioData ? "water" : "operator";
+  }, [mapDatacenters, focusedRegion]);
 
   const legendItems = useMemo(
     () =>
@@ -238,9 +263,12 @@ export default function App() {
             { label: "Microsoft", color: "#00A4EF" },
             { label: "Google", color: "#34A853" },
             { label: "Meta", color: "#1877F2" },
-            { label: "Other", color: "#9333ea" },
+            { label: "Other (frontier-AI)", color: "#9333ea" },
+            ...(categoryFilter === "all"
+              ? [{ label: "General-purpose", color: "#0d9488" }]
+              : []),
           ],
-    [scenarioData]
+    [scenarioData, categoryFilter]
   );
 
   return (
@@ -278,8 +306,24 @@ export default function App() {
             ? "Loading data centers…"
             : error
             ? `Error: ${error}`
-            : `${datacenters.length} data centers · Click any to explore its impact`}
+            : `${scopedDatacenters.length} data centers · Click any to explore its impact`}
         </p>
+        {!loading && !error && (
+          <div className="category-filter-toggle" role="group" aria-label="Facility category filter">
+            <button
+              className={"category-filter-btn" + (categoryFilter === "all" ? " category-filter-btn--active" : "")}
+              onClick={() => setCategoryFilter("all")}
+            >
+              All ({datacenters.length})
+            </button>
+            <button
+              className={"category-filter-btn" + (categoryFilter === "frontier-ai" ? " category-filter-btn--active" : "")}
+              onClick={() => setCategoryFilter("frontier-ai")}
+            >
+              Frontier-AI ({datacenters.filter((dc) => dc.category === "frontier-ai").length})
+            </button>
+          </div>
+        )}
         {generatedAt && (
           <p className="app-freshness">
             Data as of{" "}
@@ -368,7 +412,7 @@ export default function App() {
       </div>
 
       {activePanel === "compare" && (
-        <CompareModal datacenters={datacenters} onClose={closeOverlayPanel} />
+        <CompareModal datacenters={scopedDatacenters} onClose={closeOverlayPanel} />
       )}
     </div>
   );

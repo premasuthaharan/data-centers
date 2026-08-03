@@ -25,6 +25,16 @@ describe("operatorColor", () => {
     expect(operatorColor("")).toBe("#9333ea");
     expect(operatorColor(undefined)).toBe("#9333ea");
   });
+
+  it("uses the general-purpose color regardless of operator when category is general-purpose", () => {
+    expect(operatorColor("Amazon Web Services", "general-purpose")).toBe("#0d9488");
+    expect(operatorColor("SomeOtherCo", "general-purpose")).toBe("#0d9488");
+  });
+
+  it("uses operator/other colors when category is frontier-ai", () => {
+    expect(operatorColor("Google Cloud", "frontier-ai")).toBe("#34A853");
+    expect(operatorColor("SomeOtherCo", "frontier-ai")).toBe("#9333ea");
+  });
 });
 
 describe("waterSeverityColor", () => {
@@ -58,6 +68,10 @@ describe("markerColor", () => {
 
   it("falls back to gray when colorMode is 'water' and severity is missing", () => {
     expect(markerColor({ operator: "Google" }, "water")).toBe("#64748b");
+  });
+
+  it("uses the general-purpose color for general-purpose facilities regardless of operator", () => {
+    expect(markerColor({ operator: "Amazon Web Services", category: "general-purpose" })).toBe("#0d9488");
   });
 });
 
