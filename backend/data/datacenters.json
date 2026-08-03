@@ -16,7 +16,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "microsoft-fairwater-atlanta",
@@ -33,7 +34,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "meta-prometheus",
@@ -50,7 +52,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "anthropic-amazon-new-carlisle",
@@ -67,7 +70,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "openai-stargate-abilene",
@@ -84,7 +88,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "microsoft-fairwater-wisconsin",
@@ -101,7 +106,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-columbus",
@@ -118,7 +124,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-new-albany",
@@ -135,7 +142,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-council-bluffs--east-",
@@ -152,7 +160,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-lincoln",
@@ -169,7 +178,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-bristow",
@@ -186,7 +196,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "dayone-nusajaya",
@@ -203,7 +214,8 @@
       "carbon_intensity_gco2_per_kwh": 580,
       "renewable_pct": 17,
       "electricity_price_usd_per_kwh": 0.055,
-      "water_liters_per_kwh": 3.0
+      "water_liters_per_kwh": 3.0,
+      "category": "frontier-ai"
     },
     {
       "id": "colossus-1",
@@ -220,7 +232,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-omaha",
@@ -237,7 +250,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "coreweave-denton-tx",
@@ -254,7 +268,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-kansas-city-east",
@@ -271,7 +286,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "qts-richmond-1",
@@ -288,7 +304,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "meta-rosemount",
@@ -305,7 +322,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "amazon-madison-mega-site",
@@ -322,7 +340,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "microsoft-goodyear",
@@ -339,7 +358,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "meta-jeffersonville",
@@ -356,7 +376,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-the-dalles",
@@ -373,7 +394,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-midlothian",
@@ -390,14 +412,15 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "qts-richmond-2",
       "name": "QTS Richmond 2",
       "operator": "Unknown",
       "country": "United States",
-      "address": "6030\u20136070 Technology Blvd, Sandston, VA 23150",
+      "address": "6030–6070 Technology Blvd, Sandston, VA 23150",
       "lat": 37.5107225,
       "lng": -77.3115564,
       "geocode_precision": "approximate",
@@ -407,14 +430,15 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "qts-richmond-3",
       "name": "QTS Richmond 3",
       "operator": "Unknown",
       "country": "United States",
-      "address": "3525\u20133543 Portugee Rd, Sandston, VA 23150",
+      "address": "3525–3543 Portugee Rd, Sandston, VA 23150",
       "lat": 37.5107225,
       "lng": -77.3115564,
       "geocode_precision": "approximate",
@@ -424,7 +448,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "meta-montgomery",
@@ -441,7 +466,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "meta-kuna",
@@ -458,7 +484,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "meta-temple",
@@ -475,7 +502,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "meta-cheyenne",
@@ -492,7 +520,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "amazon-ridgeland",
@@ -509,7 +538,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "meta-aiken",
@@ -526,7 +556,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "coreweave-helios",
@@ -543,7 +574,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-arcola",
@@ -560,7 +592,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "microsoft-project-osmium",
@@ -577,7 +610,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-storey-county",
@@ -594,7 +628,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "meta-eagle-mountain",
@@ -611,7 +646,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "fluidstack-lake-mariner",
@@ -628,7 +664,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-lancaster",
@@ -645,7 +682,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-mesa",
@@ -662,7 +700,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-waltham-cross",
@@ -679,7 +718,8 @@
       "carbon_intensity_gco2_per_kwh": 210,
       "renewable_pct": 42,
       "electricity_price_usd_per_kwh": 0.171,
-      "water_liters_per_kwh": 1.5
+      "water_liters_per_kwh": 1.5,
+      "category": "frontier-ai"
     },
     {
       "id": "huawei-horinger",
@@ -696,7 +736,8 @@
       "carbon_intensity_gco2_per_kwh": 530,
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.08,
-      "water_liters_per_kwh": 2.5
+      "water_liters_per_kwh": 2.5,
+      "category": "frontier-ai"
     },
     {
       "id": "vnet-bayin-ulanqab",
@@ -713,7 +754,8 @@
       "carbon_intensity_gco2_per_kwh": 530,
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.08,
-      "water_liters_per_kwh": 2.5
+      "water_liters_per_kwh": 2.5,
+      "category": "frontier-ai"
     },
     {
       "id": "google-red-oak",
@@ -730,7 +772,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "meta-gallatin",
@@ -747,7 +790,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "meta-los-lunas",
@@ -764,7 +808,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "coreweave-ellendale-nd",
@@ -781,7 +826,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "coreweave-chester-va",
@@ -798,7 +844,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "oracle-batam",
@@ -815,7 +862,8 @@
       "carbon_intensity_gco2_per_kwh": 720,
       "renewable_pct": 15,
       "electricity_price_usd_per_kwh": 0.07,
-      "water_liters_per_kwh": 3.0
+      "water_liters_per_kwh": 3.0,
+      "category": "frontier-ai"
     },
     {
       "id": "google-papillion",
@@ -832,7 +880,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "coreweave-marble-nc",
@@ -849,7 +898,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "microsoft-sat40",
@@ -866,7 +916,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "stack-infrastructure-nva02",
@@ -883,7 +934,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "stream-phoenix",
@@ -900,7 +952,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "microsoft-sat14",
@@ -917,7 +970,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "vantage-tx1",
@@ -934,7 +988,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "coreweave-dalton-1---2",
@@ -951,7 +1006,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "alibaba-zhangbei",
@@ -968,7 +1024,8 @@
       "carbon_intensity_gco2_per_kwh": 530,
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.08,
-      "water_liters_per_kwh": 2.5
+      "water_liters_per_kwh": 2.5,
+      "category": "frontier-ai"
     },
     {
       "id": "start-campus-sines-data-campus",
@@ -985,7 +1042,8 @@
       "carbon_intensity_gco2_per_kwh": 160,
       "renewable_pct": 61,
       "electricity_price_usd_per_kwh": 0.19,
-      "water_liters_per_kwh": 3.0
+      "water_liters_per_kwh": 3.0,
+      "category": "frontier-ai"
     },
     {
       "id": "google-pryor--north-",
@@ -1002,7 +1060,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "coreweave-muskogee-ok",
@@ -1019,7 +1078,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "crusoe-abilene-expansion",
@@ -1036,7 +1096,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "goodnight",
@@ -1053,7 +1114,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-cedar-rapids",
@@ -1070,7 +1132,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "google-fort-wayne",
@@ -1087,7 +1150,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "meta-hyperion",
@@ -1104,7 +1168,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "meta-sarpy",
@@ -1121,7 +1186,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "openai-stargate-lordstown",
@@ -1138,7 +1204,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "openai-stargate-michigan",
@@ -1155,7 +1222,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "openai-stargate-milam",
@@ -1172,7 +1240,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "openai-stargate-new-mexico",
@@ -1189,7 +1258,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "openai-stargate-shackelford",
@@ -1206,7 +1276,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "openai-stargate-uae",
@@ -1223,7 +1294,8 @@
       "carbon_intensity_gco2_per_kwh": 580,
       "renewable_pct": 8,
       "electricity_price_usd_per_kwh": 0.045,
-      "water_liters_per_kwh": 8.0
+      "water_liters_per_kwh": 8.0,
+      "category": "frontier-ai"
     },
     {
       "id": "openai-stargate-wisconsin",
@@ -1240,7 +1312,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "qts-cedar-rapids",
@@ -1257,7 +1330,8 @@
       "carbon_intensity_gco2_per_kwh": 380,
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
-      "water_liters_per_kwh": 2.3
+      "water_liters_per_kwh": 2.3,
+      "category": "frontier-ai"
     },
     {
       "id": "southgate-melbourne",
@@ -1274,11 +1348,12 @@
       "carbon_intensity_gco2_per_kwh": 590,
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.145,
-      "water_liters_per_kwh": 4.5
+      "water_liters_per_kwh": 4.5,
+      "category": "frontier-ai"
     },
     {
       "id": "vnet-bayin-ulanqab-china",
-      "name": "VNET \u2014 Bayin, Ulanqab, China",
+      "name": "VNET — Bayin, Ulanqab, China",
       "operator": "VNET",
       "country": "China",
       "address": "Bayin, Ulanqab, China",
@@ -1292,11 +1367,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 2.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "compass-datacenters-gainesville-va",
-      "name": "Compass Datacenters \u2014 Gainesville, VA",
+      "name": "Compass Datacenters — Gainesville, VA",
       "operator": "Compass Datacenters",
       "country": "United States",
       "address": "Gainesville, VA",
@@ -1310,11 +1386,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "qts-data-centers-blackstone-gainesville-va",
-      "name": "QTS Data Centers (Blackstone) \u2014 Gainesville, VA",
+      "name": "QTS Data Centers (Blackstone) — Gainesville, VA",
       "operator": "QTS Data Centers (Blackstone)",
       "country": "United States",
       "address": "Gainesville, VA",
@@ -1328,11 +1405,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "powerhouse-data-centers-arep-harrison-street-spotsylvania-co",
-      "name": "PowerHouse Data Centers (AREP / Harrison Street) \u2014 Spotsylvania County, VA",
+      "name": "PowerHouse Data Centers (AREP / Harrison Street) — Spotsylvania County, VA",
       "operator": "PowerHouse Data Centers (AREP / Harrison Street)",
       "country": "United States",
       "address": "Spotsylvania County, VA",
@@ -1346,11 +1424,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "vantage-data-centers-stafford-county-va",
-      "name": "Vantage Data Centers \u2014 Stafford County, VA",
+      "name": "Vantage Data Centers — Stafford County, VA",
       "operator": "Vantage Data Centers",
       "country": "United States",
       "address": "Stafford County, VA",
@@ -1364,11 +1443,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "cleanarc-data-centers-ashburn-va",
-      "name": "CleanArc Data Centers \u2014 Ashburn, VA",
+      "name": "CleanArc Data Centers — Ashburn, VA",
       "operator": "CleanArc Data Centers",
       "country": "United States",
       "address": "Ashburn, VA",
@@ -1382,11 +1462,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "stack-infrastructure-stafford-county-va",
-      "name": "STACK Infrastructure \u2014 Stafford County, VA",
+      "name": "STACK Infrastructure — Stafford County, VA",
       "operator": "STACK Infrastructure",
       "country": "United States",
       "address": "Stafford County, VA",
@@ -1400,11 +1481,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "equinix-ashburn-va",
-      "name": "Equinix \u2014 Ashburn, VA",
+      "name": "Equinix — Ashburn, VA",
       "operator": "Equinix",
       "country": "United States",
       "address": "Ashburn, VA",
@@ -1418,11 +1500,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "starwood-capital-group-alexandria-va",
-      "name": "Starwood Capital Group \u2014 Alexandria, VA",
+      "name": "Starwood Capital Group — Alexandria, VA",
       "operator": "Starwood Capital Group",
       "country": "United States",
       "address": "Alexandria, VA",
@@ -1436,11 +1519,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "databank-culpeper-va",
-      "name": "DataBank \u2014 Culpeper, VA",
+      "name": "DataBank — Culpeper, VA",
       "operator": "DataBank",
       "country": "United States",
       "address": "Culpeper, VA",
@@ -1454,11 +1538,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "province-group-powhatan-county-va",
-      "name": "Province Group \u2014 Powhatan County, VA",
+      "name": "Province Group — Powhatan County, VA",
       "operator": "Province Group",
       "country": "United States",
       "address": "Powhatan County, VA",
@@ -1472,11 +1557,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "meta-prineville-or",
-      "name": "Meta \u2014 Prineville, OR",
+      "name": "Meta — Prineville, OR",
       "operator": "Meta",
       "country": "United States",
       "address": "Prineville, OR",
@@ -1490,11 +1576,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "amazon-web-services-boardman-or",
-      "name": "Amazon Web Services \u2014 Boardman, OR",
+      "name": "Amazon Web Services — Boardman, OR",
       "operator": "Amazon Web Services",
       "country": "United States",
       "address": "Boardman, OR",
@@ -1508,11 +1595,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "amazon-web-services-hermiston-or",
-      "name": "Amazon Web Services \u2014 Hermiston, OR",
+      "name": "Amazon Web Services — Hermiston, OR",
       "operator": "Amazon Web Services",
       "country": "United States",
       "address": "Hermiston, OR",
@@ -1526,11 +1614,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "amazon-web-services-boardman-or-2",
-      "name": "Amazon Web Services \u2014 Boardman, OR",
+      "name": "Amazon Web Services — Boardman, OR",
       "operator": "Amazon Web Services",
       "country": "United States",
       "address": "Boardman, OR",
@@ -1544,11 +1633,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "flexential-hillsboro-or",
-      "name": "Flexential \u2014 Hillsboro, OR",
+      "name": "Flexential — Hillsboro, OR",
       "operator": "Flexential",
       "country": "United States",
       "address": "Hillsboro, OR",
@@ -1562,11 +1652,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "flexential-hillsboro-or-2",
-      "name": "Flexential \u2014 Hillsboro, OR",
+      "name": "Flexential — Hillsboro, OR",
       "operator": "Flexential",
       "country": "United States",
       "address": "Hillsboro, OR",
@@ -1580,11 +1671,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "crane-data-centers-forest-grove-or",
-      "name": "Crane Data Centers \u2014 Forest Grove, OR",
+      "name": "Crane Data Centers — Forest Grove, OR",
       "operator": "Crane Data Centers",
       "country": "United States",
       "address": "Forest Grove, OR",
@@ -1598,11 +1690,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "sabey-data-centers-umatilla-or",
-      "name": "Sabey Data Centers \u2014 Umatilla, OR",
+      "name": "Sabey Data Centers — Umatilla, OR",
       "operator": "Sabey Data Centers",
       "country": "United States",
       "address": "Umatilla, OR",
@@ -1616,17 +1709,18 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "fermi-america-carson-county-near-amarillo-texas",
-      "name": "Fermi America \u2014 Carson County (near Amarillo), Texas",
+      "name": "Fermi America — Carson County (near Amarillo), Texas",
       "operator": "Fermi America",
       "country": "United States",
       "address": "Carson County (near Amarillo), Texas",
-      "lat": 39.7837304,
-      "lng": -100.445882,
-      "geocode_precision": "country",
+      "lat": 35.3636563,
+      "lng": -101.3353895,
+      "geocode_precision": "address",
       "power_mw": 11000.0,
       "data_status": "confirmed",
       "cost_usd_billions": 60.0,
@@ -1634,11 +1728,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "meta-platforms-el-paso-texas",
-      "name": "Meta Platforms \u2014 El Paso, Texas",
+      "name": "Meta Platforms — El Paso, Texas",
       "operator": "Meta Platforms",
       "country": "United States",
       "address": "El Paso, Texas",
@@ -1652,11 +1747,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "powerhouse-data-centers-provident-data-centers-grand-prairie",
-      "name": "PowerHouse Data Centers / Provident Data Centers \u2014 Grand Prairie (Ellis County), Texas",
+      "name": "PowerHouse Data Centers / Provident Data Centers — Grand Prairie (Ellis County), Texas",
       "operator": "PowerHouse Data Centers / Provident Data Centers",
       "country": "United States",
       "address": "Grand Prairie (Ellis County), Texas",
@@ -1670,11 +1766,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "cyrusone-carlyle-group-fort-bliss-el-paso-texas",
-      "name": "CyrusOne / Carlyle Group \u2014 Fort Bliss, El Paso, Texas",
+      "name": "CyrusOne / Carlyle Group — Fort Bliss, El Paso, Texas",
       "operator": "CyrusOne / Carlyle Group",
       "country": "United States",
       "address": "Fort Bliss, El Paso, Texas",
@@ -1688,11 +1785,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "tract-caldwell-county-texas",
-      "name": "Tract \u2014 Caldwell County, Texas",
+      "name": "Tract — Caldwell County, Texas",
       "operator": "Tract",
       "country": "United States",
       "address": "Caldwell County, Texas",
@@ -1706,11 +1804,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "eneus-energy-harlingen-cameron-county-texas",
-      "name": "Eneus Energy \u2014 Harlingen (Cameron County), Texas",
+      "name": "Eneus Energy — Harlingen (Cameron County), Texas",
       "operator": "Eneus Energy",
       "country": "United States",
       "address": "Harlingen (Cameron County), Texas",
@@ -1724,11 +1823,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "cyrusone-ross-bosque-county-texas",
-      "name": "CyrusOne \u2014 Ross (Bosque County), Texas",
+      "name": "CyrusOne — Ross (Bosque County), Texas",
       "operator": "CyrusOne",
       "country": "United States",
       "address": "Ross (Bosque County), Texas",
@@ -1742,11 +1842,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "skybox-datacenters-round-rock-texas",
-      "name": "Skybox Datacenters \u2014 Round Rock, Texas",
+      "name": "Skybox Datacenters — Round Rock, Texas",
       "operator": "Skybox Datacenters",
       "country": "United States",
       "address": "Round Rock, Texas",
@@ -1760,11 +1861,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "streams-cyrusone-san-antonio-texas",
-      "name": "Streams (CyrusOne) \u2014 San Antonio, Texas",
+      "name": "Streams (CyrusOne) — San Antonio, Texas",
       "operator": "Streams (CyrusOne)",
       "country": "United States",
       "address": "San Antonio, Texas",
@@ -1778,11 +1880,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "energy-abundance-development-corporation-laredo-texas",
-      "name": "Energy Abundance Development Corporation \u2014 Laredo, Texas",
+      "name": "Energy Abundance Development Corporation — Laredo, Texas",
       "operator": "Energy Abundance Development Corporation",
       "country": "United States",
       "address": "Laredo, Texas",
@@ -1796,11 +1899,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "qts-data-centers-fayetteville-ga",
-      "name": "QTS Data Centers \u2014 Fayetteville, GA",
+      "name": "QTS Data Centers — Fayetteville, GA",
       "operator": "QTS Data Centers",
       "country": "United States",
       "address": "Fayetteville, GA",
@@ -1814,11 +1918,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "prologis-newnan-ga",
-      "name": "Prologis \u2014 Newnan, GA",
+      "name": "Prologis — Newnan, GA",
       "operator": "Prologis",
       "country": "United States",
       "address": "Newnan, GA",
@@ -1832,11 +1937,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "digital-realty-taurus-investment-holdings-stilesboro-ga",
-      "name": "Digital Realty / Taurus Investment Holdings \u2014 Stilesboro, GA",
+      "name": "Digital Realty / Taurus Investment Holdings — Stilesboro, GA",
       "operator": "Digital Realty / Taurus Investment Holdings",
       "country": "United States",
       "address": "Stilesboro, GA",
@@ -1850,11 +1956,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "dc-blox-lithia-springs-ga",
-      "name": "DC BLOX \u2014 Lithia Springs, GA",
+      "name": "DC BLOX — Lithia Springs, GA",
       "operator": "DC BLOX",
       "country": "United States",
       "address": "Lithia Springs, GA",
@@ -1868,11 +1975,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "dc-blox-conyers-ga",
-      "name": "DC BLOX \u2014 Conyers, GA",
+      "name": "DC BLOX — Conyers, GA",
       "operator": "DC BLOX",
       "country": "United States",
       "address": "Conyers, GA",
@@ -1886,11 +1994,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "serverfarm-covington-ga",
-      "name": "Serverfarm \u2014 Covington, GA",
+      "name": "Serverfarm — Covington, GA",
       "operator": "Serverfarm",
       "country": "United States",
       "address": "Covington, GA",
@@ -1904,11 +2013,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "t5-data-centers-south-fulton-ga",
-      "name": "T5 Data Centers \u2014 South Fulton, GA",
+      "name": "T5 Data Centers — South Fulton, GA",
       "operator": "T5 Data Centers",
       "country": "United States",
       "address": "South Fulton, GA",
@@ -1922,11 +2032,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "digital-realty-forest-park-ga",
-      "name": "Digital Realty \u2014 Forest Park, GA",
+      "name": "Digital Realty — Forest Park, GA",
       "operator": "Digital Realty",
       "country": "United States",
       "address": "Forest Park, GA",
@@ -1940,11 +2051,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "trammell-crow-co-forsyth-ga",
-      "name": "Trammell Crow Co. \u2014 Forsyth, GA",
+      "name": "Trammell Crow Co. — Forsyth, GA",
       "operator": "Trammell Crow Co.",
       "country": "United States",
       "address": "Forsyth, GA",
@@ -1958,11 +2070,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "databank-lithia-springs-ga",
-      "name": "DataBank \u2014 Lithia Springs, GA",
+      "name": "DataBank — Lithia Springs, GA",
       "operator": "DataBank",
       "country": "United States",
       "address": "Lithia Springs, GA",
@@ -1976,11 +2089,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "edgecore-digital-infrastructure-mesa-az",
-      "name": "EdgeCore Digital Infrastructure \u2014 Mesa, AZ",
+      "name": "EdgeCore Digital Infrastructure — Mesa, AZ",
       "operator": "EdgeCore Digital Infrastructure",
       "country": "United States",
       "address": "Mesa, AZ",
@@ -1994,11 +2108,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "beale-infrastructure-humphrey-s-peak-power-tucson-az",
-      "name": "Beale Infrastructure / Humphrey's Peak Power \u2014 Tucson, AZ",
+      "name": "Beale Infrastructure / Humphrey's Peak Power — Tucson, AZ",
       "operator": "Beale Infrastructure / Humphrey's Peak Power",
       "country": "United States",
       "address": "Tucson, AZ",
@@ -2012,11 +2127,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "beale-infrastructure-marana-az",
-      "name": "Beale Infrastructure \u2014 Marana, AZ",
+      "name": "Beale Infrastructure — Marana, AZ",
       "operator": "Beale Infrastructure",
       "country": "United States",
       "address": "Marana, AZ",
@@ -2030,11 +2146,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "takanock-llc-waddell-az",
-      "name": "Takanock LLC \u2014 Waddell, AZ",
+      "name": "Takanock LLC — Waddell, AZ",
       "operator": "Takanock LLC",
       "country": "United States",
       "address": "Waddell, AZ",
@@ -2048,11 +2165,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "vermaland-llc-eloy-az",
-      "name": "Vermaland LLC \u2014 Eloy, AZ",
+      "name": "Vermaland LLC — Eloy, AZ",
       "operator": "Vermaland LLC",
       "country": "United States",
       "address": "Eloy, AZ",
@@ -2066,11 +2184,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "arizona-land-consulting-verma-lallian-tonopah-az",
-      "name": "Arizona Land Consulting / Verma-Lallian \u2014 Tonopah, AZ",
+      "name": "Arizona Land Consulting / Verma-Lallian — Tonopah, AZ",
       "operator": "Arizona Land Consulting / Verma-Lallian",
       "country": "United States",
       "address": "Tonopah, AZ",
@@ -2084,11 +2203,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "aligned-data-centers-glendale-az",
-      "name": "Aligned Data Centers \u2014 Glendale, AZ",
+      "name": "Aligned Data Centers — Glendale, AZ",
       "operator": "Aligned Data Centers",
       "country": "United States",
       "address": "Glendale, AZ",
@@ -2102,11 +2222,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "iron-mountain-phoenix-az",
-      "name": "Iron Mountain \u2014 Phoenix, AZ",
+      "name": "Iron Mountain — Phoenix, AZ",
       "operator": "Iron Mountain",
       "country": "United States",
       "address": "Phoenix, AZ",
@@ -2120,11 +2241,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "meta-altoona-ia",
-      "name": "Meta \u2014 Altoona, IA",
+      "name": "Meta — Altoona, IA",
       "operator": "Meta",
       "country": "United States",
       "address": "Altoona, IA",
@@ -2138,11 +2260,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "apple-waukee-ia",
-      "name": "Apple \u2014 Waukee, IA",
+      "name": "Apple — Waukee, IA",
       "operator": "Apple",
       "country": "United States",
       "address": "Waukee, IA",
@@ -2156,11 +2279,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "qts-blackstone-cedar-rapids-ia",
-      "name": "QTS (Blackstone) \u2014 Cedar Rapids, IA",
+      "name": "QTS (Blackstone) — Cedar Rapids, IA",
       "operator": "QTS (Blackstone)",
       "country": "United States",
       "address": "Cedar Rapids, IA",
@@ -2174,11 +2298,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "meta-davenport-ia",
-      "name": "Meta \u2014 Davenport, IA",
+      "name": "Meta — Davenport, IA",
       "operator": "Meta",
       "country": "United States",
       "address": "Davenport, IA",
@@ -2192,11 +2317,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-cedar-rapids-ia",
-      "name": "Google \u2014 Cedar Rapids, IA",
+      "name": "Google — Cedar Rapids, IA",
       "operator": "Google",
       "country": "United States",
       "address": "Cedar Rapids, IA",
@@ -2210,11 +2336,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-palo-ia",
-      "name": "Google \u2014 Palo, IA",
+      "name": "Google — Palo, IA",
       "operator": "Google",
       "country": "United States",
       "address": "Palo, IA",
@@ -2228,11 +2355,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "copt-defense-properties-van-meter-ia",
-      "name": "COPT Defense Properties \u2014 Van Meter, IA",
+      "name": "COPT Defense Properties — Van Meter, IA",
       "operator": "COPT Defense Properties",
       "country": "United States",
       "address": "Van Meter, IA",
@@ -2246,11 +2374,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "edged-data-centers-endeavour-ankeny-ia",
-      "name": "Edged Data Centers (Endeavour) \u2014 Ankeny, IA",
+      "name": "Edged Data Centers (Endeavour) — Ankeny, IA",
       "operator": "Edged Data Centers (Endeavour)",
       "country": "United States",
       "address": "Ankeny, IA",
@@ -2264,11 +2393,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "cyrusone-council-bluffs-ia",
-      "name": "CyrusOne \u2014 Council Bluffs, IA",
+      "name": "CyrusOne — Council Bluffs, IA",
       "operator": "CyrusOne",
       "country": "United States",
       "address": "Council Bluffs, IA",
@@ -2282,11 +2412,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-quincy-wa",
-      "name": "Microsoft \u2014 Quincy, WA",
+      "name": "Microsoft — Quincy, WA",
       "operator": "Microsoft",
       "country": "United States",
       "address": "Quincy, WA",
@@ -2300,11 +2431,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-malaga-wa",
-      "name": "Microsoft \u2014 Malaga, WA",
+      "name": "Microsoft — Malaga, WA",
       "operator": "Microsoft",
       "country": "United States",
       "address": "Malaga, WA",
@@ -2318,11 +2450,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-east-wenatchee-wa",
-      "name": "Microsoft \u2014 East Wenatchee, WA",
+      "name": "Microsoft — East Wenatchee, WA",
       "operator": "Microsoft",
       "country": "United States",
       "address": "East Wenatchee, WA",
@@ -2336,11 +2469,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "vantage-data-centers-quincy-wa",
-      "name": "Vantage Data Centers \u2014 Quincy, WA",
+      "name": "Vantage Data Centers — Quincy, WA",
       "operator": "Vantage Data Centers",
       "country": "United States",
       "address": "Quincy, WA",
@@ -2354,11 +2488,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "sabey-data-centers-quincy-wa",
-      "name": "Sabey Data Centers \u2014 Quincy, WA",
+      "name": "Sabey Data Centers — Quincy, WA",
       "operator": "Sabey Data Centers",
       "country": "United States",
       "address": "Quincy, WA",
@@ -2372,11 +2507,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "sabey-data-centers-east-wenatchee-wa",
-      "name": "Sabey Data Centers \u2014 East Wenatchee, WA",
+      "name": "Sabey Data Centers — East Wenatchee, WA",
       "operator": "Sabey Data Centers",
       "country": "United States",
       "address": "East Wenatchee, WA",
@@ -2390,11 +2526,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "amazon-web-services-wallula-walla-walla-county-wa",
-      "name": "Amazon Web Services \u2014 Wallula (Walla Walla County), WA",
+      "name": "Amazon Web Services — Wallula (Walla Walla County), WA",
       "operator": "Amazon Web Services",
       "country": "United States",
       "address": "Wallula (Walla Walla County), WA",
@@ -2408,11 +2545,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "equinix-seattle-wa",
-      "name": "Equinix \u2014 Seattle, WA",
+      "name": "Equinix — Seattle, WA",
       "operator": "Equinix",
       "country": "United States",
       "address": "Seattle, WA",
@@ -2426,11 +2564,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "h5-data-centers-quincy-wa",
-      "name": "H5 Data Centers \u2014 Quincy, WA",
+      "name": "H5 Data Centers — Quincy, WA",
       "operator": "H5 Data Centers",
       "country": "United States",
       "address": "Quincy, WA",
@@ -2444,11 +2583,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "voltage-park-quincy-wa",
-      "name": "Voltage Park \u2014 Quincy, WA",
+      "name": "Voltage Park — Quincy, WA",
       "operator": "Voltage Park",
       "country": "United States",
       "address": "Quincy, WA",
@@ -2462,11 +2602,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "amazon-web-services-hamlet-nc",
-      "name": "Amazon Web Services \u2014 Hamlet, NC",
+      "name": "Amazon Web Services — Hamlet, NC",
       "operator": "Amazon Web Services",
       "country": "United States",
       "address": "Hamlet, NC",
@@ -2480,17 +2621,18 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-conover-hickory-maiden-nc",
-      "name": "Microsoft \u2014 Conover/Hickory/Maiden, NC",
+      "name": "Microsoft — Conover/Hickory/Maiden, NC",
       "operator": "Microsoft",
       "country": "United States",
       "address": "Conover/Hickory/Maiden, NC",
-      "lat": 39.7837304,
-      "lng": -100.445882,
-      "geocode_precision": "country",
+      "lat": 35.7065004,
+      "lng": -81.2184383,
+      "geocode_precision": "address",
       "power_mw": 720.0,
       "data_status": "confirmed",
       "cost_usd_billions": 1.0,
@@ -2498,11 +2640,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "apple-maiden-nc",
-      "name": "Apple \u2014 Maiden, NC",
+      "name": "Apple — Maiden, NC",
       "operator": "Apple",
       "country": "United States",
       "address": "Maiden, NC",
@@ -2516,11 +2659,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-lenoir-nc",
-      "name": "Google \u2014 Lenoir, NC",
+      "name": "Google — Lenoir, NC",
       "operator": "Google",
       "country": "United States",
       "address": "Lenoir, NC",
@@ -2534,11 +2678,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "digital-realty-charlotte-nc",
-      "name": "Digital Realty \u2014 Charlotte, NC",
+      "name": "Digital Realty — Charlotte, NC",
       "operator": "Digital Realty",
       "country": "United States",
       "address": "Charlotte, NC",
@@ -2552,11 +2697,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "energy-storage-solutions-tarboro-nc",
-      "name": "Energy Storage Solutions \u2014 Tarboro, NC",
+      "name": "Energy Storage Solutions — Tarboro, NC",
       "operator": "Energy Storage Solutions",
       "country": "United States",
       "address": "Tarboro, NC",
@@ -2570,11 +2716,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "blue-ridge-companies-engineered-land-solutions-walnut-cove-n",
-      "name": "Blue Ridge Companies / Engineered Land Solutions \u2014 Walnut Cove, NC",
+      "name": "Blue Ridge Companies / Engineered Land Solutions — Walnut Cove, NC",
       "operator": "Blue Ridge Companies / Engineered Land Solutions",
       "country": "United States",
       "address": "Walnut Cove, NC",
@@ -2588,11 +2735,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "whitefiber-bit-digital-madison-nc",
-      "name": "WhiteFiber (Bit Digital) \u2014 Madison, NC",
+      "name": "WhiteFiber (Bit Digital) — Madison, NC",
       "operator": "WhiteFiber (Bit Digital)",
       "country": "United States",
       "address": "Madison, NC",
@@ -2606,11 +2754,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "compass-datacenters-statesville-nc",
-      "name": "Compass Datacenters \u2014 Statesville, NC",
+      "name": "Compass Datacenters — Statesville, NC",
       "operator": "Compass Datacenters",
       "country": "United States",
       "address": "Statesville, NC",
@@ -2624,11 +2773,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "powerhouse-data-centers-american-real-estate-partners-charlo",
-      "name": "PowerHouse Data Centers (American Real Estate Partners) \u2014 Charlotte, NC",
+      "name": "PowerHouse Data Centers (American Real Estate Partners) — Charlotte, NC",
       "operator": "PowerHouse Data Centers (American Real Estate Partners)",
       "country": "United States",
       "address": "Charlotte, NC",
@@ -2642,11 +2792,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "sb-energy-softbank-group-piketon-oh",
-      "name": "SB Energy (SoftBank Group) \u2014 Piketon, OH",
+      "name": "SB Energy (SoftBank Group) — Piketon, OH",
       "operator": "SB Energy (SoftBank Group)",
       "country": "United States",
       "address": "Piketon, OH",
@@ -2660,11 +2811,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "frontier-ai"
     },
     {
       "id": "amazon-web-services-aws-wilmington-oh",
-      "name": "Amazon Web Services (AWS) \u2014 Wilmington, OH",
+      "name": "Amazon Web Services (AWS) — Wilmington, OH",
       "operator": "Amazon Web Services (AWS)",
       "country": "United States",
       "address": "Wilmington, OH",
@@ -2678,11 +2830,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "bristolville-25-developer-llc-lordstown-oh",
-      "name": "Bristolville 25 Developer LLC \u2014 Lordstown, OH",
+      "name": "Bristolville 25 Developer LLC — Lordstown, OH",
       "operator": "Bristolville 25 Developer LLC",
       "country": "United States",
       "address": "Lordstown, OH",
@@ -2696,11 +2849,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "j5-llc-linked-to-meta-platforms-piqua-oh",
-      "name": "J5 LLC (linked to Meta Platforms) \u2014 Piqua, OH",
+      "name": "J5 LLC (linked to Meta Platforms) — Piqua, OH",
       "operator": "J5 LLC (linked to Meta Platforms)",
       "country": "United States",
       "address": "Piqua, OH",
@@ -2714,11 +2868,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "db-stu-llc-linked-to-meta-platforms-mount-orab-oh",
-      "name": "DB Stu LLC (linked to Meta Platforms) \u2014 Mount Orab, OH",
+      "name": "DB Stu LLC (linked to Meta Platforms) — Mount Orab, OH",
       "operator": "DB Stu LLC (linked to Meta Platforms)",
       "country": "United States",
       "address": "Mount Orab, OH",
@@ -2732,11 +2887,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "aligned-data-centers-conesville-oh",
-      "name": "Aligned Data Centers \u2014 Conesville, OH",
+      "name": "Aligned Data Centers — Conesville, OH",
       "operator": "Aligned Data Centers",
       "country": "United States",
       "address": "Conesville, OH",
@@ -2750,11 +2906,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "aligned-data-centers-sandusky-oh",
-      "name": "Aligned Data Centers \u2014 Sandusky, OH",
+      "name": "Aligned Data Centers — Sandusky, OH",
       "operator": "Aligned Data Centers",
       "country": "United States",
       "address": "Sandusky, OH",
@@ -2768,11 +2925,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "terawulf-somerset-ny",
-      "name": "TeraWulf \u2014 Somerset, NY",
+      "name": "TeraWulf — Somerset, NY",
       "operator": "TeraWulf",
       "country": "United States",
       "address": "Somerset, NY",
@@ -2786,11 +2944,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "frontier-ai"
     },
     {
       "id": "terawulf-lansing-ny",
-      "name": "TeraWulf \u2014 Lansing, NY",
+      "name": "TeraWulf — Lansing, NY",
       "operator": "TeraWulf",
       "country": "United States",
       "address": "Lansing, NY",
@@ -2804,11 +2963,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "stream-data-centers-alabama-ny",
-      "name": "Stream Data Centers \u2014 Alabama, NY",
+      "name": "Stream Data Centers — Alabama, NY",
       "operator": "Stream Data Centers",
       "country": "United States",
       "address": "Alabama, NY",
@@ -2822,11 +2982,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "ranalli-super-dc-llc-lysander-ny",
-      "name": "Ranalli Super DC LLC \u2014 Lysander, NY",
+      "name": "Ranalli Super DC LLC — Lysander, NY",
       "operator": "Ranalli Super DC LLC",
       "country": "United States",
       "address": "Lysander, NY",
@@ -2840,11 +3001,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "ibm-poughkeepsie-ny",
-      "name": "IBM \u2014 Poughkeepsie, NY",
+      "name": "IBM — Poughkeepsie, NY",
       "operator": "IBM",
       "country": "United States",
       "address": "Poughkeepsie, NY",
@@ -2858,11 +3020,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "equinix-secaucus-nj",
-      "name": "Equinix \u2014 Secaucus, NJ",
+      "name": "Equinix — Secaucus, NJ",
       "operator": "Equinix",
       "country": "United States",
       "address": "Secaucus, NJ",
@@ -2876,11 +3039,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "digital-realty-new-york-ny",
-      "name": "Digital Realty \u2014 New York, NY",
+      "name": "Digital Realty — New York, NY",
       "operator": "Digital Realty",
       "country": "United States",
       "address": "New York, NY",
@@ -2894,11 +3058,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "databank-orangeburg-ny",
-      "name": "DataBank \u2014 Orangeburg, NY",
+      "name": "DataBank — Orangeburg, NY",
       "operator": "DataBank",
       "country": "United States",
       "address": "Orangeburg, NY",
@@ -2912,17 +3077,18 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "imperial-valley-computer-manufacturing-imperial-ca-aten-clar",
-      "name": "Imperial Valley Computer Manufacturing \u2014 Imperial, CA (Aten & Clark roads)",
+      "name": "Imperial Valley Computer Manufacturing — Imperial, CA (Aten & Clark roads)",
       "operator": "Imperial Valley Computer Manufacturing",
       "country": "United States",
       "address": "Imperial, CA (Aten & Clark roads)",
-      "lat": 39.7837304,
-      "lng": -100.445882,
-      "geocode_precision": "country",
+      "lat": 33.0305487,
+      "lng": -115.3595666,
+      "geocode_precision": "address",
       "power_mw": 330.0,
       "data_status": "confirmed",
       "cost_usd_billions": 10.0,
@@ -2930,11 +3096,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "vantage-data-centers-santa-clara-ca",
-      "name": "Vantage Data Centers \u2014 Santa Clara, CA",
+      "name": "Vantage Data Centers — Santa Clara, CA",
       "operator": "Vantage Data Centers",
       "country": "United States",
       "address": "Santa Clara, CA",
@@ -2948,11 +3115,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "vantage-data-centers-santa-clara-ca-2",
-      "name": "Vantage Data Centers \u2014 Santa Clara, CA",
+      "name": "Vantage Data Centers — Santa Clara, CA",
       "operator": "Vantage Data Centers",
       "country": "United States",
       "address": "Santa Clara, CA",
@@ -2966,11 +3134,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "edgecore-digital-infrastructure-santa-clara-ca",
-      "name": "EdgeCore Digital Infrastructure \u2014 Santa Clara, CA",
+      "name": "EdgeCore Digital Infrastructure — Santa Clara, CA",
       "operator": "EdgeCore Digital Infrastructure",
       "country": "United States",
       "address": "Santa Clara, CA",
@@ -2984,11 +3153,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "coresite-santa-clara-ca",
-      "name": "CoreSite \u2014 Santa Clara, CA",
+      "name": "CoreSite — Santa Clara, CA",
       "operator": "CoreSite",
       "country": "United States",
       "address": "Santa Clara, CA",
@@ -3002,11 +3172,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "ntt-global-data-centers-santa-clara-ca",
-      "name": "NTT Global Data Centers \u2014 Santa Clara, CA",
+      "name": "NTT Global Data Centers — Santa Clara, CA",
       "operator": "NTT Global Data Centers",
       "country": "United States",
       "address": "Santa Clara, CA",
@@ -3020,11 +3191,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "cologix-santa-clara-ca",
-      "name": "Cologix \u2014 Santa Clara, CA",
+      "name": "Cologix — Santa Clara, CA",
       "operator": "Cologix",
       "country": "United States",
       "address": "Santa Clara, CA",
@@ -3038,17 +3210,18 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "equinix-los-angeles-ca-one-wilshire",
-      "name": "Equinix \u2014 Los Angeles, CA (One Wilshire)",
+      "name": "Equinix — Los Angeles, CA (One Wilshire)",
       "operator": "Equinix",
       "country": "United States",
       "address": "Los Angeles, CA (One Wilshire)",
-      "lat": 39.7837304,
-      "lng": -100.445882,
-      "geocode_precision": "country",
+      "lat": 34.0536909,
+      "lng": -118.242766,
+      "geocode_precision": "address",
       "power_mw": 45.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -3056,17 +3229,18 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "prime-data-centers-sacramento-ca-mcclellan-park",
-      "name": "Prime Data Centers \u2014 Sacramento, CA (McClellan Park)",
+      "name": "Prime Data Centers — Sacramento, CA (McClellan Park)",
       "operator": "Prime Data Centers",
       "country": "United States",
       "address": "Sacramento, CA (McClellan Park)",
-      "lat": 39.7837304,
-      "lng": -100.445882,
-      "geocode_precision": "country",
+      "lat": 38.5810606,
+      "lng": -121.493895,
+      "geocode_precision": "address",
       "power_mw": 48.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -3074,17 +3248,18 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "amazon-web-services-salem-township-pa-susquehanna-nuclear-pl",
-      "name": "Amazon Web Services \u2014 Salem Township, PA (Susquehanna nuclear plant)",
+      "name": "Amazon Web Services — Salem Township, PA (Susquehanna nuclear plant)",
       "operator": "Amazon Web Services",
       "country": "United States",
       "address": "Salem Township, PA (Susquehanna nuclear plant)",
-      "lat": 39.7837304,
-      "lng": -100.445882,
-      "geocode_precision": "country",
+      "lat": 41.1078249,
+      "lng": -76.1791155,
+      "geocode_precision": "address",
       "power_mw": 960.0,
       "data_status": "confirmed",
       "cost_usd_billions": 0.65,
@@ -3092,11 +3267,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "vantage-data-centers-shackelford-county-tx",
-      "name": "Vantage Data Centers \u2014 Shackelford County, TX",
+      "name": "Vantage Data Centers — Shackelford County, TX",
       "operator": "Vantage Data Centers",
       "country": "United States",
       "address": "Shackelford County, TX",
@@ -3110,11 +3286,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "frontier-ai"
     },
     {
       "id": "applied-digital-ellendale-nd",
-      "name": "Applied Digital \u2014 Ellendale, ND",
+      "name": "Applied Digital — Ellendale, ND",
       "operator": "Applied Digital",
       "country": "United States",
       "address": "Ellendale, ND",
@@ -3128,11 +3305,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "frontier-ai"
     },
     {
       "id": "xai-5414-tulane-rd-memphis-tn",
-      "name": "xAI \u2014 5414 Tulane Rd, Memphis, TN",
+      "name": "xAI — 5414 Tulane Rd, Memphis, TN",
       "operator": "xAI",
       "country": "United States",
       "address": "5414 Tulane Rd, Memphis, TN",
@@ -3146,11 +3324,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "frontier-ai"
     },
     {
       "id": "xai-southaven-ms",
-      "name": "xAI \u2014 Southaven, MS",
+      "name": "xAI — Southaven, MS",
       "operator": "xAI",
       "country": "United States",
       "address": "Southaven, MS",
@@ -3164,11 +3343,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "frontier-ai"
     },
     {
       "id": "google-berkeley-county-sc-moncks-corner",
-      "name": "Google \u2014 Berkeley County, SC (Moncks Corner)",
+      "name": "Google — Berkeley County, SC (Moncks Corner)",
       "operator": "Google",
       "country": "United States",
       "address": "Berkeley County, SC (Moncks Corner)",
@@ -3182,11 +3362,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-douglas-county-ga-douglasville",
-      "name": "Google \u2014 Douglas County, GA (Douglasville)",
+      "name": "Google — Douglas County, GA (Douglasville)",
       "operator": "Google",
       "country": "United States",
       "address": "Douglas County, GA (Douglasville)",
@@ -3200,11 +3381,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-henderson-nv",
-      "name": "Google \u2014 Henderson, NV",
+      "name": "Google — Henderson, NV",
       "operator": "Google",
       "country": "United States",
       "address": "Henderson, NV",
@@ -3218,11 +3400,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-haskell-county-tx",
-      "name": "Google \u2014 Haskell County, TX",
+      "name": "Google — Haskell County, TX",
       "operator": "Google",
       "country": "United States",
       "address": "Haskell County, TX",
@@ -3236,11 +3419,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-kansas-city-mo",
-      "name": "Google \u2014 Kansas City, MO",
+      "name": "Google — Kansas City, MO",
       "operator": "Google",
       "country": "United States",
       "address": "Kansas City, MO",
@@ -3254,11 +3438,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-clarksville-tn-montgomery-county",
-      "name": "Google \u2014 Clarksville, TN (Montgomery County)",
+      "name": "Google — Clarksville, TN (Montgomery County)",
       "operator": "Google",
       "country": "United States",
       "address": "Clarksville, TN (Montgomery County)",
@@ -3272,17 +3457,18 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "qts-data-centers-fairfax-ia-cedar-rapids-metro",
-      "name": "QTS Data Centers \u2014 Fairfax, IA (Cedar Rapids metro)",
+      "name": "QTS Data Centers — Fairfax, IA (Cedar Rapids metro)",
       "operator": "QTS Data Centers",
       "country": "United States",
       "address": "Fairfax, IA (Cedar Rapids metro)",
-      "lat": 39.7837304,
-      "lng": -100.445882,
-      "geocode_precision": "country",
+      "lat": 41.9194471,
+      "lng": -91.7810132,
+      "geocode_precision": "address",
       "power_mw": 616.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -3290,11 +3476,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-middenmeer-noord-holland-netherlands",
-      "name": "Microsoft \u2014 Middenmeer, Noord-Holland, Netherlands",
+      "name": "Microsoft — Middenmeer, Noord-Holland, Netherlands",
       "operator": "Microsoft",
       "country": "Netherlands",
       "address": "Middenmeer, Noord-Holland, Netherlands",
@@ -3308,11 +3495,12 @@
       "renewable_pct": 40,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-middenmeer-noord-holland-netherlands-2",
-      "name": "Microsoft \u2014 Middenmeer, Noord-Holland, Netherlands",
+      "name": "Microsoft — Middenmeer, Noord-Holland, Netherlands",
       "operator": "Microsoft",
       "country": "Netherlands",
       "address": "Middenmeer, Noord-Holland, Netherlands",
@@ -3326,11 +3514,12 @@
       "renewable_pct": 40,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-eemshaven-groningen-netherlands",
-      "name": "Google \u2014 Eemshaven, Groningen, Netherlands",
+      "name": "Google — Eemshaven, Groningen, Netherlands",
       "operator": "Google",
       "country": "Netherlands",
       "address": "Eemshaven, Groningen, Netherlands",
@@ -3344,11 +3533,12 @@
       "renewable_pct": 40,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-winschoten-groningen-netherlands",
-      "name": "Google \u2014 Winschoten, Groningen, Netherlands",
+      "name": "Google — Winschoten, Groningen, Netherlands",
       "operator": "Google",
       "country": "Netherlands",
       "address": "Winschoten, Groningen, Netherlands",
@@ -3362,11 +3552,12 @@
       "renewable_pct": 40,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "digital-realty-schiphol-rijk-noord-holland-netherlands",
-      "name": "Digital Realty \u2014 Schiphol-Rijk, Noord-Holland, Netherlands",
+      "name": "Digital Realty — Schiphol-Rijk, Noord-Holland, Netherlands",
       "operator": "Digital Realty",
       "country": "Netherlands",
       "address": "Schiphol-Rijk, Noord-Holland, Netherlands",
@@ -3380,11 +3571,12 @@
       "renewable_pct": 40,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "equinix-amsterdam-noord-holland-netherlands",
-      "name": "Equinix \u2014 Amsterdam, Noord-Holland, Netherlands",
+      "name": "Equinix — Amsterdam, Noord-Holland, Netherlands",
       "operator": "Equinix",
       "country": "Netherlands",
       "address": "Amsterdam, Noord-Holland, Netherlands",
@@ -3398,11 +3590,12 @@
       "renewable_pct": 40,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "multiple-switch-datacenters-cloudhq-others-haarlemmermeer-no",
-      "name": "Multiple (Switch Datacenters, CloudHQ, others) \u2014 Haarlemmermeer, Noord-Holland, Netherlands",
+      "name": "Multiple (Switch Datacenters, CloudHQ, others) — Haarlemmermeer, Noord-Holland, Netherlands",
       "operator": "Multiple (Switch Datacenters, CloudHQ, others)",
       "country": "Netherlands",
       "address": "Haarlemmermeer, Noord-Holland, Netherlands",
@@ -3416,11 +3609,12 @@
       "renewable_pct": 40,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-amsterdam-noord-holland-netherlands",
-      "name": "Microsoft \u2014 Amsterdam, Noord-Holland, Netherlands",
+      "name": "Microsoft — Amsterdam, Noord-Holland, Netherlands",
       "operator": "Microsoft",
       "country": "Netherlands",
       "address": "Amsterdam, Noord-Holland, Netherlands",
@@ -3434,11 +3628,12 @@
       "renewable_pct": 40,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-middenmeer-noord-holland-netherlands",
-      "name": "Google \u2014 Middenmeer, Noord-Holland, Netherlands",
+      "name": "Google — Middenmeer, Noord-Holland, Netherlands",
       "operator": "Google",
       "country": "Netherlands",
       "address": "Middenmeer, Noord-Holland, Netherlands",
@@ -3452,11 +3647,12 @@
       "renewable_pct": 40,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "meta-cancelled-zeewolde-flevoland-netherlands",
-      "name": "Meta (cancelled) \u2014 Zeewolde, Flevoland, Netherlands",
+      "name": "Meta (cancelled) — Zeewolde, Flevoland, Netherlands",
       "operator": "Meta (cancelled)",
       "country": "Netherlands",
       "address": "Zeewolde, Flevoland, Netherlands",
@@ -3470,11 +3666,12 @@
       "renewable_pct": 40,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "meta-clonee-county-meath-ireland",
-      "name": "Meta \u2014 Clonee, County Meath, Ireland",
+      "name": "Meta — Clonee, County Meath, Ireland",
       "operator": "Meta",
       "country": "Ireland",
       "address": "Clonee, County Meath, Ireland",
@@ -3488,11 +3685,12 @@
       "renewable_pct": 35,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-grange-castle-dublin-ireland",
-      "name": "Microsoft \u2014 Grange Castle, Dublin, Ireland",
+      "name": "Microsoft — Grange Castle, Dublin, Ireland",
       "operator": "Microsoft",
       "country": "Ireland",
       "address": "Grange Castle, Dublin, Ireland",
@@ -3506,11 +3704,12 @@
       "renewable_pct": 35,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-grange-castle-dublin-ireland",
-      "name": "Google \u2014 Grange Castle, Dublin, Ireland",
+      "name": "Google — Grange Castle, Dublin, Ireland",
       "operator": "Google",
       "country": "Ireland",
       "address": "Grange Castle, Dublin, Ireland",
@@ -3524,11 +3723,12 @@
       "renewable_pct": 35,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "aws-mulhuddart-dublin-15-ireland",
-      "name": "AWS \u2014 Mulhuddart, Dublin 15, Ireland",
+      "name": "AWS — Mulhuddart, Dublin 15, Ireland",
       "operator": "AWS",
       "country": "Ireland",
       "address": "Mulhuddart, Dublin 15, Ireland",
@@ -3542,11 +3742,12 @@
       "renewable_pct": 35,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "echelon-data-centres-arklow-county-wicklow-ireland",
-      "name": "Echelon Data Centres \u2014 Arklow, County Wicklow, Ireland",
+      "name": "Echelon Data Centres — Arklow, County Wicklow, Ireland",
       "operator": "Echelon Data Centres",
       "country": "Ireland",
       "address": "Arklow, County Wicklow, Ireland",
@@ -3560,17 +3761,18 @@
       "renewable_pct": 35,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "echelon-data-centres-kish-business-park-county-wicklow-irela",
-      "name": "Echelon Data Centres \u2014 Kish Business Park, County Wicklow, Ireland",
+      "name": "Echelon Data Centres — Kish Business Park, County Wicklow, Ireland",
       "operator": "Echelon Data Centres",
       "country": "Ireland",
       "address": "Kish Business Park, County Wicklow, Ireland",
-      "lat": 52.865196,
-      "lng": -7.9794599,
-      "geocode_precision": "country",
+      "lat": 52.9582099,
+      "lng": -6.3814208,
+      "geocode_precision": "approximate",
       "power_mw": 150.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -3578,11 +3780,12 @@
       "renewable_pct": 35,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "equinix-blanchardstown-dublin-ireland",
-      "name": "Equinix \u2014 Blanchardstown, Dublin, Ireland",
+      "name": "Equinix — Blanchardstown, Dublin, Ireland",
       "operator": "Equinix",
       "country": "Ireland",
       "address": "Blanchardstown, Dublin, Ireland",
@@ -3596,11 +3799,12 @@
       "renewable_pct": 35,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "digital-realty-clondalkin-dublin-ireland",
-      "name": "Digital Realty \u2014 Clondalkin, Dublin, Ireland",
+      "name": "Digital Realty — Clondalkin, Dublin, Ireland",
       "operator": "Digital Realty",
       "country": "Ireland",
       "address": "Clondalkin, Dublin, Ireland",
@@ -3614,11 +3818,12 @@
       "renewable_pct": 35,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "echelon-data-centres-clondalkin-dublin-ireland",
-      "name": "Echelon Data Centres \u2014 Clondalkin, Dublin, Ireland",
+      "name": "Echelon Data Centres — Clondalkin, Dublin, Ireland",
       "operator": "Echelon Data Centres",
       "country": "Ireland",
       "address": "Clondalkin, Dublin, Ireland",
@@ -3632,11 +3837,12 @@
       "renewable_pct": 35,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-grange-castle-dublin-ireland-2",
-      "name": "Google \u2014 Grange Castle, Dublin, Ireland",
+      "name": "Google — Grange Castle, Dublin, Ireland",
       "operator": "Google",
       "country": "Ireland",
       "address": "Grange Castle, Dublin, Ireland",
@@ -3650,14 +3856,15 @@
       "renewable_pct": 35,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "meta-platforms-lule-norrbotten-sweden",
-      "name": "Meta Platforms \u2014 Lule\u00c3\u00a5, Norrbotten, Sweden",
+      "name": "Meta Platforms — Luleå, Norrbotten, Sweden",
       "operator": "Meta Platforms",
       "country": "Sweden",
-      "address": "Lule\u00c3\u00a5, Norrbotten, Sweden",
+      "address": "Luleå, Norrbotten, Sweden",
       "lat": 65.5831187,
       "lng": 22.1459535,
       "geocode_precision": "address",
@@ -3668,11 +3875,12 @@
       "renewable_pct": 83,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "ecodatacenter-falun-dalarna-sweden",
-      "name": "EcoDataCenter \u2014 Falun, Dalarna, Sweden",
+      "name": "EcoDataCenter — Falun, Dalarna, Sweden",
       "operator": "EcoDataCenter",
       "country": "Sweden",
       "address": "Falun, Dalarna, Sweden",
@@ -3686,11 +3894,12 @@
       "renewable_pct": 83,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "digital-realty-kista-stockholm-sweden",
-      "name": "Digital Realty \u2014 Kista, Stockholm, Sweden",
+      "name": "Digital Realty — Kista, Stockholm, Sweden",
       "operator": "Digital Realty",
       "country": "Sweden",
       "address": "Kista, Stockholm, Sweden",
@@ -3704,11 +3913,12 @@
       "renewable_pct": 83,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "conapto-stockholm-stockholm-sweden",
-      "name": "Conapto \u2014 Stockholm, Stockholm, Sweden",
+      "name": "Conapto — Stockholm, Stockholm, Sweden",
       "operator": "Conapto",
       "country": "Sweden",
       "address": "Stockholm, Stockholm, Sweden",
@@ -3722,17 +3932,18 @@
       "renewable_pct": 83,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "ecodatacenter-borl-nge-dalarna-sweden",
-      "name": "EcoDataCenter \u2014 Borl\u00c3\u00a4nge, Dalarna, Sweden",
+      "name": "EcoDataCenter — Borlänge, Dalarna, Sweden",
       "operator": "EcoDataCenter",
       "country": "Sweden",
-      "address": "Borl\u00c3\u00a4nge, Dalarna, Sweden",
-      "lat": 59.6749712,
-      "lng": 14.5208584,
-      "geocode_precision": "country",
+      "address": "Borlänge, Dalarna, Sweden",
+      "lat": 60.4856426,
+      "lng": 15.4234561,
+      "geocode_precision": "approximate",
       "power_mw": 250.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -3740,17 +3951,18 @@
       "renewable_pct": 83,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "atnorth-l-ngsele-v-sternorrland-sweden",
-      "name": "atNorth \u2014 L\u00c3\u00a5ngsele, V\u00c3\u00a4sternorrland, Sweden",
+      "name": "atNorth — Långsele, Västernorrland, Sweden",
       "operator": "atNorth",
       "country": "Sweden",
-      "address": "L\u00c3\u00a5ngsele, V\u00c3\u00a4sternorrland, Sweden",
-      "lat": 59.6749712,
-      "lng": 14.5208584,
-      "geocode_precision": "country",
+      "address": "Långsele, Västernorrland, Sweden",
+      "lat": 63.1851106,
+      "lng": 17.0565672,
+      "geocode_precision": "approximate",
       "power_mw": 300.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -3758,17 +3970,18 @@
       "renewable_pct": 83,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "brookfield-asset-management-str-ngn-s-s-dermanland-sweden",
-      "name": "Brookfield Asset Management \u2014 Str\u00c3\u00a4ngn\u00c3\u00a4s, S\u00c3\u00b6dermanland, Sweden",
+      "name": "Brookfield Asset Management — Strängnäs, Södermanland, Sweden",
       "operator": "Brookfield Asset Management",
       "country": "Sweden",
-      "address": "Str\u00c3\u00a4ngn\u00c3\u00a4s, S\u00c3\u00b6dermanland, Sweden",
-      "lat": 59.6749712,
-      "lng": 14.5208584,
-      "geocode_precision": "country",
+      "address": "Strängnäs, Södermanland, Sweden",
+      "lat": 59.3763155,
+      "lng": 17.0268194,
+      "geocode_precision": "approximate",
       "power_mw": 750.0,
       "data_status": "confirmed",
       "cost_usd_billions": 9.9,
@@ -3776,11 +3989,12 @@
       "renewable_pct": 83,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "equinix-stockholm-stockholm-sweden",
-      "name": "Equinix \u2014 Stockholm, Stockholm, Sweden",
+      "name": "Equinix — Stockholm, Stockholm, Sweden",
       "operator": "Equinix",
       "country": "Sweden",
       "address": "Stockholm, Stockholm, Sweden",
@@ -3794,11 +4008,12 @@
       "renewable_pct": 83,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "atnorth-stockholm-stockholm-sweden",
-      "name": "atNorth \u2014 Stockholm, Stockholm, Sweden",
+      "name": "atNorth — Stockholm, Stockholm, Sweden",
       "operator": "atNorth",
       "country": "Sweden",
       "address": "Stockholm, Stockholm, Sweden",
@@ -3812,17 +4027,18 @@
       "renewable_pct": 83,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "edgemode-vertical-data-marviken-sterg-tland-sweden",
-      "name": "EdgeMode / Vertical Data \u2014 Marviken, \u00c3\u0096sterg\u00c3\u00b6tland, Sweden",
+      "name": "EdgeMode / Vertical Data — Marviken, Östergötland, Sweden",
       "operator": "EdgeMode / Vertical Data",
       "country": "Sweden",
-      "address": "Marviken, \u00c3\u0096sterg\u00c3\u00b6tland, Sweden",
-      "lat": 59.6749712,
-      "lng": 14.5208584,
-      "geocode_precision": "country",
+      "address": "Marviken, Östergötland, Sweden",
+      "lat": 59.9716475,
+      "lng": 15.7601797,
+      "geocode_precision": "approximate",
       "power_mw": 20.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -3830,11 +4046,12 @@
       "renewable_pct": 83,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-tuike-finland-oy-hamina-kymenlaakso-finland",
-      "name": "Google (Tuike Finland Oy) \u2014 Hamina, Kymenlaakso, Finland",
+      "name": "Google (Tuike Finland Oy) — Hamina, Kymenlaakso, Finland",
       "operator": "Google (Tuike Finland Oy)",
       "country": "Finland",
       "address": "Hamina, Kymenlaakso, Finland",
@@ -3848,11 +4065,12 @@
       "renewable_pct": 60,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-espoo-uusimaa-finland",
-      "name": "Microsoft \u2014 Espoo, Uusimaa, Finland",
+      "name": "Microsoft — Espoo, Uusimaa, Finland",
       "operator": "Microsoft",
       "country": "Finland",
       "address": "Espoo, Uusimaa, Finland",
@@ -3866,11 +4084,12 @@
       "renewable_pct": 60,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-kirkkonummi-uusimaa-finland",
-      "name": "Microsoft \u2014 Kirkkonummi, Uusimaa, Finland",
+      "name": "Microsoft — Kirkkonummi, Uusimaa, Finland",
       "operator": "Microsoft",
       "country": "Finland",
       "address": "Kirkkonummi, Uusimaa, Finland",
@@ -3884,11 +4103,12 @@
       "renewable_pct": 60,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "atnorth-being-acquired-by-equinix-cpp-investments-myllykoski",
-      "name": "atNorth (being acquired by Equinix/CPP Investments) \u2014 Myllykoski, Kouvola, Finland",
+      "name": "atNorth (being acquired by Equinix/CPP Investments) — Myllykoski, Kouvola, Finland",
       "operator": "atNorth (being acquired by Equinix/CPP Investments)",
       "country": "Finland",
       "address": "Myllykoski, Kouvola, Finland",
@@ -3902,11 +4122,12 @@
       "renewable_pct": 60,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-alphabet-kajaani-muhos-kainuu-north-ostrobothnia-finl",
-      "name": "Google (Alphabet) \u2014 Kajaani / Muhos, Kainuu / North Ostrobothnia, Finland",
+      "name": "Google (Alphabet) — Kajaani / Muhos, Kainuu / North Ostrobothnia, Finland",
       "operator": "Google (Alphabet)",
       "country": "Finland",
       "address": "Kajaani / Muhos, Kainuu / North Ostrobothnia, Finland",
@@ -3920,11 +4141,12 @@
       "renewable_pct": 60,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "xtx-markets-kajaani-kainuu-finland",
-      "name": "XTX Markets \u2014 Kajaani, Kainuu, Finland",
+      "name": "XTX Markets — Kajaani, Kainuu, Finland",
       "operator": "XTX Markets",
       "country": "Finland",
       "address": "Kajaani, Kainuu, Finland",
@@ -3938,11 +4160,12 @@
       "renewable_pct": 60,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "verne-ardian-vantaa-uusimaa-finland",
-      "name": "Verne (Ardian) \u2014 Vantaa, Uusimaa, Finland",
+      "name": "Verne (Ardian) — Vantaa, Uusimaa, Finland",
       "operator": "Verne (Ardian)",
       "country": "Finland",
       "address": "Vantaa, Uusimaa, Finland",
@@ -3956,14 +4179,15 @@
       "renewable_pct": 60,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "verne-ardian-m-nts-l-uusimaa-finland",
-      "name": "Verne (Ardian) \u2014 M\u00c3\u00a4nts\u00c3\u00a4l\u00c3\u00a4, Uusimaa, Finland",
+      "name": "Verne (Ardian) — Mäntsälä, Uusimaa, Finland",
       "operator": "Verne (Ardian)",
       "country": "Finland",
-      "address": "M\u00c3\u00a4nts\u00c3\u00a4l\u00c3\u00a4, Uusimaa, Finland",
+      "address": "Mäntsälä, Uusimaa, Finland",
       "lat": 60.2246684,
       "lng": 25.1272631,
       "geocode_precision": "approximate",
@@ -3974,11 +4198,12 @@
       "renewable_pct": 60,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "equinix-helsinki-uusimaa-finland",
-      "name": "Equinix \u2014 Helsinki, Uusimaa, Finland",
+      "name": "Equinix — Helsinki, Uusimaa, Finland",
       "operator": "Equinix",
       "country": "Finland",
       "address": "Helsinki, Uusimaa, Finland",
@@ -3992,11 +4217,12 @@
       "renewable_pct": 60,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "verne-ardian-pori-satakunta-finland",
-      "name": "Verne (Ardian) \u2014 Pori, Satakunta, Finland",
+      "name": "Verne (Ardian) — Pori, Satakunta, Finland",
       "operator": "Verne (Ardian)",
       "country": "Finland",
       "address": "Pori, Satakunta, Finland",
@@ -4010,11 +4236,12 @@
       "renewable_pct": 60,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 1.3,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "equinix-frankfurt-am-main-hesse-germany",
-      "name": "Equinix \u2014 Frankfurt am Main, Hesse, Germany",
+      "name": "Equinix — Frankfurt am Main, Hesse, Germany",
       "operator": "Equinix",
       "country": "Germany",
       "address": "Frankfurt am Main, Hesse, Germany",
@@ -4028,11 +4255,12 @@
       "renewable_pct": 52,
       "electricity_price_usd_per_kwh": 0.198,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-hanau-hesse-germany",
-      "name": "Google \u2014 Hanau, Hesse, Germany",
+      "name": "Google — Hanau, Hesse, Germany",
       "operator": "Google",
       "country": "Germany",
       "address": "Hanau, Hesse, Germany",
@@ -4046,11 +4274,12 @@
       "renewable_pct": 52,
       "electricity_price_usd_per_kwh": 0.198,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-dietzenbach-hesse-germany",
-      "name": "Google \u2014 Dietzenbach, Hesse, Germany",
+      "name": "Google — Dietzenbach, Hesse, Germany",
       "operator": "Google",
       "country": "Germany",
       "address": "Dietzenbach, Hesse, Germany",
@@ -4064,11 +4293,12 @@
       "renewable_pct": 52,
       "electricity_price_usd_per_kwh": 0.198,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "cyrusone-griesheim-frankfurt-am-main-hesse-germany",
-      "name": "CyrusOne \u2014 Griesheim, Frankfurt am Main, Hesse, Germany",
+      "name": "CyrusOne — Griesheim, Frankfurt am Main, Hesse, Germany",
       "operator": "CyrusOne",
       "country": "Germany",
       "address": "Griesheim, Frankfurt am Main, Hesse, Germany",
@@ -4082,11 +4312,12 @@
       "renewable_pct": 52,
       "electricity_price_usd_per_kwh": 0.198,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-bergheim-north-rhine-westphalia-germany",
-      "name": "Microsoft \u2014 Bergheim, North Rhine-Westphalia, Germany",
+      "name": "Microsoft — Bergheim, North Rhine-Westphalia, Germany",
       "operator": "Microsoft",
       "country": "Germany",
       "address": "Bergheim, North Rhine-Westphalia, Germany",
@@ -4100,11 +4331,12 @@
       "renewable_pct": 52,
       "electricity_price_usd_per_kwh": 0.198,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-elsdorf-north-rhine-westphalia-germany",
-      "name": "Microsoft \u2014 Elsdorf, North Rhine-Westphalia, Germany",
+      "name": "Microsoft — Elsdorf, North Rhine-Westphalia, Germany",
       "operator": "Microsoft",
       "country": "Germany",
       "address": "Elsdorf, North Rhine-Westphalia, Germany",
@@ -4118,11 +4350,12 @@
       "renewable_pct": 52,
       "electricity_price_usd_per_kwh": 0.198,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "virtus-data-centres-st-telemedia-gdc-wustermark-brandenburg-",
-      "name": "VIRTUS Data Centres / ST Telemedia GDC \u2014 Wustermark, Brandenburg, Germany",
+      "name": "VIRTUS Data Centres / ST Telemedia GDC — Wustermark, Brandenburg, Germany",
       "operator": "VIRTUS Data Centres / ST Telemedia GDC",
       "country": "Germany",
       "address": "Wustermark, Brandenburg, Germany",
@@ -4136,11 +4369,12 @@
       "renewable_pct": 52,
       "electricity_price_usd_per_kwh": 0.198,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "virtus-data-centres-st-telemedia-gdc-berlin-berlin-germany",
-      "name": "VIRTUS Data Centres / ST Telemedia GDC \u2014 Berlin, Berlin, Germany",
+      "name": "VIRTUS Data Centres / ST Telemedia GDC — Berlin, Berlin, Germany",
       "operator": "VIRTUS Data Centres / ST Telemedia GDC",
       "country": "Germany",
       "address": "Berlin, Berlin, Germany",
@@ -4154,11 +4388,12 @@
       "renewable_pct": 52,
       "electricity_price_usd_per_kwh": 0.198,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "ntt-global-data-centers-nierstein-rhineland-palatinate-germa",
-      "name": "NTT Global Data Centers \u2014 Nierstein, Rhineland-Palatinate, Germany",
+      "name": "NTT Global Data Centers — Nierstein, Rhineland-Palatinate, Germany",
       "operator": "NTT Global Data Centers",
       "country": "Germany",
       "address": "Nierstein, Rhineland-Palatinate, Germany",
@@ -4172,11 +4407,12 @@
       "renewable_pct": 52,
       "electricity_price_usd_per_kwh": 0.198,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "colt-dcs-sossenheim-frankfurt-am-main-hesse-germany",
-      "name": "Colt DCS \u2014 Sossenheim, Frankfurt am Main, Hesse, Germany",
+      "name": "Colt DCS — Sossenheim, Frankfurt am Main, Hesse, Germany",
       "operator": "Colt DCS",
       "country": "Germany",
       "address": "Sossenheim, Frankfurt am Main, Hesse, Germany",
@@ -4190,14 +4426,15 @@
       "renewable_pct": 52,
       "electricity_price_usd_per_kwh": 0.198,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "equinix-pantin-le-de-france-france",
-      "name": "Equinix \u2014 Pantin, \u00c3\u008ele-de-France, France",
+      "name": "Equinix — Pantin, Île-de-France, France",
       "operator": "Equinix",
       "country": "France",
-      "address": "Pantin, \u00c3\u008ele-de-France, France",
+      "address": "Pantin, Île-de-France, France",
       "lat": 46.3674352,
       "lng": 2.9625622,
       "geocode_precision": "approximate",
@@ -4208,14 +4445,15 @@
       "renewable_pct": 24,
       "electricity_price_usd_per_kwh": 0.11,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "equinix-saint-denis-le-de-france-france",
-      "name": "Equinix \u2014 Saint-Denis, \u00c3\u008ele-de-France, France",
+      "name": "Equinix — Saint-Denis, Île-de-France, France",
       "operator": "Equinix",
       "country": "France",
-      "address": "Saint-Denis, \u00c3\u008ele-de-France, France",
+      "address": "Saint-Denis, Île-de-France, France",
       "lat": 46.4631577,
       "lng": 3.1238884,
       "geocode_precision": "address",
@@ -4226,17 +4464,18 @@
       "renewable_pct": 24,
       "electricity_price_usd_per_kwh": 0.11,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "digital-realty-marseille-provence-alpes-c-te-d-azur-france",
-      "name": "Digital Realty \u2014 Marseille, Provence-Alpes-C\u00c3\u00b4te d'Azur, France",
+      "name": "Digital Realty — Marseille, Provence-Alpes-Côte d'Azur, France",
       "operator": "Digital Realty",
       "country": "France",
-      "address": "Marseille, Provence-Alpes-C\u00c3\u00b4te d'Azur, France",
-      "lat": 46.603354,
-      "lng": 1.8883335,
-      "geocode_precision": "country",
+      "address": "Marseille, Provence-Alpes-Côte d'Azur, France",
+      "lat": 43.2963986,
+      "lng": 5.3777888,
+      "geocode_precision": "address",
       "power_mw": 44.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -4244,17 +4483,18 @@
       "renewable_pct": 24,
       "electricity_price_usd_per_kwh": 0.11,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "digital-realty-bouc-bel-air-provence-alpes-c-te-d-azur-franc",
-      "name": "Digital Realty \u2014 Bouc-Bel-Air, Provence-Alpes-C\u00c3\u00b4te d'Azur, France",
+      "name": "Digital Realty — Bouc-Bel-Air, Provence-Alpes-Côte d'Azur, France",
       "operator": "Digital Realty",
       "country": "France",
-      "address": "Bouc-Bel-Air, Provence-Alpes-C\u00c3\u00b4te d'Azur, France",
-      "lat": 46.603354,
-      "lng": 1.8883335,
-      "geocode_precision": "country",
+      "address": "Bouc-Bel-Air, Provence-Alpes-Côte d'Azur, France",
+      "lat": 43.4511819,
+      "lng": 5.4127848,
+      "geocode_precision": "address",
       "power_mw": 50.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -4262,11 +4502,12 @@
       "renewable_pct": 24,
       "electricity_price_usd_per_kwh": 0.11,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "ovhcloud-strasbourg-grand-est-france",
-      "name": "OVHcloud \u2014 Strasbourg, Grand Est, France",
+      "name": "OVHcloud — Strasbourg, Grand Est, France",
       "operator": "OVHcloud",
       "country": "France",
       "address": "Strasbourg, Grand Est, France",
@@ -4280,11 +4521,12 @@
       "renewable_pct": 24,
       "electricity_price_usd_per_kwh": 0.11,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "ovhcloud-roubaix-hauts-de-france-france",
-      "name": "OVHcloud \u2014 Roubaix, Hauts-de-France, France",
+      "name": "OVHcloud — Roubaix, Hauts-de-France, France",
       "operator": "OVHcloud",
       "country": "France",
       "address": "Roubaix, Hauts-de-France, France",
@@ -4298,14 +4540,15 @@
       "renewable_pct": 24,
       "electricity_price_usd_per_kwh": 0.11,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "ntt-data-le-coudray-montceaux-le-de-france-france",
-      "name": "NTT DATA \u2014 Le Coudray-Montceaux, \u00c3\u008ele-de-France, France",
+      "name": "NTT DATA — Le Coudray-Montceaux, Île-de-France, France",
       "operator": "NTT DATA",
       "country": "France",
-      "address": "Le Coudray-Montceaux, \u00c3\u008ele-de-France, France",
+      "address": "Le Coudray-Montceaux, Île-de-France, France",
       "lat": 46.3674352,
       "lng": 2.9625622,
       "geocode_precision": "approximate",
@@ -4316,11 +4559,12 @@
       "renewable_pct": 24,
       "electricity_price_usd_per_kwh": 0.11,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-petit-landau-grand-est-france",
-      "name": "Microsoft \u2014 Petit-Landau, Grand Est, France",
+      "name": "Microsoft — Petit-Landau, Grand Est, France",
       "operator": "Microsoft",
       "country": "France",
       "address": "Petit-Landau, Grand Est, France",
@@ -4334,11 +4578,12 @@
       "renewable_pct": 24,
       "electricity_price_usd_per_kwh": 0.11,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "data4-cambrai-hauts-de-france-france",
-      "name": "Data4 \u2014 Cambrai, Hauts-de-France, France",
+      "name": "Data4 — Cambrai, Hauts-de-France, France",
       "operator": "Data4",
       "country": "France",
       "address": "Cambrai, Hauts-de-France, France",
@@ -4352,14 +4597,15 @@
       "renewable_pct": 24,
       "electricity_price_usd_per_kwh": 0.11,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "eclairion-bess-sur-braye-pays-de-la-loire-france",
-      "name": "Eclairion \u2014 Bess\u00c3\u00a9-sur-Braye, Pays de la Loire, France",
+      "name": "Eclairion — Bessé-sur-Braye, Pays de la Loire, France",
       "operator": "Eclairion",
       "country": "France",
-      "address": "Bess\u00c3\u00a9-sur-Braye, Pays de la Loire, France",
+      "address": "Bessé-sur-Braye, Pays de la Loire, France",
       "lat": 47.6594864,
       "lng": -0.8186143,
       "geocode_precision": "approximate",
@@ -4370,11 +4616,12 @@
       "renewable_pct": 24,
       "electricity_price_usd_per_kwh": 0.11,
       "water_liters_per_kwh": 1.8,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "equinix-slough-berkshire-united-kingdom",
-      "name": "Equinix \u2014 Slough, Berkshire, United Kingdom",
+      "name": "Equinix — Slough, Berkshire, United Kingdom",
       "operator": "Equinix",
       "country": "United Kingdom",
       "address": "Slough, Berkshire, United Kingdom",
@@ -4388,17 +4635,18 @@
       "renewable_pct": 42,
       "electricity_price_usd_per_kwh": 0.171,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "virtus-data-centres-stockley-park-slough-united-kingdom",
-      "name": "VIRTUS Data Centres \u2014 Stockley Park, Slough, United Kingdom",
+      "name": "VIRTUS Data Centres — Stockley Park, Slough, United Kingdom",
       "operator": "VIRTUS Data Centres",
       "country": "United Kingdom",
       "address": "Stockley Park, Slough, United Kingdom",
-      "lat": 54.7023545,
-      "lng": -3.2765753,
-      "geocode_precision": "country",
+      "lat": 51.5097976,
+      "lng": -0.4412238,
+      "geocode_precision": "approximate",
       "power_mw": 90.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -4406,11 +4654,12 @@
       "renewable_pct": 42,
       "electricity_price_usd_per_kwh": 0.171,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "telehouse-kddi-london-docklands-london-united-kingdom",
-      "name": "Telehouse (KDDI) \u2014 London Docklands, London, United Kingdom",
+      "name": "Telehouse (KDDI) — London Docklands, London, United Kingdom",
       "operator": "Telehouse (KDDI)",
       "country": "United Kingdom",
       "address": "London Docklands, London, United Kingdom",
@@ -4424,11 +4673,12 @@
       "renewable_pct": 42,
       "electricity_price_usd_per_kwh": 0.171,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "telehouse-kddi-london-docklands-london-united-kingdom-2",
-      "name": "Telehouse (KDDI) \u2014 London Docklands, London, United Kingdom",
+      "name": "Telehouse (KDDI) — London Docklands, London, United Kingdom",
       "operator": "Telehouse (KDDI)",
       "country": "United Kingdom",
       "address": "London Docklands, London, United Kingdom",
@@ -4442,11 +4692,12 @@
       "renewable_pct": 42,
       "electricity_price_usd_per_kwh": 0.171,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "equinix-south-mimms-hertfordshire-united-kingdom",
-      "name": "Equinix \u2014 South Mimms, Hertfordshire, United Kingdom",
+      "name": "Equinix — South Mimms, Hertfordshire, United Kingdom",
       "operator": "Equinix",
       "country": "United Kingdom",
       "address": "South Mimms, Hertfordshire, United Kingdom",
@@ -4460,11 +4711,12 @@
       "renewable_pct": 42,
       "electricity_price_usd_per_kwh": 0.171,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-park-royal-london-united-kingdom",
-      "name": "Microsoft \u2014 Park Royal, London, United Kingdom",
+      "name": "Microsoft — Park Royal, London, United Kingdom",
       "operator": "Microsoft",
       "country": "United Kingdom",
       "address": "Park Royal, London, United Kingdom",
@@ -4478,11 +4730,12 @@
       "renewable_pct": 42,
       "electricity_price_usd_per_kwh": 0.171,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "uk-atomic-energy-authority-private-partner-tbd-culham-oxford",
-      "name": "UK Atomic Energy Authority / Private Partner (TBD) \u2014 Culham, Oxfordshire, United Kingdom",
+      "name": "UK Atomic Energy Authority / Private Partner (TBD) — Culham, Oxfordshire, United Kingdom",
       "operator": "UK Atomic Energy Authority / Private Partner (TBD)",
       "country": "United Kingdom",
       "address": "Culham, Oxfordshire, United Kingdom",
@@ -4496,17 +4749,18 @@
       "renewable_pct": 42,
       "electricity_price_usd_per_kwh": 0.171,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "teesworks-government-private-partner-tbd-middlesbrough-teess",
-      "name": "Teesworks / Government / Private Partner (TBD) \u2014 Middlesbrough, Teesside, United Kingdom",
+      "name": "Teesworks / Government / Private Partner (TBD) — Middlesbrough, Teesside, United Kingdom",
       "operator": "Teesworks / Government / Private Partner (TBD)",
       "country": "United Kingdom",
       "address": "Middlesbrough, Teesside, United Kingdom",
-      "lat": 54.7023545,
-      "lng": -3.2765753,
-      "geocode_precision": "country",
+      "lat": 54.5760419,
+      "lng": -1.2344047,
+      "geocode_precision": "approximate",
       "power_mw": 500.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -4514,11 +4768,12 @@
       "renewable_pct": 42,
       "electricity_price_usd_per_kwh": 0.171,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "colt-data-centre-services-hayes-london-united-kingdom",
-      "name": "Colt Data Centre Services \u2014 Hayes, London, United Kingdom",
+      "name": "Colt Data Centre Services — Hayes, London, United Kingdom",
       "operator": "Colt Data Centre Services",
       "country": "United Kingdom",
       "address": "Hayes, London, United Kingdom",
@@ -4532,17 +4787,18 @@
       "renewable_pct": 42,
       "electricity_price_usd_per_kwh": 0.171,
       "water_liters_per_kwh": 1.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "amazon-web-services-villanueva-de-g-llego-zaragoza-arag-n-sp",
-      "name": "Amazon Web Services \u2014 Villanueva de G\u00c3\u00a1llego, Zaragoza, Arag\u00c3\u00b3n, Spain",
+      "name": "Amazon Web Services — Villanueva de Gállego, Zaragoza, Aragón, Spain",
       "operator": "Amazon Web Services",
       "country": "Spain",
-      "address": "Villanueva de G\u00c3\u00a1llego, Zaragoza, Arag\u00c3\u00b3n, Spain",
-      "lat": 39.3260685,
-      "lng": -4.8379791,
-      "geocode_precision": "country",
+      "address": "Villanueva de Gállego, Zaragoza, Aragón, Spain",
+      "lat": 41.7860299,
+      "lng": -0.8565179,
+      "geocode_precision": "approximate",
       "power_mw": 50.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -4550,17 +4806,18 @@
       "renewable_pct": 50,
       "electricity_price_usd_per_kwh": 0.15,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-villamayor-de-g-llego-zaragoza-arag-n-spain",
-      "name": "Microsoft \u2014 Villamayor de G\u00c3\u00a1llego, Zaragoza, Arag\u00c3\u00b3n, Spain",
+      "name": "Microsoft — Villamayor de Gállego, Zaragoza, Aragón, Spain",
       "operator": "Microsoft",
       "country": "Spain",
-      "address": "Villamayor de G\u00c3\u00a1llego, Zaragoza, Arag\u00c3\u00b3n, Spain",
-      "lat": 39.3260685,
-      "lng": -4.8379791,
-      "geocode_precision": "country",
+      "address": "Villamayor de Gállego, Zaragoza, Aragón, Spain",
+      "lat": 41.6857456,
+      "lng": -0.7740328,
+      "geocode_precision": "approximate",
       "power_mw": 200.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -4568,17 +4825,18 @@
       "renewable_pct": 50,
       "electricity_price_usd_per_kwh": 0.15,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-la-muela-zaragoza-arag-n-spain",
-      "name": "Microsoft \u2014 La Muela, Zaragoza, Arag\u00c3\u00b3n, Spain",
+      "name": "Microsoft — La Muela, Zaragoza, Aragón, Spain",
       "operator": "Microsoft",
       "country": "Spain",
-      "address": "La Muela, Zaragoza, Arag\u00c3\u00b3n, Spain",
-      "lat": 39.3260685,
-      "lng": -4.8379791,
-      "geocode_precision": "country",
+      "address": "La Muela, Zaragoza, Aragón, Spain",
+      "lat": 41.580472,
+      "lng": -1.1161953,
+      "geocode_precision": "approximate",
       "power_mw": 300.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -4586,11 +4844,12 @@
       "renewable_pct": 50,
       "electricity_price_usd_per_kwh": 0.15,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "meta-platforms-talavera-de-la-reina-castilla-la-mancha-spain",
-      "name": "Meta Platforms \u2014 Talavera de la Reina, Castilla-La Mancha, Spain",
+      "name": "Meta Platforms — Talavera de la Reina, Castilla-La Mancha, Spain",
       "operator": "Meta Platforms",
       "country": "Spain",
       "address": "Talavera de la Reina, Castilla-La Mancha, Spain",
@@ -4604,14 +4863,15 @@
       "renewable_pct": 50,
       "electricity_price_usd_per_kwh": 0.15,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "nabiax-aermont-capital-alcal-de-henares-madrid-spain",
-      "name": "Nabiax (Aermont Capital) \u2014 Alcal\u00c3\u00a1 de Henares, Madrid, Spain",
+      "name": "Nabiax (Aermont Capital) — Alcalá de Henares, Madrid, Spain",
       "operator": "Nabiax (Aermont Capital)",
       "country": "Spain",
-      "address": "Alcal\u00c3\u00a1 de Henares, Madrid, Spain",
+      "address": "Alcalá de Henares, Madrid, Spain",
       "lat": 40.481954,
       "lng": -3.363981,
       "geocode_precision": "address",
@@ -4622,17 +4882,18 @@
       "renewable_pct": 50,
       "electricity_price_usd_per_kwh": 0.15,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "qts-data-centers-blackstone-calatorao-zaragoza-arag-n-spain",
-      "name": "QTS Data Centers (Blackstone) \u2014 Calatorao, Zaragoza, Arag\u00c3\u00b3n, Spain",
+      "name": "QTS Data Centers (Blackstone) — Calatorao, Zaragoza, Aragón, Spain",
       "operator": "QTS Data Centers (Blackstone)",
       "country": "Spain",
-      "address": "Calatorao, Zaragoza, Arag\u00c3\u00b3n, Spain",
-      "lat": 39.3260685,
-      "lng": -4.8379791,
-      "geocode_precision": "country",
+      "address": "Calatorao, Zaragoza, Aragón, Spain",
+      "lat": 41.5222363,
+      "lng": -1.3464441,
+      "geocode_precision": "approximate",
       "power_mw": 300.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -4640,11 +4901,12 @@
       "renewable_pct": 50,
       "electricity_price_usd_per_kwh": 0.15,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "pure-data-centres-group-meco-madrid-spain",
-      "name": "Pure Data Centres Group \u2014 Meco, Madrid, Spain",
+      "name": "Pure Data Centres Group — Meco, Madrid, Spain",
       "operator": "Pure Data Centres Group",
       "country": "Spain",
       "address": "Meco, Madrid, Spain",
@@ -4658,11 +4920,12 @@
       "renewable_pct": 50,
       "electricity_price_usd_per_kwh": 0.15,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "apto-data-centers-fuenlabrada-madrid-spain",
-      "name": "Apto Data Centers \u2014 Fuenlabrada, Madrid, Spain",
+      "name": "Apto Data Centers — Fuenlabrada, Madrid, Spain",
       "operator": "Apto Data Centers",
       "country": "Spain",
       "address": "Fuenlabrada, Madrid, Spain",
@@ -4676,11 +4939,12 @@
       "renewable_pct": 50,
       "electricity_price_usd_per_kwh": 0.15,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "barcelona-supercomputing-center-bsc-cns-barcelona-catalonia-",
-      "name": "Barcelona Supercomputing Center (BSC-CNS) \u2014 Barcelona, Catalonia, Spain",
+      "name": "Barcelona Supercomputing Center (BSC-CNS) — Barcelona, Catalonia, Spain",
       "operator": "Barcelona Supercomputing Center (BSC-CNS)",
       "country": "Spain",
       "address": "Barcelona, Catalonia, Spain",
@@ -4694,11 +4958,12 @@
       "renewable_pct": 50,
       "electricity_price_usd_per_kwh": 0.15,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "data4-group-alcobendas-madrid-spain",
-      "name": "Data4 Group \u2014 Alcobendas, Madrid, Spain",
+      "name": "Data4 Group — Alcobendas, Madrid, Spain",
       "operator": "Data4 Group",
       "country": "Spain",
       "address": "Alcobendas, Madrid, Spain",
@@ -4712,11 +4977,12 @@
       "renewable_pct": 50,
       "electricity_price_usd_per_kwh": 0.15,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "equinix-one-north-ayer-rajah-singapore",
-      "name": "Equinix \u2014 One-North, Ayer Rajah, Singapore",
+      "name": "Equinix — One-North, Ayer Rajah, Singapore",
       "operator": "Equinix",
       "country": "Singapore",
       "address": "One-North, Ayer Rajah, Singapore",
@@ -4730,11 +4996,12 @@
       "renewable_pct": 3,
       "electricity_price_usd_per_kwh": 0.14,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "equinix-jurong-west-singapore",
-      "name": "Equinix \u2014 Jurong West, Singapore",
+      "name": "Equinix — Jurong West, Singapore",
       "operator": "Equinix",
       "country": "Singapore",
       "address": "Jurong West, Singapore",
@@ -4748,11 +5015,12 @@
       "renewable_pct": 3,
       "electricity_price_usd_per_kwh": 0.14,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "airtrunk-blackstone-loyang-pasir-ris-singapore",
-      "name": "AirTrunk (Blackstone) \u2014 Loyang, Pasir Ris, Singapore",
+      "name": "AirTrunk (Blackstone) — Loyang, Pasir Ris, Singapore",
       "operator": "AirTrunk (Blackstone)",
       "country": "Singapore",
       "address": "Loyang, Pasir Ris, Singapore",
@@ -4766,11 +5034,12 @@
       "renewable_pct": 3,
       "electricity_price_usd_per_kwh": 0.14,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "airtrunk-bytedance-blackstone-loyang-pasir-ris-singapore",
-      "name": "AirTrunk / ByteDance (Blackstone) \u2014 Loyang, Pasir Ris, Singapore",
+      "name": "AirTrunk / ByteDance (Blackstone) — Loyang, Pasir Ris, Singapore",
       "operator": "AirTrunk / ByteDance (Blackstone)",
       "country": "Singapore",
       "address": "Loyang, Pasir Ris, Singapore",
@@ -4784,11 +5053,12 @@
       "renewable_pct": 3,
       "electricity_price_usd_per_kwh": 0.14,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "digital-realty-loyang-singapore",
-      "name": "Digital Realty \u2014 Loyang, Singapore",
+      "name": "Digital Realty — Loyang, Singapore",
       "operator": "Digital Realty",
       "country": "Singapore",
       "address": "Loyang, Singapore",
@@ -4802,11 +5072,12 @@
       "renewable_pct": 3,
       "electricity_price_usd_per_kwh": 0.14,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "digital-realty-jurong-east-singapore",
-      "name": "Digital Realty \u2014 Jurong East, Singapore",
+      "name": "Digital Realty — Jurong East, Singapore",
       "operator": "Digital Realty",
       "country": "Singapore",
       "address": "Jurong East, Singapore",
@@ -4820,11 +5091,12 @@
       "renewable_pct": 3,
       "electricity_price_usd_per_kwh": 0.14,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "keppel-data-centres-genting-lane-kallang-singapore",
-      "name": "Keppel Data Centres \u2014 Genting Lane, Kallang, Singapore",
+      "name": "Keppel Data Centres — Genting Lane, Kallang, Singapore",
       "operator": "Keppel Data Centres",
       "country": "Singapore",
       "address": "Genting Lane, Kallang, Singapore",
@@ -4838,11 +5110,12 @@
       "renewable_pct": 3,
       "electricity_price_usd_per_kwh": 0.14,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "keppel-data-centres-genting-lane-kallang-singapore-2",
-      "name": "Keppel Data Centres \u2014 Genting Lane, Kallang, Singapore",
+      "name": "Keppel Data Centres — Genting Lane, Kallang, Singapore",
       "operator": "Keppel Data Centres",
       "country": "Singapore",
       "address": "Genting Lane, Kallang, Singapore",
@@ -4856,11 +5129,12 @@
       "renewable_pct": 3,
       "electricity_price_usd_per_kwh": 0.14,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "edb-imda-multi-operator-park-jurong-island-singapore",
-      "name": "EDB / IMDA (multi-operator park) \u2014 Jurong Island, Singapore",
+      "name": "EDB / IMDA (multi-operator park) — Jurong Island, Singapore",
       "operator": "EDB / IMDA (multi-operator park)",
       "country": "Singapore",
       "address": "Jurong Island, Singapore",
@@ -4874,11 +5148,12 @@
       "renewable_pct": 3,
       "electricity_price_usd_per_kwh": 0.14,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "singtel-nxera-tuas-western-singapore",
-      "name": "Singtel / Nxera \u2014 Tuas, Western Singapore",
+      "name": "Singtel / Nxera — Tuas, Western Singapore",
       "operator": "Singtel / Nxera",
       "country": "Singapore",
       "address": "Tuas, Western Singapore",
@@ -4892,11 +5167,12 @@
       "renewable_pct": 3,
       "electricity_price_usd_per_kwh": 0.14,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "amazon-web-services-koto-tokyo-japan",
-      "name": "Amazon Web Services \u2014 Koto, Tokyo, Japan",
+      "name": "Amazon Web Services — Koto, Tokyo, Japan",
       "operator": "Amazon Web Services",
       "country": "Japan",
       "address": "Koto, Tokyo, Japan",
@@ -4910,11 +5186,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.155,
       "water_liters_per_kwh": 2.0,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "amazon-web-services-osaka-osaka-prefecture-japan",
-      "name": "Amazon Web Services \u2014 Osaka, Osaka Prefecture, Japan",
+      "name": "Amazon Web Services — Osaka, Osaka Prefecture, Japan",
       "operator": "Amazon Web Services",
       "country": "Japan",
       "address": "Osaka, Osaka Prefecture, Japan",
@@ -4928,11 +5205,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.155,
       "water_liters_per_kwh": 2.0,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-saitama-saitama-prefecture-japan",
-      "name": "Microsoft \u2014 Saitama, Saitama Prefecture, Japan",
+      "name": "Microsoft — Saitama, Saitama Prefecture, Japan",
       "operator": "Microsoft",
       "country": "Japan",
       "address": "Saitama, Saitama Prefecture, Japan",
@@ -4946,11 +5224,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.155,
       "water_liters_per_kwh": 2.0,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-osaka-osaka-prefecture-japan",
-      "name": "Microsoft \u2014 Osaka, Osaka Prefecture, Japan",
+      "name": "Microsoft — Osaka, Osaka Prefecture, Japan",
       "operator": "Microsoft",
       "country": "Japan",
       "address": "Osaka, Osaka Prefecture, Japan",
@@ -4964,11 +5243,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.155,
       "water_liters_per_kwh": 2.0,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-inzai-chiba-prefecture-japan",
-      "name": "Google \u2014 Inzai, Chiba Prefecture, Japan",
+      "name": "Google — Inzai, Chiba Prefecture, Japan",
       "operator": "Google",
       "country": "Japan",
       "address": "Inzai, Chiba Prefecture, Japan",
@@ -4982,11 +5262,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.155,
       "water_liters_per_kwh": 2.0,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "softbank-sb-openai-japan-jv-sakai-osaka-prefecture-japan",
-      "name": "SoftBank / SB OpenAI Japan JV \u2014 Sakai, Osaka Prefecture, Japan",
+      "name": "SoftBank / SB OpenAI Japan JV — Sakai, Osaka Prefecture, Japan",
       "operator": "SoftBank / SB OpenAI Japan JV",
       "country": "Japan",
       "address": "Sakai, Osaka Prefecture, Japan",
@@ -5000,11 +5281,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.155,
       "water_liters_per_kwh": 2.0,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "frontier-ai"
     },
     {
       "id": "ntt-data-global-data-centers-osaka-osaka-prefecture-japan",
-      "name": "NTT DATA Global Data Centers \u2014 Osaka, Osaka Prefecture, Japan",
+      "name": "NTT DATA Global Data Centers — Osaka, Osaka Prefecture, Japan",
       "operator": "NTT DATA Global Data Centers",
       "country": "Japan",
       "address": "Osaka, Osaka Prefecture, Japan",
@@ -5018,11 +5300,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.155,
       "water_liters_per_kwh": 2.0,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "ntt-data-global-data-centers-tochigi-tochigi-prefecture-japa",
-      "name": "NTT DATA Global Data Centers \u2014 Tochigi, Tochigi Prefecture, Japan",
+      "name": "NTT DATA Global Data Centers — Tochigi, Tochigi Prefecture, Japan",
       "operator": "NTT DATA Global Data Centers",
       "country": "Japan",
       "address": "Tochigi, Tochigi Prefecture, Japan",
@@ -5036,17 +5319,18 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.155,
       "water_liters_per_kwh": 2.0,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "airtrunk-tokyo-tokyo-metropolis-japan",
-      "name": "AirTrunk \u2014 Tokyo, Tokyo Metropolis, Japan",
+      "name": "AirTrunk — Tokyo, Tokyo Metropolis, Japan",
       "operator": "AirTrunk",
       "country": "Japan",
       "address": "Tokyo, Tokyo Metropolis, Japan",
-      "lat": 36.5748441,
-      "lng": 139.2394179,
-      "geocode_precision": "country",
+      "lat": 35.6768601,
+      "lng": 139.7638947,
+      "geocode_precision": "approximate",
       "power_mw": 300.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -5054,17 +5338,18 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.155,
       "water_liters_per_kwh": 2.0,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "at-tokyo-corporation-koto-tokyo-metropolis-japan",
-      "name": "AT TOKYO Corporation \u2014 Koto, Tokyo Metropolis, Japan",
+      "name": "AT TOKYO Corporation — Koto, Tokyo Metropolis, Japan",
       "operator": "AT TOKYO Corporation",
       "country": "Japan",
       "address": "Koto, Tokyo Metropolis, Japan",
-      "lat": 36.5748441,
-      "lng": 139.2394179,
-      "geocode_precision": "country",
+      "lat": 35.6727747,
+      "lng": 139.8169621,
+      "geocode_precision": "approximate",
       "power_mw": 130.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -5072,11 +5357,12 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.155,
       "water_liters_per_kwh": 2.0,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "yotta-infrastructure-solutions-hiranandani-group-panvel-navi",
-      "name": "Yotta Infrastructure Solutions (Hiranandani Group) \u2014 Panvel, Navi Mumbai, Maharashtra, India",
+      "name": "Yotta Infrastructure Solutions (Hiranandani Group) — Panvel, Navi Mumbai, Maharashtra, India",
       "operator": "Yotta Infrastructure Solutions (Hiranandani Group)",
       "country": "India",
       "address": "Panvel, Navi Mumbai, Maharashtra, India",
@@ -5090,11 +5376,12 @@
       "renewable_pct": 20,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "yotta-infrastructure-solutions-hiranandani-group-panvel-navi-2",
-      "name": "Yotta Infrastructure Solutions (Hiranandani Group) \u2014 Panvel, Navi Mumbai, Maharashtra, India",
+      "name": "Yotta Infrastructure Solutions (Hiranandani Group) — Panvel, Navi Mumbai, Maharashtra, India",
       "operator": "Yotta Infrastructure Solutions (Hiranandani Group)",
       "country": "India",
       "address": "Panvel, Navi Mumbai, Maharashtra, India",
@@ -5108,11 +5395,12 @@
       "renewable_pct": 20,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "ctrls-datacenters-gachibowli-hyderabad-telangana-india",
-      "name": "CtrlS Datacenters \u2014 Gachibowli, Hyderabad, Telangana, India",
+      "name": "CtrlS Datacenters — Gachibowli, Hyderabad, Telangana, India",
       "operator": "CtrlS Datacenters",
       "country": "India",
       "address": "Gachibowli, Hyderabad, Telangana, India",
@@ -5126,11 +5414,12 @@
       "renewable_pct": 20,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "ctrls-datacenters-chandanvelly-industrial-park-hyderabad-tel",
-      "name": "CtrlS Datacenters \u2014 Chandanvelly Industrial Park, Hyderabad, Telangana, India",
+      "name": "CtrlS Datacenters — Chandanvelly Industrial Park, Hyderabad, Telangana, India",
       "operator": "CtrlS Datacenters",
       "country": "India",
       "address": "Chandanvelly Industrial Park, Hyderabad, Telangana, India",
@@ -5144,11 +5433,12 @@
       "renewable_pct": 20,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "adaniconnex-adani-enterprises-edgeconnex-jv-ambattur-chennai",
-      "name": "AdaniConneX (Adani Enterprises + EdgeConneX JV) \u2014 Ambattur, Chennai, Tamil Nadu, India",
+      "name": "AdaniConneX (Adani Enterprises + EdgeConneX JV) — Ambattur, Chennai, Tamil Nadu, India",
       "operator": "AdaniConneX (Adani Enterprises + EdgeConneX JV)",
       "country": "India",
       "address": "Ambattur, Chennai, Tamil Nadu, India",
@@ -5162,11 +5452,12 @@
       "renewable_pct": 20,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "adaniconnex-adani-enterprises-edgeconnex-jv-hyderabad-telang",
-      "name": "AdaniConneX (Adani Enterprises + EdgeConneX JV) \u2014 Hyderabad, Telangana, India",
+      "name": "AdaniConneX (Adani Enterprises + EdgeConneX JV) — Hyderabad, Telangana, India",
       "operator": "AdaniConneX (Adani Enterprises + EdgeConneX JV)",
       "country": "India",
       "address": "Hyderabad, Telangana, India",
@@ -5180,11 +5471,12 @@
       "renewable_pct": 20,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-azure-india-south-central-hyderabad-telangana-indi",
-      "name": "Microsoft (Azure India South Central) \u2014 Hyderabad, Telangana, India",
+      "name": "Microsoft (Azure India South Central) — Hyderabad, Telangana, India",
       "operator": "Microsoft (Azure India South Central)",
       "country": "India",
       "address": "Hyderabad, Telangana, India",
@@ -5198,11 +5490,12 @@
       "renewable_pct": 20,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "ntt-global-data-centers-ntt-data-ambattur-chennai-tamil-nadu",
-      "name": "NTT Global Data Centers (NTT DATA) \u2014 Ambattur, Chennai, Tamil Nadu, India",
+      "name": "NTT Global Data Centers (NTT DATA) — Ambattur, Chennai, Tamil Nadu, India",
       "operator": "NTT Global Data Centers (NTT DATA)",
       "country": "India",
       "address": "Ambattur, Chennai, Tamil Nadu, India",
@@ -5216,11 +5509,12 @@
       "renewable_pct": 20,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "adaniconnex-google-adani-enterprises-edgeconnex-jv-visakhapa",
-      "name": "AdaniConneX / Google (Adani Enterprises + EdgeConneX JV) \u2014 Visakhapatnam, Andhra Pradesh, India",
+      "name": "AdaniConneX / Google (Adani Enterprises + EdgeConneX JV) — Visakhapatnam, Andhra Pradesh, India",
       "operator": "AdaniConneX / Google (Adani Enterprises + EdgeConneX JV)",
       "country": "India",
       "address": "Visakhapatnam, Andhra Pradesh, India",
@@ -5234,11 +5528,12 @@
       "renewable_pct": 20,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "reliance-industries-jio-jamnagar-gujarat-india",
-      "name": "Reliance Industries / Jio \u2014 Jamnagar, Gujarat, India",
+      "name": "Reliance Industries / Jio — Jamnagar, Gujarat, India",
       "operator": "Reliance Industries / Jio",
       "country": "India",
       "address": "Jamnagar, Gujarat, India",
@@ -5252,11 +5547,12 @@
       "renewable_pct": 20,
       "electricity_price_usd_per_kwh": 0.09,
       "water_liters_per_kwh": 3.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "amazon-web-services-aws-eastern-creek-new-south-wales-austra",
-      "name": "Amazon Web Services (AWS) \u2014 Eastern Creek, New South Wales, Australia",
+      "name": "Amazon Web Services (AWS) — Eastern Creek, New South Wales, Australia",
       "operator": "Amazon Web Services (AWS)",
       "country": "Australia",
       "address": "Eastern Creek, New South Wales, Australia",
@@ -5270,11 +5566,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "cdc-data-centres-eastern-creek-new-south-wales-australia",
-      "name": "CDC Data Centres \u2014 Eastern Creek, New South Wales, Australia",
+      "name": "CDC Data Centres — Eastern Creek, New South Wales, Australia",
       "operator": "CDC Data Centres",
       "country": "Australia",
       "address": "Eastern Creek, New South Wales, Australia",
@@ -5288,11 +5585,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-cdc-data-centres-canberra-australian-capital-terri",
-      "name": "Microsoft / CDC Data Centres \u2014 Canberra, Australian Capital Territory, Australia",
+      "name": "Microsoft / CDC Data Centres — Canberra, Australian Capital Territory, Australia",
       "operator": "Microsoft / CDC Data Centres",
       "country": "Australia",
       "address": "Canberra, Australian Capital Territory, Australia",
@@ -5306,11 +5604,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "nextdc-west-footscray-victoria-australia",
-      "name": "NextDC \u2014 West Footscray, Victoria, Australia",
+      "name": "NextDC — West Footscray, Victoria, Australia",
       "operator": "NextDC",
       "country": "Australia",
       "address": "West Footscray, Victoria, Australia",
@@ -5324,11 +5623,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "nextdc-port-melbourne-victoria-australia",
-      "name": "NextDC \u2014 Port Melbourne, Victoria, Australia",
+      "name": "NextDC — Port Melbourne, Victoria, Australia",
       "operator": "NextDC",
       "country": "Australia",
       "address": "Port Melbourne, Victoria, Australia",
@@ -5342,11 +5642,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "cdc-data-centres-marsden-park-new-south-wales-australia",
-      "name": "CDC Data Centres \u2014 Marsden Park, New South Wales, Australia",
+      "name": "CDC Data Centres — Marsden Park, New South Wales, Australia",
       "operator": "CDC Data Centres",
       "country": "Australia",
       "address": "Marsden Park, New South Wales, Australia",
@@ -5360,11 +5661,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "airtrunk-blackstone-lane-cove-west-new-south-wales-australia",
-      "name": "AirTrunk (Blackstone) \u2014 Lane Cove West, New South Wales, Australia",
+      "name": "AirTrunk (Blackstone) — Lane Cove West, New South Wales, Australia",
       "operator": "AirTrunk (Blackstone)",
       "country": "Australia",
       "address": "Lane Cove West, New South Wales, Australia",
@@ -5378,11 +5680,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-kemps-creek-new-south-wales-australia",
-      "name": "Microsoft \u2014 Kemps Creek, New South Wales, Australia",
+      "name": "Microsoft — Kemps Creek, New South Wales, Australia",
       "operator": "Microsoft",
       "country": "Australia",
       "address": "Kemps Creek, New South Wales, Australia",
@@ -5396,11 +5699,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "macquarie-data-centres-macquarie-park-new-south-wales-austra",
-      "name": "Macquarie Data Centres \u2014 Macquarie Park, New South Wales, Australia",
+      "name": "Macquarie Data Centres — Macquarie Park, New South Wales, Australia",
       "operator": "Macquarie Data Centres",
       "country": "Australia",
       "address": "Macquarie Park, New South Wales, Australia",
@@ -5414,11 +5718,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "cdc-data-centres-laverton-north-victoria-australia",
-      "name": "CDC Data Centres \u2014 Laverton North, Victoria, Australia",
+      "name": "CDC Data Centres — Laverton North, Victoria, Australia",
       "operator": "CDC Data Centres",
       "country": "Australia",
       "address": "Laverton North, Victoria, Australia",
@@ -5432,11 +5737,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.145,
       "water_liters_per_kwh": 4.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "gcbd-guizhou-cloud-big-data-for-apple-icloud-guiyang-guizhou",
-      "name": "GCBD (Guizhou-Cloud Big Data) for Apple iCloud \u2014 Guiyang, Guizhou, China",
+      "name": "GCBD (Guizhou-Cloud Big Data) for Apple iCloud — Guiyang, Guizhou, China",
       "operator": "GCBD (Guizhou-Cloud Big Data) for Apple iCloud",
       "country": "China",
       "address": "Guiyang, Guizhou, China",
@@ -5450,11 +5756,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 2.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "alibaba-cloud-heyuan-guangdong-china",
-      "name": "Alibaba Cloud \u2014 Heyuan, Guangdong, China",
+      "name": "Alibaba Cloud — Heyuan, Guangdong, China",
       "operator": "Alibaba Cloud",
       "country": "China",
       "address": "Heyuan, Guangdong, China",
@@ -5468,17 +5775,18 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 2.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "alibaba-cloud-zhangbei-county-hebei-zhangjiakou-hub-china",
-      "name": "Alibaba Cloud \u2014 Zhangbei County, Hebei (Zhangjiakou hub), China",
+      "name": "Alibaba Cloud — Zhangbei County, Hebei (Zhangjiakou hub), China",
       "operator": "Alibaba Cloud",
       "country": "China",
       "address": "Zhangbei County, Hebei (Zhangjiakou hub), China",
-      "lat": 34.5412252,
-      "lng": 108.9237067,
-      "geocode_precision": "country",
+      "lat": 40.8438537,
+      "lng": 114.8795005,
+      "geocode_precision": "approximate",
       "power_mw": 280.0,
       "data_status": "confirmed",
       "cost_usd_billions": null,
@@ -5486,11 +5794,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 2.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "tencent-gui-an-new-district-guizhou-china",
-      "name": "Tencent \u2014 Gui'an New District, Guizhou, China",
+      "name": "Tencent — Gui'an New District, Guizhou, China",
       "operator": "Tencent",
       "country": "China",
       "address": "Gui'an New District, Guizhou, China",
@@ -5504,11 +5813,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 2.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "china-telecom-hohhot-inner-mongolia-china",
-      "name": "China Telecom \u2014 Hohhot, Inner Mongolia, China",
+      "name": "China Telecom — Hohhot, Inner Mongolia, China",
       "operator": "China Telecom",
       "country": "China",
       "address": "Hohhot, Inner Mongolia, China",
@@ -5522,11 +5832,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 2.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "21vianet-microsoft-azure-china-beijing-china",
-      "name": "21Vianet (Microsoft Azure China) \u2014 Beijing, China",
+      "name": "21Vianet (Microsoft Azure China) — Beijing, China",
       "operator": "21Vianet (Microsoft Azure China)",
       "country": "China",
       "address": "Beijing, China",
@@ -5540,11 +5851,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 2.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "baidu-yangquan-shanxi-china",
-      "name": "Baidu \u2014 Yangquan, Shanxi, China",
+      "name": "Baidu — Yangquan, Shanxi, China",
       "operator": "Baidu",
       "country": "China",
       "address": "Yangquan, Shanxi, China",
@@ -5558,11 +5870,12 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 2.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-changhua-county-taiwan",
-      "name": "Google \u2014 Changhua County, Taiwan",
+      "name": "Google — Changhua County, Taiwan",
       "operator": "Google",
       "country": "Taiwan",
       "address": "Changhua County, Taiwan",
@@ -5576,11 +5889,12 @@
       "renewable_pct": 8,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 2.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "google-yunlin-county-taiwan",
-      "name": "Google \u2014 Yunlin County, Taiwan",
+      "name": "Google — Yunlin County, Taiwan",
       "operator": "Google",
       "country": "Taiwan",
       "address": "Yunlin County, Taiwan",
@@ -5594,11 +5908,12 @@
       "renewable_pct": 8,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 2.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "microsoft-taipei-taiwan",
-      "name": "Microsoft \u2014 Taipei, Taiwan",
+      "name": "Microsoft — Taipei, Taiwan",
       "operator": "Microsoft",
       "country": "Taiwan",
       "address": "Taipei, Taiwan",
@@ -5612,11 +5927,12 @@
       "renewable_pct": 8,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 2.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "amazon-web-services-taipei-taiwan",
-      "name": "Amazon Web Services \u2014 Taipei, Taiwan",
+      "name": "Amazon Web Services — Taipei, Taiwan",
       "operator": "Amazon Web Services",
       "country": "Taiwan",
       "address": "Taipei, Taiwan",
@@ -5630,11 +5946,12 @@
       "renewable_pct": 8,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 2.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     },
     {
       "id": "chunghwa-telecom-banqiao-new-taipei-taiwan",
-      "name": "Chunghwa Telecom \u2014 Banqiao, New Taipei, Taiwan",
+      "name": "Chunghwa Telecom — Banqiao, New Taipei, Taiwan",
       "operator": "Chunghwa Telecom",
       "country": "Taiwan",
       "address": "Banqiao, New Taipei, Taiwan",
@@ -5648,7 +5965,8 @@
       "renewable_pct": 8,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 2.5,
-      "source": "trackpolicy"
+      "source": "trackpolicy",
+      "category": "general-purpose"
     }
   ]
 }
