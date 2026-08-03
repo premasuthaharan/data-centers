@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { fmt } from "./formatters";
+import { fmt, formatBuildDate } from "./formatters";
 import { severityColor } from "./severityColors";
 import { encodeScenarioParams } from "../utils/scenarioUrl";
 
@@ -112,6 +112,7 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose,
     constructionStatus === "planned" ||
     (constructionStatus === "under_construction" && !dc.power_mw);
   const constructionNotice = CONSTRUCTION_STATUS_NOTICES[constructionStatus];
+  const buildDateLabel = formatBuildDate(dc.build_date);
 
   const [copied, setCopied] = useState(false);
   const [embedCopied, setEmbedCopied] = useState(false);
@@ -157,6 +158,7 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose,
             </span>
           )}
           {dc.address && <><br /><span className="dc-address">{dc.address}</span></>}
+          {buildDateLabel && <><br /><span className="dc-build-date">Built {buildDateLabel}</span></>}
         </div>
         {precisionWarning && <div className="dc-precision-warning">⚠ {precisionWarning}</div>}
         {sImpact && (

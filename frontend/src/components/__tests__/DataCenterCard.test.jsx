@@ -145,6 +145,19 @@ describe("DataCenterCard", () => {
     expect(screen.queryByText(/Grid is greener than/)).not.toBeInTheDocument();
   });
 
+  it("renders the build date next to the address when present", () => {
+    const dc = makeDc({ address: "1 Main St, Anytown", build_date: "2025-03" });
+    render(<DataCenterCard dc={dc} onClose={() => {}} />);
+
+    expect(screen.getByText("Built March 2025")).toBeInTheDocument();
+  });
+
+  it("omits the build date line cleanly when absent", () => {
+    render(<DataCenterCard dc={makeDc()} onClose={() => {}} />);
+
+    expect(screen.queryByText(/^Built /)).not.toBeInTheDocument();
+  });
+
   it("does not render impact blocks for announced (unbuilt) facilities", () => {
     const dc = makeDc({
       data_status: "announced",

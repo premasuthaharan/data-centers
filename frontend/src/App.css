@@ -331,6 +331,11 @@
   font-size: 13px;
 }
 
+.dc-build-date {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
 .dc-precision-warning {
   color: #ffcc00;
   font-size: 13px;
