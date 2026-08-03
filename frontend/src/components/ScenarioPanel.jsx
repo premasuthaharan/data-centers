@@ -30,6 +30,27 @@ export const PRESETS = [
     scenario: { water_liters_per_kwh: 1.0 },
   },
   {
+    id: "cost-allocation-reform",
+    label: "Ratepayer Cost Allocation",
+    description:
+      "Large facilities (100MW+) cover their own grid-interconnection costs instead of spreading them across residential ratepayers — reflects bills like the federal FAIR Data Act and NC's Ratepayer Protection Act.",
+    scenario: { cost_allocation_reform: true },
+  },
+  {
+    id: "tax-incentive-rollback",
+    label: "Tax Incentive Rollback",
+    description:
+      "States end sales/property tax exemptions for data center equipment — reflects repeal bills seen in Pennsylvania and Ohio.",
+    scenario: { tax_incentive_rollback: true },
+  },
+  {
+    id: "hyperscale-moratorium",
+    label: "Hyperscale Moratorium",
+    description:
+      "Announced and planned facilities at 50MW+ are paused pending review, mirroring New York's Executive Order 62.",
+    scenario: { hyperscale_moratorium_mw: 50 },
+  },
+  {
     id: "aggressive-policy",
     label: "Aggressive Policy",
     description: "All of the above, combined.",
@@ -38,6 +59,9 @@ export const PRESETS = [
       carbon_intensity_gco2_per_kwh: 50,
       pue: 1.1,
       water_liters_per_kwh: 1.0,
+      cost_allocation_reform: true,
+      tax_incentive_rollback: true,
+      hyperscale_moratorium_mw: 50,
     },
   },
 ];
