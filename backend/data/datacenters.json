@@ -17,7 +17,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2025-06"
     },
     {
       "id": "microsoft-fairwater-atlanta",
