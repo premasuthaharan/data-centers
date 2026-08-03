@@ -1,18 +1,18 @@
 ## 1. Derive new constants from real data
 
-- [ ] 1.1 Compute the actual `power_mw` distribution (min/p25/median/p75/max)
+- [x] 1.1 Compute the actual `power_mw` distribution (min/p25/median/p75/max)
       separately for `category: "frontier-ai"` and `category:
       "general-purpose"` facilities in the current 318-entry dataset —
       the same methodology `SOURCES.md` already used for the original
       75-facility threshold derivation
-- [ ] 1.2 Decide per-category `PUE` and `UTILIZATION_FACTOR` values:
+- [x] 1.2 Decide per-category `PUE` and `UTILIZATION_FACTOR` values:
       frontier-ai stays close to today's 1.3 / 0.8 (optimistic, modern,
       near-continuous load); general-purpose moves toward the Uptime
       Institute 2024 survey average (1.56 PUE) and a lower utilization
       figure representative of non-AI-training workloads. Document the
       reasoning and source for each, matching the existing `SOURCES.md`
       standard (not just picking new numbers)
-- [ ] 1.3 Recompute `price_lift_pct` and `water_mgd` for every current
+- [x] 1.3 Recompute `price_lift_pct` and `water_mgd` for every current
       entry under the existing formula and inspect the resulting
       distribution to re-derive `price_lift_severity` /
       `water_severity` bucket boundaries — decide single global
@@ -22,16 +22,16 @@
 
 ## 2. Implement in logic.py
 
-- [ ] 2.1 Replace the single global `PUE` / `UTILIZATION_FACTOR`
+- [x] 2.1 Replace the single global `PUE` / `UTILIZATION_FACTOR`
       constants with per-category values (dict keyed by `category`,
       falling back to today's global constants if `category` is absent
       from a record)
-- [ ] 2.2 `compute_impact` reads the category-appropriate PUE/utilization
+- [x] 2.2 `compute_impact` reads the category-appropriate PUE/utilization
       for `annual_kwh` and `waste_heat_mw` instead of the flat
       module-level constants
-- [ ] 2.3 Update `price_lift_severity` / `water_severity` threshold
+- [x] 2.3 Update `price_lift_severity` / `water_severity` threshold
       constants per the decision in 1.3
-- [ ] 2.4 Confirm `pue`/`utilization` override parameters on
+- [x] 2.4 Confirm `pue`/`utilization` override parameters on
       `compute_impact` (used by the policy-scenario feature) still work
       correctly layered on top of category-based defaults — an explicit
       scenario override should still win over the category default

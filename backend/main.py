@@ -13,7 +13,6 @@ from logic import (
     nearest_datacenters,
     get_dataset_metadata,
     regions_with_aggregate_impact,
-    PUE,
 )
 
 app = FastAPI(title="Data Centers API")
@@ -114,7 +113,10 @@ def post_scenario(body: ScenarioRequest):
         targeted = centers
 
     overrides = body.scenario.model_dump(exclude={"pue"}, exclude_none=True)
-    pue = body.scenario.pue if body.scenario.pue is not None else PUE
+    # None (not the global PUE constant) lets compute_impact apply the
+    # category-appropriate default when the scenario doesn't explicitly
+    # override PUE.
+    pue = body.scenario.pue
 
     baseline = [{**dc, "impact": compute_impact(dc)} for dc in targeted]
     scenario = [{**dc, "impact": compute_impact(dc, overrides=overrides, pue=pue)} for dc in targeted]
