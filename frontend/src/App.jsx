@@ -165,6 +165,50 @@ export default function App() {
     setFocusedRegion(region.region);
   }, []);
 
+  // "Current view" today is either all facilities or the focusedRegion
+  // subset (from the region scorecard) — there's no general filter system
+  // yet, so export scope mirrors exactly what the map is showing.
+  const exportCSV = useCallback(() => {
+    const source = scenarioData ? scenarioData.data_centers : datacenters;
+    const rows = focusedRegion ? source.filter((dc) => dc.country === focusedRegion) : source;
+
+    const columns = [
+      ["Name", (dc) => dc.name],
+      ["Operator", (dc) => dc.operator],
+      ["Country", (dc) => dc.country],
+      ["Address", (dc) => dc.address],
+      ["Power (MW)", (dc) => dc.power_mw],
+      ["Capital cost ($B)", (dc) => dc.cost_usd_billions],
+      ["Homes powered", (dc) => dc.impact?.electricity?.homes_powered],
+      ["Annual draw (kWh)", (dc) => dc.impact?.electricity?.annual_kwh],
+      ["Electricity price lift (%)", (dc) => dc.impact?.electricity?.price_lift_pct],
+      ["Water withdrawal (MGD)", (dc) => dc.impact?.water?.daily_withdrawal_mgd],
+      ["Water stress severity", (dc) => dc.impact?.water?.severity],
+      ["Annual CO2 (tonnes)", (dc) => dc.impact?.carbon?.annual_co2_tonnes],
+      ["Cars equivalent", (dc) => dc.impact?.carbon?.cars_equivalent],
+      ["Grid renewables (%)", (dc) => dc.impact?.carbon?.renewable_pct],
+    ];
+
+    const escapeCell = (value) => {
+      if (value == null) return "";
+      const s = String(value);
+      return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    };
+
+    const csv = [
+      columns.map(([label]) => escapeCell(label)).join(","),
+      ...rows.map((dc) => columns.map(([, get]) => escapeCell(get(dc))).join(",")),
+    ].join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = focusedRegion ? `data-centers-${focusedRegion}.csv` : "data-centers.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [datacenters, scenarioData, focusedRegion]);
+
   const selectedDC = datacenters.find((dc) => dc.id === selectedId) ?? null;
   // The scenario-recomputed record for the selected facility, if a scenario
   // is active and this facility is within its scope (POST /api/scenario's
@@ -255,6 +299,9 @@ export default function App() {
           </button>
           <button className="app-action-btn" onClick={openScorecardPanel}>
             🏆 Region scorecard
+          </button>
+          <button className="app-action-btn" onClick={exportCSV}>
+            ⬇ Export CSV
           </button>
         </div>
       </div>

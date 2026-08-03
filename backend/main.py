@@ -8,6 +8,7 @@ from logic import (
     aggregate_impact,
     all_datacenters_with_impact,
     compute_impact,
+    datacenter_by_id_with_impact,
     load_datacenters,
     nearest_datacenters,
     get_dataset_metadata,
@@ -77,11 +78,21 @@ def get_nearest(lat: float = Query(...), lng: float = Query(...), n: int = Query
     return nearest_datacenters(lat, lng, n)
 
 
+@app.get("/api/datacenters/{facility_id}")
+def get_one(facility_id: str):
+    dc = datacenter_by_id_with_impact(facility_id)
+    if dc is None:
+        raise HTTPException(status_code=404, detail=f"Unknown facility id: {facility_id}")
+    return dc
+
+
 class ScenarioOverrides(BaseModel):
     renewable_pct: float | None = None
     carbon_intensity_gco2_per_kwh: float | None = None
     water_liters_per_kwh: float | None = None
     pue: float | None = None
+    cost_allocation_reform: bool | None = None
+    tax_incentive_rollback: bool | None = None
 
 
 class ScenarioRequest(BaseModel):

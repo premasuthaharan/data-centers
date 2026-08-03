@@ -285,3 +285,37 @@ describe("DataCenterCard copy link", () => {
     expect(writeText.mock.calls[0][0]).not.toContain("scenario=");
   });
 });
+
+describe("DataCenterCard copy embed code", () => {
+  it("copies an iframe snippet pointing at the ?embed=<id> URL", async () => {
+    window.history.pushState(null, "", "/?facility=dc-a");
+    const writeText = vi.fn(() => Promise.resolve());
+    vi.stubGlobal("navigator", { ...navigator, clipboard: { writeText } });
+
+    render(<DataCenterCard dc={makeDc()} onClose={() => {}} />);
+
+    fireEvent.click(screen.getByRole("button", { name: /copy embed code/i }));
+
+    const snippet = writeText.mock.calls[0][0];
+    expect(snippet).toContain("<iframe");
+    expect(snippet).toContain("embed=dc-a");
+    await waitFor(() => expect(screen.getByText(/embed code copied/i)).toBeInTheDocument());
+  });
+});
+
+describe("DataCenterCard embed mode", () => {
+  it("omits the close button and copy-link/copy-embed actions", () => {
+    render(<DataCenterCard dc={makeDc()} embed />);
+
+    expect(screen.queryByRole("button", { name: /close/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /copy link/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /copy embed code/i })).not.toBeInTheDocument();
+  });
+
+  it("still renders the facility's stats", () => {
+    render(<DataCenterCard dc={makeDc()} embed />);
+
+    expect(screen.getByText("Facility A")).toBeInTheDocument();
+    expect(screen.getByText("86,766")).toBeInTheDocument();
+  });
+});

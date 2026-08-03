@@ -336,6 +336,54 @@ class TestComputeImpact:
         assert scenario["land"]["waste_heat_mw"] == baseline["land"]["waste_heat_mw"]
 
 
+# --- Policy scenario mechanics: cost allocation, tax incentive, moratorium ---
+
+class TestCostAllocationReform:
+    def test_raises_cost_for_large_facility(self):
+        dc = {"power_mw": 200.0, "electricity_price_usd_per_kwh": 0.083}
+        baseline = compute_impact(dc)
+        scenario = compute_impact(dc, overrides={"cost_allocation_reform": True})
+        assert scenario["electricity"]["annual_cost_millions_usd"] > baseline["electricity"]["annual_cost_millions_usd"]
+
+    def test_no_effect_below_threshold(self):
+        dc = {"power_mw": 50.0, "electricity_price_usd_per_kwh": 0.083}
+        baseline = compute_impact(dc)
+        scenario = compute_impact(dc, overrides={"cost_allocation_reform": True})
+        assert scenario["electricity"]["annual_cost_millions_usd"] == baseline["electricity"]["annual_cost_millions_usd"]
+
+    def test_no_effect_when_not_enabled(self):
+        dc = {"power_mw": 200.0, "electricity_price_usd_per_kwh": 0.083}
+        baseline = compute_impact(dc)
+        scenario = compute_impact(dc, overrides={})
+        assert scenario["electricity"]["annual_cost_millions_usd"] == baseline["electricity"]["annual_cost_millions_usd"]
+
+
+class TestTaxIncentiveRollback:
+    def test_raises_cost_using_country_rate(self):
+        dc = {"power_mw": 100.0, "country": "United States", "electricity_price_usd_per_kwh": 0.083}
+        baseline = compute_impact(dc)
+        scenario = compute_impact(dc, overrides={"tax_incentive_rollback": True})
+        assert scenario["electricity"]["annual_cost_millions_usd"] == pytest.approx(
+            baseline["electricity"]["annual_cost_millions_usd"] * 1.12, abs=0.1
+        )
+
+    def test_unknown_country_uses_default_rate(self):
+        dc = {"power_mw": 100.0, "country": "Nowhereland", "electricity_price_usd_per_kwh": 0.083}
+        baseline = compute_impact(dc)
+        scenario = compute_impact(dc, overrides={"tax_incentive_rollback": True})
+        assert scenario["electricity"]["annual_cost_millions_usd"] == pytest.approx(
+            baseline["electricity"]["annual_cost_millions_usd"] * 1.08, abs=0.1
+        )
+
+    def test_stacks_with_cost_allocation_reform(self):
+        dc = {"power_mw": 200.0, "country": "United States", "electricity_price_usd_per_kwh": 0.083}
+        baseline = compute_impact(dc)
+        both = compute_impact(dc, overrides={"cost_allocation_reform": True, "tax_incentive_rollback": True})
+        only_tax = compute_impact(dc, overrides={"tax_incentive_rollback": True})
+        assert both["electricity"]["annual_cost_millions_usd"] > only_tax["electricity"]["annual_cost_millions_usd"]
+        assert both["electricity"]["annual_cost_millions_usd"] > baseline["electricity"]["annual_cost_millions_usd"]
+
+
 # --- aggregate_impact ---
 
 class TestAggregateImpact:
