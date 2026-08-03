@@ -77,6 +77,22 @@ internal heuristic rather than implied to be industry fact.
   facility-level water withdrawal. Countries not in the table use the
   3.0 L/kWh default above, unchanged from the prior global constant.
 
+### State water stress category (`STATE_WATER_STRESS` in `logic.py`)
+- **Used in:** `water.stress_category` in `compute_impact`'s output — a
+  categorical badge (e.g. "extremely high") shown alongside a facility's
+  own water withdrawal figures in the UI, distinct from `water_severity`
+  (which is derived from the facility's own MGD, not regional context).
+- **Status:** Internal categorical judgment per state, not a precise
+  per-state statistic. Same sourcing approach as "Per-country water
+  intensity" above.
+- **Context:** Labels ("low", "moderate", "high", "extremely high") follow
+  WRI Aqueduct's own category naming as informal guidance for each state's
+  general baseline water stress (arid Southwest states like AZ/NM/CA/NV
+  rated "extremely high"; wetter Midwest/Northeast states like IA/OH/NY
+  rated "low"), not a lookup against Aqueduct's precise numeric index.
+  Only covers states with facilities in the current dataset — states not
+  listed return `None` (unavailable), not a default/estimated category.
+
 ### Water severity thresholds (1 / 5 / 15 MGD → low/moderate/high/critical)
 - **Used in:** `water_severity` (`logic.py:51-58`)
 - **Status:** Internal heuristic, not externally sourced. **No EPA baseline
@@ -266,6 +282,20 @@ internal heuristic rather than implied to be industry fact.
   country set as `GRID_DATA`/`IMPACT_RATES` in `fetch_data.py`; countries
   outside this table have no per-km² view (the scorecard falls back to
   per-facility or total).
+
+### Grid renewables ranking (`COUNTRY_RENEWABLE_PCT` in `logic.py`)
+- **Used in:** `grid_context()`, which powers the "greener than N of M
+  tracked grids" comparison line in the facility detail panel.
+- **Status:** Duplicates `GRID_DATA`'s `renewable_pct` values from
+  `fetch_data.py` — same source/status as that table, not an independently
+  derived figure. Kept as a separate table because `logic.py` (imported by
+  the FastAPI app) must not import `fetch_data.py` (a standalone CLI
+  script with network/CSV dependencies); if `GRID_DATA`'s renewable_pct
+  values are updated, this table should be updated to match.
+- **Context:** Covers the same ~33-country set `fetch_data.py` can geocode
+  into, not just countries currently represented in `datacenters.json`, so
+  ranking reflects the full tracked universe rather than whatever
+  countries happen to have facilities today.
 
 ### Manually-researched locations (`backend/data/location_overrides.json`)
 - **Used in:** `fetch_data.py` `main()` — checked per-record before the CSV

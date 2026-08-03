@@ -1,5 +1,6 @@
 import math
 import json
+import re
 from pathlib import Path
 
 _DATA_PATH = Path(__file__).parent / "data" / "datacenters.json"
@@ -258,6 +259,103 @@ def region_area_km2(region: str) -> float | None:
     return COUNTRY_AREA_KM2.get(region)
 
 
+# Renewable generation share (%) by country, mirroring GRID_DATA's
+# renewable_pct in fetch_data.py (kept as a separate table here since
+# logic.py must not import fetch_data.py — that module is a standalone CLI
+# script with network/CSV dependencies unrelated to serving the API).
+# Covers the full country set fetch_data.py can geocode into, not just
+# countries currently represented in datacenters.json, so grid_context's
+# "N of M tracked grids" reflects the full tracked universe.
+COUNTRY_RENEWABLE_PCT = {
+    "United States": 22, "Canada": 67, "United Kingdom": 42, "Ireland": 35,
+    "Germany": 52, "Netherlands": 40, "Belgium": 30, "France": 24,
+    "Sweden": 83, "Norway": 98, "Finland": 60, "Denmark": 65,
+    "Singapore": 3, "Japan": 22, "South Korea": 9, "Taiwan": 8,
+    "China": 29, "India": 20, "Indonesia": 15, "Malaysia": 17,
+    "Australia": 29, "New Zealand": 84, "Brazil": 88, "South Africa": 12,
+    "Bahrain": 5, "United Arab Emirates": 8, "Israel": 10, "Switzerland": 62,
+    "Austria": 80, "Spain": 50, "Italy": 42, "Poland": 18, "Portugal": 61,
+}
+
+
+def grid_context(country: str) -> dict | None:
+    """Rank/percentile of a country's renewable generation share among all
+    tracked countries. Returns None when the country isn't tracked."""
+    pct = COUNTRY_RENEWABLE_PCT.get(country)
+    if pct is None:
+        return None
+    ranked = sorted(COUNTRY_RENEWABLE_PCT.items(), key=lambda kv: kv[1], reverse=True)
+    total = len(ranked)
+    rank = next(i for i, (name, _) in enumerate(ranked, start=1) if name == country)
+    greener_than = sum(1 for _, other_pct in COUNTRY_RENEWABLE_PCT.items() if other_pct < pct)
+    return {
+        "rank": rank,
+        "total_tracked": total,
+        "greener_than_pct": round(100 * greener_than / (total - 1)) if total > 1 else None,
+    }
+
+
+# US state names -> 2-letter code, for deriving state from a facility's
+# free-text address (which carries city/state, not a structured field).
+US_STATE_NAMES = {
+    "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR",
+    "California": "CA", "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE",
+    "Florida": "FL", "Georgia": "GA", "Hawaii": "HI", "Idaho": "ID",
+    "Illinois": "IL", "Indiana": "IN", "Iowa": "IA", "Kansas": "KS",
+    "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME", "Maryland": "MD",
+    "Massachusetts": "MA", "Michigan": "MI", "Minnesota": "MN", "Mississippi": "MS",
+    "Missouri": "MO", "Montana": "MT", "Nebraska": "NE", "Nevada": "NV",
+    "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM", "New York": "NY",
+    "North Carolina": "NC", "North Dakota": "ND", "Ohio": "OH", "Oklahoma": "OK",
+    "Oregon": "OR", "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC",
+    "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX", "Utah": "UT",
+    "Vermont": "VT", "Virginia": "VA", "Washington": "WA", "West Virginia": "WV",
+    "Wisconsin": "WI", "Wyoming": "WY",
+}
+US_STATE_CODES = set(US_STATE_NAMES.values())
+
+
+def extract_us_state(address: str, country: str) -> str | None:
+    """Best-effort 2-letter US state code from a free-text address. Returns
+    None (not a guess) when the address doesn't carry a recognizable state —
+    callers must treat that as "state unknown," not "state absent"."""
+    if country != "United States" or not address:
+        return None
+    parts = [p.strip() for p in address.split(",") if p.strip()]
+    for part in reversed(parts):
+        m = re.fullmatch(r"([A-Z]{2})(\s+\d{3,10})?", part)
+        if m and m.group(1) in US_STATE_CODES:
+            return m.group(1)
+    for part in reversed(parts):
+        for name, code in US_STATE_NAMES.items():
+            if part == name or part.endswith(f" {name}"):
+                return code
+    return None
+
+
+# Water stress category by US state, using WRI Aqueduct's own category
+# labels ("Low", "Low-medium", "Medium-high", "High", "Extremely high") as
+# informal guidance rather than a precise per-state statistic — same
+# sourcing approach as IMPACT_RATES' per-country water intensity in
+# fetch_data.py. See SOURCES.md ("State water stress category"). States not
+# listed here are treated as unavailable, not defaulted.
+STATE_WATER_STRESS = {
+    "AZ": "extremely high", "NM": "extremely high", "CA": "extremely high",
+    "NV": "extremely high", "TX": "high", "CO": "high", "UT": "high",
+    "OK": "high", "KS": "high", "NE": "moderate", "ND": "moderate",
+    "WY": "moderate", "GA": "moderate", "NC": "moderate", "SC": "moderate",
+    "VA": "moderate", "TN": "moderate", "AL": "moderate", "MS": "moderate",
+    "LA": "low", "IA": "low", "IN": "low", "OH": "low", "WI": "low",
+    "MN": "low", "NY": "low",
+}
+
+
+def water_stress_category(state: str | None) -> str | None:
+    if state is None:
+        return None
+    return STATE_WATER_STRESS.get(state)
+
+
 def aggregate_impact(centers_with_impact: list[dict]) -> dict:
     water_severity_counts = {"low": 0, "moderate": 0, "high": 0, "critical": 0}
     for dc in centers_with_impact:
@@ -291,9 +389,78 @@ def regions_with_aggregate_impact() -> list[dict]:
     ]
 
 
+def _percentile_rank(values: list[float], value: float) -> int:
+    """% of values strictly less than `value` — "uses more water than X% of
+    tracked facilities" reads naturally as this direction, not <=."""
+    if len(values) <= 1:
+        return 0
+    lower = sum(1 for v in values if v < value)
+    return round(100 * lower / (len(values) - 1))
+
+
+def _region_key(dc: dict) -> str | None:
+    country = dc.get("country")
+    state = extract_us_state(dc.get("address") or "", country or "")
+    if state:
+        return f"US-{state}"
+    return country
+
+
+def _region_label(region_key: str) -> str:
+    if region_key.startswith("US-"):
+        return region_key[3:]
+    return region_key
+
+
+def compute_peer_contexts(centers_with_impact: list[dict]) -> dict[str, dict]:
+    """Percentile rank (among all facilities) and rank-within-region (US
+    state, else country) for water/carbon/electricity, keyed by facility id.
+    Computed once across the full dataset so every facility is compared
+    against the same population."""
+    water = [dc["impact"]["water"]["daily_withdrawal_mgd"] for dc in centers_with_impact]
+    carbon = [dc["impact"]["carbon"]["annual_co2_tonnes"] for dc in centers_with_impact]
+    elec = [dc["impact"]["electricity"]["annual_kwh"] for dc in centers_with_impact]
+
+    by_region: dict[str, list[dict]] = {}
+    for dc in centers_with_impact:
+        key = _region_key(dc)
+        if key:
+            by_region.setdefault(key, []).append(dc)
+
+    region_water_rank: dict[str, tuple[int, int]] = {}
+    for key, facilities in by_region.items():
+        ordered = sorted(facilities, key=lambda d: d["impact"]["water"]["daily_withdrawal_mgd"], reverse=True)
+        for i, dc in enumerate(ordered, start=1):
+            region_water_rank[dc["id"]] = (i, len(ordered))
+
+    contexts = {}
+    for dc, w, c, e in zip(centers_with_impact, water, carbon, elec):
+        region_key = _region_key(dc)
+        entry = {
+            "water_percentile": _percentile_rank(water, w),
+            "carbon_percentile": _percentile_rank(carbon, c),
+            "electricity_percentile": _percentile_rank(elec, e),
+        }
+        if region_key and dc["id"] in region_water_rank:
+            rank, total = region_water_rank[dc["id"]]
+            entry["region_label"] = _region_label(region_key)
+            entry["water_rank_in_region"] = rank
+            entry["facilities_in_region"] = total
+        contexts[dc["id"]] = entry
+    return contexts
+
+
 def all_datacenters_with_impact() -> list[dict]:
     centers = load_datacenters()
-    return [{**dc, "impact": compute_impact(dc)} for dc in centers]
+    with_impact = [{**dc, "impact": compute_impact(dc)} for dc in centers]
+
+    peer_contexts = compute_peer_contexts(with_impact)
+    for dc in with_impact:
+        dc["impact"]["peer_context"] = peer_contexts.get(dc["id"])
+        state = extract_us_state(dc.get("address") or "", dc.get("country") or "")
+        dc["impact"]["water"]["stress_category"] = water_stress_category(state)
+        dc["impact"]["carbon"]["grid_context"] = grid_context(dc.get("country") or "")
+    return with_impact
 
 
 def datacenter_by_id_with_impact(facility_id: str) -> dict | None:

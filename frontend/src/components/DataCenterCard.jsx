@@ -10,9 +10,22 @@ const PRECISION_WARNINGS = {
   country: "Location is approximate (country-level geocode only)",
   failed: "Location unknown — could not be geocoded",
 };
+const WATER_STRESS_LABELS = {
+  low: "Low baseline water stress",
+  moderate: "Moderate baseline water stress",
+  high: "High baseline water stress",
+  "extremely high": "Extremely high baseline water stress",
+};
 
 function SectionHeader({ children }) {
   return <div className="dc-section-label">{children}</div>;
+}
+
+// A single line of regional/peer context under a stat block — distinct from
+// impact-note (a static explanatory paragraph): this is a computed, per-
+// facility comparison, so it renders as a labeled row rather than prose.
+function ContextLine({ children }) {
+  return <div className="impact-context-line">{children}</div>;
 }
 
 // value/scenarioValue are raw numbers (or ranks, for severity) so the
@@ -67,6 +80,8 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose,
   const water = impact.water || {};
   const carbon = impact.carbon || {};
   const land = impact.land || {};
+  const peerContext = impact.peer_context;
+  const gridContext = carbon.grid_context;
   const isAnnounced = (dc.data_status ?? impact.data_status) === "announced";
 
   const sImpact = scenarioDc?.impact;
@@ -203,6 +218,19 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose,
             scenarioValue={sWater?.households_equivalent}
             sub="households/day"
           />
+          {peerContext && (
+            <ContextLine>
+              Uses more water than {peerContext.water_percentile}% of tracked facilities
+              {peerContext.region_label && peerContext.facilities_in_region > 1 && (
+                <> · #{peerContext.water_rank_in_region} of {peerContext.facilities_in_region} in {peerContext.region_label}</>
+              )}
+            </ContextLine>
+          )}
+          {water.stress_category && peerContext?.region_label && (
+            <ContextLine>
+              {peerContext.region_label}: {WATER_STRESS_LABELS[water.stress_category] ?? water.stress_category}
+            </ContextLine>
+          )}
           <p className="impact-note">
             Cooling towers evaporate millions of gallons daily, competing with municipal water supplies and local agriculture — especially critical in drought-prone regions.
           </p>
@@ -233,6 +261,12 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose,
           <div className="dc-renewables-bar" style={{ marginTop: 8 }}>
             <div className="dc-renewables-fill" style={{ width: `${(sCarbon ?? carbon).renewable_pct ?? 0}%` }} />
           </div>
+          {gridContext && (
+            <ContextLine>
+              Grid is greener than {gridContext.greener_than_pct}% of tracked countries'
+              grids ({gridContext.rank} of {gridContext.total_tracked})
+            </ContextLine>
+          )}
           <p className="impact-note">
             Diesel backup generators and fossil-heavy grids contribute to local air quality degradation, with particulate matter affecting residents within the impact radius.
           </p>

@@ -65,6 +65,86 @@ describe("DataCenterCard", () => {
     expect(screen.getByText("22%")).toHaveStyle({ color: severityColor("moderate") });
   });
 
+  it("renders peer-ranking and region-rank lines when peer_context is present", () => {
+    const dc = makeDc({
+      impact: {
+        peer_context: {
+          water_percentile: 91,
+          carbon_percentile: 91,
+          electricity_percentile: 91,
+          region_label: "TX",
+          water_rank_in_region: 2,
+          facilities_in_region: 8,
+        },
+      },
+    });
+    render(<DataCenterCard dc={dc} onClose={() => {}} />);
+
+    expect(screen.getByText(/Uses more water than 91% of tracked facilities/)).toBeInTheDocument();
+    expect(screen.getByText(/#2 of 8 in TX/)).toBeInTheDocument();
+  });
+
+  it("omits the region-rank clause when only one facility is in the region", () => {
+    const dc = makeDc({
+      impact: {
+        peer_context: {
+          water_percentile: 50,
+          region_label: "WY",
+          water_rank_in_region: 1,
+          facilities_in_region: 1,
+        },
+      },
+    });
+    render(<DataCenterCard dc={dc} onClose={() => {}} />);
+
+    expect(screen.getByText(/Uses more water than 50% of tracked facilities/)).toBeInTheDocument();
+    expect(screen.queryByText(/in WY/)).not.toBeInTheDocument();
+  });
+
+  it("omits peer-ranking lines entirely when peer_context is absent", () => {
+    render(<DataCenterCard dc={makeDc()} onClose={() => {}} />);
+
+    expect(screen.queryByText(/Uses more water than/)).not.toBeInTheDocument();
+  });
+
+  it("renders a state water-stress badge when stress_category and region are present", () => {
+    const dc = makeDc({
+      impact: {
+        peer_context: { region_label: "AZ", facilities_in_region: 1, water_rank_in_region: 1 },
+        water: { daily_withdrawal_mgd: 1.52, severity: "moderate", households_equivalent: 5067, stress_category: "extremely high" },
+      },
+    });
+    render(<DataCenterCard dc={dc} onClose={() => {}} />);
+
+    expect(screen.getByText(/AZ: Extremely high baseline water stress/)).toBeInTheDocument();
+  });
+
+  it("omits the water-stress badge when stress_category is absent", () => {
+    const dc = makeDc({
+      impact: { peer_context: { region_label: "IL", facilities_in_region: 1, water_rank_in_region: 1 } },
+    });
+    render(<DataCenterCard dc={dc} onClose={() => {}} />);
+
+    expect(screen.queryByText(/baseline water stress/)).not.toBeInTheDocument();
+  });
+
+  it("renders a grid-ranking line when grid_context is present", () => {
+    const dc = makeDc({
+      impact: {
+        carbon: { annual_co2_tonnes: 300_000, cars_equivalent: 65_217, renewable_pct: 22, renewable_severity: "moderate", grid_context: { rank: 21, total_tracked: 33, greener_than_pct: 34 } },
+      },
+    });
+    render(<DataCenterCard dc={dc} onClose={() => {}} />);
+
+    expect(screen.getByText(/Grid is greener than 34% of tracked countries' grids \(21 of 33\)/)).toBeInTheDocument();
+  });
+
+  it("omits the grid-ranking line when grid_context is absent", () => {
+    render(<DataCenterCard dc={makeDc()} onClose={() => {}} />);
+
+    expect(screen.queryByText(/Grid is greener than/)).not.toBeInTheDocument();
+  });
+
   it("does not render impact blocks for announced (unbuilt) facilities", () => {
     const dc = makeDc({
       data_status: "announced",

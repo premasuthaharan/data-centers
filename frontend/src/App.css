@@ -446,6 +446,13 @@
   padding-top: 8px;
 }
 
+.impact-context-line {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
 .impact-block-body a {
   color: #38bdf8;
   text-decoration: underline;
