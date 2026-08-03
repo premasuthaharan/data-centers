@@ -3,7 +3,7 @@
 The detail panel (`DataCenterCard.jsx`'s `dc-detail-panel`, opened from a
 map marker) shows operator, country, and address in its header
 (`dc-detail-meta`, lines 100-103) but has no sense of *when* a facility
-went up. Combined with [[add-facility-lifecycle-status]], a user looking
+went up. Combined with [[facility-lifecycle-status]], a user looking
 at an "under construction" facility has no way to tell whether it broke
 ground last month or is nearly finished — build date is the piece of
 context that makes a status badge meaningful rather than just a label.
@@ -39,9 +39,9 @@ other change landing first.
 - Affected specs: none (additive field + display; no API contract
   changes beyond a new optional key already covered by
   `GET /api/datacenters`' existing pass-through of dataset fields).
-- Independent of [[add-facility-lifecycle-status]] and
-  [[add-trackpolicy-datacenters]] — useful with or without either, though
+- Independent of [[facility-lifecycle-status]] and
+  [[trackpolicy-datacenters]] — useful with or without either, though
   it's most informative once combined with the status badge from
-  [[add-facility-lifecycle-status]].
+  [[facility-lifecycle-status]].
 - Purely additive: facilities with no known `build_date` render identically
   to today.

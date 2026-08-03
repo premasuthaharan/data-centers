@@ -39,7 +39,7 @@ rather than becoming a new map layer or standalone page.
     county-boundary lookup) is a prerequisite.
   - Power/grid consumption-by-sector benchmarks at county granularity are
     less consistently available than water data; scope the initial
-    version to water (where [[add-facility-build-date]]'s sibling
+    version to water (where [[facility-build-date]]'s sibling
     proposals already lean on `water_liters_per_kwh` as a real,
     per-facility field) and treat a power/grid version as a stretch goal
     once the data-availability question is answered.
@@ -73,7 +73,7 @@ rather than becoming a new map layer or standalone page.
   unavailable, rather than extrapolating nationwide.
 - Independent of the other changes in this batch and the earlier
   trackpolicy.org batch, though it reads naturally alongside
-  [[add-facility-lifecycle-status]]'s "planned" facilities — regional
+  [[facility-lifecycle-status]]'s "planned" facilities — regional
   context is arguably more persuasive for a facility that hasn't broken
   ground yet, when the argument is "here's what this will do to local
   water," than for one already operating.
