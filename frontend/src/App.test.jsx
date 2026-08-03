@@ -542,3 +542,68 @@ describe("App CSV export", () => {
     expect(csv).not.toContain("300000");
   });
 });
+
+describe("App facility search", () => {
+  const DATACENTERS = [
+    { id: "dc-a", name: "Colossus 2", operator: "SpaceXAI", country: "US", impact: {}, category: "frontier-ai" },
+    { id: "dc-b", name: "Equinix Ashburn", operator: "Equinix", country: "US", impact: {}, category: "general-purpose" },
+  ];
+
+  function mockFetchDatacenters() {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({ data_centers: DATACENTERS, generated_at: "2026-01-01" }),
+        })
+      )
+    );
+  }
+
+  it("opens the search panel, filters results, and flies to the selected facility on click", async () => {
+    mockFetchDatacenters();
+    render(<App />);
+    await waitFor(() => expect(screen.getByText(/2 data centers/)).toBeInTheDocument());
+
+    fireEvent.click(screen.getByLabelText(/search for a facility/i));
+    expect(screen.getByText("Colossus 2")).toBeInTheDocument();
+    expect(screen.getByText("Equinix Ashburn")).toBeInTheDocument();
+
+    fireEvent.change(screen.getByPlaceholderText(/search by name or operator/i), {
+      target: { value: "equinix" },
+    });
+    expect(screen.getByText("Equinix Ashburn")).toBeInTheDocument();
+    expect(screen.queryByText("Colossus 2")).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByText("Equinix Ashburn"));
+
+    // Selecting a result closes the search panel and opens the detail card
+    // (same handleSelect path NearMePanel's onFlyTo uses).
+    expect(screen.queryByPlaceholderText(/search by name or operator/i)).not.toBeInTheDocument();
+    expect(screen.getByTestId("mock-map")).toHaveAttribute("data-selected", "dc-b");
+  });
+
+  it("scopes search results to the active category filter", async () => {
+    mockFetchDatacenters();
+    render(<App />);
+    await waitFor(() => expect(screen.getByText(/2 data centers/)).toBeInTheDocument());
+
+    fireEvent.click(screen.getByText(/Frontier-AI/));
+    fireEvent.click(screen.getByLabelText(/search for a facility/i));
+
+    expect(screen.getByText("Colossus 2")).toBeInTheDocument();
+    expect(screen.queryByText("Equinix Ashburn")).not.toBeInTheDocument();
+  });
+
+  it("closes the search panel via its close button without selecting anything", async () => {
+    mockFetchDatacenters();
+    render(<App />);
+    await waitFor(() => expect(screen.getByText(/2 data centers/)).toBeInTheDocument());
+
+    fireEvent.click(screen.getByLabelText(/search for a facility/i));
+    fireEvent.click(screen.getByLabelText("Close"));
+
+    expect(screen.queryByPlaceholderText(/search by name or operator/i)).not.toBeInTheDocument();
+    expect(screen.getByTestId("mock-map")).toHaveAttribute("data-selected", "");
+  });
+});

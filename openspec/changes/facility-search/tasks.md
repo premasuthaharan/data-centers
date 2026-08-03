@@ -10,30 +10,30 @@
 
 ## 2. Search trigger + panel
 
-- [ ] 2.1 Add a small square icon-button trigger next to
+- [x] 2.1 Add a small square icon-button trigger next to
       `NearMePanel`'s "Show data centers near me" button in `App.jsx`
       (same visual cluster, distinct control)
-- [ ] 2.2 New `FacilitySearchPanel.jsx`: text input + live-filtered result
+- [x] 2.2 New `FacilitySearchPanel.jsx`: text input + live-filtered result
       list using the shared search helper from 1.1, styled consistently
       with `CompareModal.jsx`'s existing search-result list
       (`compare-search-results`/`compare-search-result-btn` classes or
       equivalents)
-- [ ] 2.3 Wire result selection to the same `handleSelect` callback passed
+- [x] 2.3 Wire result selection to the same `handleSelect` callback passed
       to `NearMePanel` (`onFlyTo`), so clicking a result flies the map and
       opens the detail card exactly like a near-me result click
-- [ ] 2.4 Scope search results to `scopedDatacenters` (the
+- [x] 2.4 Scope search results to `scopedDatacenters` (the
       category-filtered list already computed in `App.jsx` for the map),
       not the full unfiltered dataset
-- [ ] 2.5 Close behavior: result selection, explicit close button, and
+- [x] 2.5 Close behavior: result selection, explicit close button, and
       outside-click dismissal (matching `CompareModal`'s
       `compare-modal-overlay` pattern)
 
 ## 3. Styling
 
-- [ ] 3.1 `App.css`: square icon-button style for the new trigger, sized
+- [x] 3.1 `App.css`: square icon-button style for the new trigger, sized
       to sit next to `.near-me-trigger` without disrupting its existing
       layout/positioning
-- [ ] 3.2 Panel styling consistent with existing overlay panels
+- [x] 3.2 Panel styling consistent with existing overlay panels
       (detail-panel-wrapper / near-me-card conventions — dark/light theme
       variables, not hardcoded colors)
 
@@ -42,11 +42,11 @@
 - [x] 4.1 Unit tests for the extracted `searchFacilities` helper
       (case-insensitivity, name match, operator match, empty query
       returns all, no-match returns empty)
-- [ ] 4.2 Component test for `FacilitySearchPanel.jsx`: typing filters
+- [x] 4.2 Component test for `FacilitySearchPanel.jsx`: typing filters
       results, selecting a result calls the provided callback with the
       right facility id
-- [ ] 4.3 `cd frontend && npm test` passes
-- [ ] 4.4 Manual: search for a facility by name and by operator, confirm
+- [x] 4.3 `cd frontend && npm test` passes
+- [x] 4.4 Manual: search for a facility by name and by operator, confirm
       the map flies to it and the detail card opens; toggle the
       frontier-AI filter and confirm search results respect it; confirm
       outside-click and close button both dismiss the panel
