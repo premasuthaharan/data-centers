@@ -367,6 +367,10 @@ export default function App() {
               <span className="legend-dot" style={{ background: "#475569", opacity: 0.55 }} />
               Announced (capacity not yet public)
             </div>
+            <div className="legend-item">
+              <span className="legend-dot legend-dot--hollow" />
+              Planned / under construction
+            </div>
           </>
         )}
       </div>

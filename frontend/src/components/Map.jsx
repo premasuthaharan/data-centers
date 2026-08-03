@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { markerColor, kmToGeoJSONCircle, hasCoordinates, isAnnounced } from "./mapHelpers";
+import { markerColor, kmToGeoJSONCircle, hasCoordinates, isAnnounced, isNonOperational, constructionStatus } from "./mapHelpers";
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 mapboxgl.accessToken = MAPBOX_TOKEN;
@@ -23,6 +23,16 @@ function approxNote(precision) {
 
 const ANNOUNCED_COLOR = "#475569";
 
+const CONSTRUCTION_STATUS_LABELS = {
+  planned: "Planned",
+  under_construction: "Under construction",
+};
+
+function constructionStatusNote(status) {
+  const label = CONSTRUCTION_STATUS_LABELS[status];
+  return label ? `<br/><span class="popup-sub">${label}</span>` : "";
+}
+
 function buildGeoJSON(datacenters, colorMode) {
   const locatable = datacenters.filter(hasCoordinates);
 
@@ -39,6 +49,7 @@ function buildGeoJSON(datacenters, colorMode) {
       name: dc.name,
       geocodePrecision: dc.geocode_precision ?? "address",
       announced: isAnnounced(dc),
+      nonOperational: isNonOperational(dc),
     },
   }));
 
@@ -53,6 +64,8 @@ function buildGeoJSON(datacenters, colorMode) {
       operator: dc.operator,
       geocodePrecision: dc.geocode_precision ?? "address",
       announced: isAnnounced(dc),
+      nonOperational: isNonOperational(dc),
+      constructionStatus: constructionStatus(dc),
     },
   }));
 
@@ -146,17 +159,22 @@ export default function Map({ datacenters, selectedId, onSelectDatacenter, color
           6, 7,
           10, 10,
         ],
-        "circle-color": ["get", "color"],
+        // Non-operational facilities (planned, or under-construction with no
+        // confirmed capacity) render hollow — a colored ring with a
+        // transparent center — so they read as "not yet drawing power" at a
+        // glance, distinct from the flat-gray "announced" (capacity-unknown)
+        // treatment.
+        "circle-color": ["case", ["get", "nonOperational"], "rgba(0,0,0,0)", ["get", "color"]],
         "circle-stroke-color": [
           "case",
-          ["==", ["get", "geocodePrecision"], "address"],
-          "#ffffff",
+          ["get", "nonOperational"], ["get", "color"],
+          ["==", ["get", "geocodePrecision"], "address"], "#ffffff",
           "#ffcc00",
         ],
         "circle-stroke-width": [
           "case",
-          ["==", ["get", "geocodePrecision"], "address"],
-          1.5,
+          ["get", "nonOperational"], 2,
+          ["==", ["get", "geocodePrecision"], "address"], 1.5,
           2.5,
         ],
         "circle-opacity": ["case", ["get", "announced"], 0.55, 0.9],
@@ -195,7 +213,7 @@ export default function Map({ datacenters, selectedId, onSelectDatacenter, color
       const p = e.features[0].properties;
       popup.current
         .setLngLat(e.lngLat)
-        .setHTML(`<div class="popup"><strong>${p.name}</strong><br/><span class="popup-sub">${p.operator}</span>${approxNote(p.geocodePrecision)}</div>`)
+        .setHTML(`<div class="popup"><strong>${p.name}</strong><br/><span class="popup-sub">${p.operator}</span>${constructionStatusNote(p.constructionStatus)}${approxNote(p.geocodePrecision)}</div>`)
         .addTo(map.current);
     });
     map.current.on("mouseleave", "dc-points-hit", () => {

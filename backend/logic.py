@@ -178,6 +178,7 @@ def compute_impact(
         # Map geometry
         "radius_km": impact_radius_km(power_mw),
         "data_status": dc.get("data_status", "confirmed" if power_mw else "announced"),
+        "construction_status": dc.get("construction_status", "operational"),
         # Electricity
         "electricity": {
             "annual_kwh": round(annual_kwh),

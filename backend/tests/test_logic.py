@@ -180,6 +180,20 @@ class TestComputeImpact:
         result = compute_impact(dc)
         assert result["data_status"] == "announced"
 
+    def test_construction_status_defaults_to_operational_when_absent(self):
+        dc = {"power_mw": 100.0}
+        result = compute_impact(dc)
+        assert result["construction_status"] == "operational"
+
+    def test_explicit_construction_status_is_passed_through(self):
+        dc = {"power_mw": 100.0, "construction_status": "planned"}
+        result = compute_impact(dc)
+        assert result["construction_status"] == "planned"
+
+        dc = {"power_mw": 100.0, "construction_status": "under_construction"}
+        result = compute_impact(dc)
+        assert result["construction_status"] == "under_construction"
+
     @pytest.mark.parametrize(
         "power_mw,expected_severity",
         [
