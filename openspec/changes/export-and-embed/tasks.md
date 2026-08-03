@@ -13,10 +13,10 @@
 
 ## 2. Single-facility endpoint (for the embed view)
 
-- [ ] 2.1 `GET /api/datacenters/{id}` in `main.py`, returning one
+- [x] 2.1 `GET /api/datacenters/{id}` in `main.py`, returning one
       facility with computed impact (reuses existing `compute_impact`
       logic rather than shipping the full dataset to an embed)
-- [ ] 2.2 Backend tests: valid id returns the facility, unknown id
+- [x] 2.2 Backend tests: valid id returns the facility, unknown id
       returns 404
 
 ## 3. Embed view

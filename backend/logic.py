@@ -262,6 +262,12 @@ def all_datacenters_with_impact() -> list[dict]:
     return [{**dc, "impact": compute_impact(dc)} for dc in centers]
 
 
+def datacenter_by_id_with_impact(facility_id: str) -> dict | None:
+    centers = load_datacenters()
+    dc = next((dc for dc in centers if dc["id"] == facility_id), None)
+    return {**dc, "impact": compute_impact(dc)} if dc else None
+
+
 def nearest_datacenters(user_lat: float, user_lng: float, n: int = 3) -> list[dict]:
     centers = load_datacenters()
     scored = sorted(
