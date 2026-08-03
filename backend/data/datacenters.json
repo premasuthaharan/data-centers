@@ -17,7 +17,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2025-10"
     },
     {
       "id": "microsoft-fairwater-atlanta",
@@ -53,7 +54,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2025-10"
     },
     {
       "id": "anthropic-amazon-new-carlisle",
@@ -89,7 +91,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2025-09"
     },
     {
       "id": "microsoft-fairwater-wisconsin",
@@ -107,7 +110,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2026-04"
     },
     {
       "id": "google-columbus",
@@ -125,7 +129,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2024-04"
     },
     {
       "id": "google-new-albany",
@@ -143,7 +148,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2024-04"
     },
     {
       "id": "google-council-bluffs--east-",
@@ -161,7 +167,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2024-11"
     },
     {
       "id": "google-lincoln",
@@ -179,7 +186,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2026-05"
     },
     {
       "id": "google-bristow",
@@ -197,7 +205,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2024-04"
     },
     {
       "id": "dayone-nusajaya",
@@ -233,7 +242,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2024-08"
     },
     {
       "id": "google-omaha",
@@ -251,7 +261,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2024-04"
     },
     {
       "id": "coreweave-denton-tx",
@@ -269,7 +280,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2025-05"
     },
     {
       "id": "google-kansas-city-east",
@@ -287,7 +299,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2026-08"
     },
     {
       "id": "qts-richmond-1",
@@ -305,7 +318,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2024-01"
     },
     {
       "id": "meta-rosemount",
@@ -359,7 +373,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2023-04"
     },
     {
       "id": "meta-jeffersonville",
@@ -395,7 +410,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2025-03"
     },
     {
       "id": "google-midlothian",
@@ -413,7 +429,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2026-04"
     },
     {
       "id": "qts-richmond-2",
@@ -449,7 +466,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2026-02"
     },
     {
       "id": "meta-montgomery",
@@ -575,7 +593,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2026-06"
     },
     {
       "id": "google-arcola",
@@ -593,7 +612,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2026-06"
     },
     {
       "id": "microsoft-project-osmium",
@@ -611,7 +631,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2021"
     },
     {
       "id": "google-storey-county",
@@ -629,7 +650,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2023-08"
     },
     {
       "id": "meta-eagle-mountain",
@@ -665,7 +687,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2025-10"
     },
     {
       "id": "google-lancaster",
@@ -683,7 +706,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2024"
     },
     {
       "id": "google-mesa",
@@ -701,7 +725,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2025-07"
     },
     {
       "id": "google-waltham-cross",
@@ -719,7 +744,8 @@
       "renewable_pct": 42,
       "electricity_price_usd_per_kwh": 0.171,
       "water_liters_per_kwh": 1.5,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2025-09"
     },
     {
       "id": "huawei-horinger",
@@ -737,7 +763,8 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 2.5,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2025-06"
     },
     {
       "id": "vnet-bayin-ulanqab",
@@ -755,7 +782,8 @@
       "renewable_pct": 29,
       "electricity_price_usd_per_kwh": 0.08,
       "water_liters_per_kwh": 2.5,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2025-07"
     },
     {
       "id": "google-red-oak",
@@ -773,7 +801,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2025-08"
     },
     {
       "id": "meta-gallatin",
@@ -791,7 +820,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2026-06"
     },
     {
       "id": "meta-los-lunas",
@@ -809,7 +839,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2026-03"
     },
     {
       "id": "coreweave-ellendale-nd",
@@ -827,7 +858,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2025-10"
     },
     {
       "id": "coreweave-chester-va",
@@ -845,7 +877,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2024-01"
     },
     {
       "id": "oracle-batam",
@@ -881,7 +914,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2023-01"
     },
     {
       "id": "coreweave-marble-nc",
@@ -899,7 +933,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2026-03"
     },
     {
       "id": "microsoft-sat40",
@@ -917,7 +952,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2024-05"
     },
     {
       "id": "stack-infrastructure-nva02",
@@ -935,7 +971,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2024-10"
     },
     {
       "id": "stream-phoenix",
@@ -953,7 +990,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2026-05"
     },
     {
       "id": "microsoft-sat14",
@@ -971,7 +1009,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2024-07"
     },
     {
       "id": "vantage-tx1",
@@ -989,7 +1028,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2026-02"
     },
     {
       "id": "coreweave-dalton-1---2",
@@ -1007,7 +1047,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2026-02"
     },
     {
       "id": "alibaba-zhangbei",
@@ -1043,7 +1084,8 @@
       "renewable_pct": 61,
       "electricity_price_usd_per_kwh": 0.19,
       "water_liters_per_kwh": 3.0,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2026-04"
     },
     {
       "id": "google-pryor--north-",
@@ -1061,7 +1103,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2024-07"
     },
     {
       "id": "coreweave-muskogee-ok",
@@ -1187,7 +1230,8 @@
       "renewable_pct": 22,
       "electricity_price_usd_per_kwh": 0.083,
       "water_liters_per_kwh": 2.3,
-      "category": "frontier-ai"
+      "category": "frontier-ai",
+      "build_date": "2026-08"
     },
     {
       "id": "openai-stargate-lordstown",
