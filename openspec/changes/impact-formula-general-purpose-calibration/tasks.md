@@ -46,10 +46,10 @@
 
 ## 4. Tests and verification
 
-- [ ] 4.1 `backend/tests/test_logic.py`: update/add coverage for
+- [x] 4.1 `backend/tests/test_logic.py`: update/add coverage for
       per-category PUE/utilization selection, the fallback for
       missing-`category` records, and the new severity thresholds
-- [ ] 4.2 `cd backend && python3 -m pytest` passes
+- [x] 4.2 `cd backend && python3 -m pytest` passes
 - [ ] 4.3 Manual: spot-check a handful of facilities across both
       categories in the running app and confirm impact figures and
       severity badges look directionally correct (e.g. a small

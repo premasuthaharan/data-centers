@@ -5,7 +5,9 @@ import pytest
 
 from logic import (
     PUE,
+    PUE_BY_CATEGORY,
     UTILIZATION_FACTOR,
+    UTILIZATION_FACTOR_BY_CATEGORY,
     aggregate_impact,
     all_datacenters_with_impact,
     compute_impact,
@@ -185,7 +187,7 @@ class TestComputeImpact:
         [
             (0.001, "low"),       # tiny draw, well under 1 MGD
             (100, "moderate"),    # 1.98 MGD
-            (300, "high"),        # ~5.9 MGD
+            (200, "high"),        # ~3.96 MGD
             (1000, "critical"),   # ~19.8 MGD
         ],
     )
@@ -204,6 +206,7 @@ class TestComputeImpact:
         dc = {"power_mw": 253.0}
         result = compute_impact(dc)
         assert result["water"]["daily_withdrawal_mgd"] == pytest.approx(5.0, abs=0.1)
+        assert result["water"]["severity"] == "critical"
 
     @pytest.mark.parametrize(
         "power_mw,expected_severity",
@@ -336,6 +339,60 @@ class TestComputeImpact:
         assert scenario["land"]["waste_heat_mw"] == baseline["land"]["waste_heat_mw"]
 
 
+# --- Per-category PUE / UTILIZATION_FACTOR selection ---
+
+class TestCategoryPueUtilization:
+    def test_frontier_ai_uses_frontier_ai_constants(self):
+        dc = {"power_mw": 100.0, "category": "frontier-ai"}
+        result = compute_impact(dc)
+        expected_kwh = 100.0 * UTILIZATION_FACTOR_BY_CATEGORY["frontier-ai"] * PUE_BY_CATEGORY["frontier-ai"] * 1_000 * 8_760
+        assert result["electricity"]["annual_kwh"] == round(expected_kwh)
+        assert result["land"]["waste_heat_mw"] == round(100.0 * (PUE_BY_CATEGORY["frontier-ai"] - 1), 1)
+
+    def test_general_purpose_uses_general_purpose_constants(self):
+        dc = {"power_mw": 100.0, "category": "general-purpose"}
+        result = compute_impact(dc)
+        expected_kwh = 100.0 * UTILIZATION_FACTOR_BY_CATEGORY["general-purpose"] * PUE_BY_CATEGORY["general-purpose"] * 1_000 * 8_760
+        assert result["electricity"]["annual_kwh"] == round(expected_kwh)
+        assert result["land"]["waste_heat_mw"] == round(100.0 * (PUE_BY_CATEGORY["general-purpose"] - 1), 1)
+
+    def test_general_purpose_differs_from_frontier_ai(self):
+        base = {"power_mw": 100.0}
+        frontier = compute_impact({**base, "category": "frontier-ai"})
+        general = compute_impact({**base, "category": "general-purpose"})
+        assert frontier["electricity"]["annual_kwh"] != general["electricity"]["annual_kwh"]
+        assert frontier["land"]["waste_heat_mw"] != general["land"]["waste_heat_mw"]
+
+    def test_missing_category_falls_back_to_frontier_ai_values(self):
+        dc = {"power_mw": 100.0}
+        result = compute_impact(dc)
+        frontier = compute_impact({"power_mw": 100.0, "category": "frontier-ai"})
+        assert result["electricity"]["annual_kwh"] == frontier["electricity"]["annual_kwh"]
+        assert result["land"]["waste_heat_mw"] == frontier["land"]["waste_heat_mw"]
+        # Also matches the legacy global constants directly.
+        assert result["electricity"]["annual_kwh"] == round(100.0 * UTILIZATION_FACTOR * PUE * 1_000 * 8_760)
+
+    def test_unrecognized_category_falls_back_to_frontier_ai_values(self):
+        dc = {"power_mw": 100.0, "category": "some-future-category"}
+        result = compute_impact(dc)
+        frontier = compute_impact({"power_mw": 100.0, "category": "frontier-ai"})
+        assert result["electricity"]["annual_kwh"] == frontier["electricity"]["annual_kwh"]
+
+    def test_explicit_pue_override_wins_over_category_default(self):
+        dc = {"power_mw": 100.0, "category": "general-purpose"}
+        result = compute_impact(dc, pue=1.1)
+        assert result["land"]["waste_heat_mw"] == round(100.0 * (1.1 - 1), 1)
+        assert result["land"]["waste_heat_mw"] != round(100.0 * (PUE_BY_CATEGORY["general-purpose"] - 1), 1)
+
+    def test_explicit_utilization_override_wins_over_category_default(self):
+        dc = {"power_mw": 100.0, "category": "general-purpose"}
+        category_default = compute_impact(dc)
+        overridden = compute_impact(dc, utilization=0.5)
+        assert overridden["electricity"]["annual_kwh"] != category_default["electricity"]["annual_kwh"]
+        expected_kwh = 100.0 * 0.5 * PUE_BY_CATEGORY["general-purpose"] * 1_000 * 8_760
+        assert overridden["electricity"]["annual_kwh"] == round(expected_kwh)
+
+
 # --- Policy scenario mechanics: cost allocation, tax incentive, moratorium ---
 
 class TestCostAllocationReform:
@@ -413,7 +470,7 @@ class TestAggregateImpact:
         )
 
     def test_counts_facilities_per_water_severity(self):
-        centers = [{"power_mw": mw} for mw in (0.001, 100, 300, 1000)]  # low, moderate, high, critical
+        centers = [{"power_mw": mw} for mw in (0.001, 100, 200, 1000)]  # low, moderate, high, critical
         centers_with_impact = [{**dc, "impact": compute_impact(dc)} for dc in centers]
         result = aggregate_impact(centers_with_impact)
 
