@@ -1,20 +1,20 @@
 ## 1. Retrieve source data
 
-- [ ] 1.1 Fetch trackpolicy.org's `#datacenters` list in full — investigate
+- [x] 1.1 Fetch trackpolicy.org's `#datacenters` list in full — investigate
       whether it's backed by a fetchable JSON/CSV endpoint (inspect network
       requests / page source) rather than relying on the rendered page,
       since the site claims 310 facilities but only a handful render
       without interaction
-- [ ] 1.2 Record whatever fields trackpolicy.org actually provides per
+- [x] 1.2 Record whatever fields trackpolicy.org actually provides per
       facility (name, address/location, operator, status, power_mw,
       cost_usd_billions) and note which are missing per-entry
 
 ## 2. Cross-reference against existing dataset
 
-- [ ] 2.1 Match trackpolicy.org entries against
+- [x] 2.1 Match trackpolicy.org entries against
       `backend/data/datacenters.json` by name and address to build a list
       of facilities we don't yet have
-- [ ] 2.2 For ambiguous matches (same operator/region, different naming),
+- [x] 2.2 For ambiguous matches (same operator/region, different naming),
       resolve manually rather than guessing — false "new" entries would
       duplicate existing facilities
 
