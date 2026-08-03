@@ -9,10 +9,16 @@ const MONTH_NAMES = [
   "July", "August", "September", "October", "November", "December",
 ];
 
-// Formats a "YYYY-MM" build_date string as "Month YYYY". Returns null for
-// missing/malformed input so callers can conditionally render.
+// Formats a build_date string as "Month YYYY", or just "YYYY" when only
+// year-level precision is known (source date was an estimate, not a
+// specific observed month). Returns null for missing/malformed input so
+// callers can conditionally render.
 export function formatBuildDate(buildDate) {
   if (!buildDate) return null;
+
+  const yearOnly = /^(\d{4})$/.exec(buildDate);
+  if (yearOnly) return yearOnly[1];
+
   const match = /^(\d{4})-(\d{2})$/.exec(buildDate);
   if (!match) return null;
   const [, year, month] = match;

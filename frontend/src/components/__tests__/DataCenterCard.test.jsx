@@ -152,6 +152,13 @@ describe("DataCenterCard", () => {
     expect(screen.getByText("Built March 2025")).toBeInTheDocument();
   });
 
+  it("renders a year-only build date when only that precision is known", () => {
+    const dc = makeDc({ build_date: "2021" });
+    render(<DataCenterCard dc={dc} onClose={() => {}} />);
+
+    expect(screen.getByText("Built 2021")).toBeInTheDocument();
+  });
+
   it("omits the build date line cleanly when absent", () => {
     render(<DataCenterCard dc={makeDc()} onClose={() => {}} />);
 

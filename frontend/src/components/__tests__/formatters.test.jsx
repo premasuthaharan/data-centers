@@ -42,6 +42,11 @@ describe("formatBuildDate", () => {
     expect(formatBuildDate("2020-12")).toBe("December 2020");
   });
 
+  it("formats a bare YYYY string as the year alone", () => {
+    expect(formatBuildDate("2024")).toBe("2024");
+    expect(formatBuildDate("2021")).toBe("2021");
+  });
+
   it("returns null for null, undefined, or empty input", () => {
     expect(formatBuildDate(null)).toBeNull();
     expect(formatBuildDate(undefined)).toBeNull();
@@ -49,8 +54,8 @@ describe("formatBuildDate", () => {
   });
 
   it("returns null for malformed input", () => {
-    expect(formatBuildDate("2025")).toBeNull();
     expect(formatBuildDate("2025-13")).toBeNull();
     expect(formatBuildDate("not-a-date")).toBeNull();
+    expect(formatBuildDate("25-03")).toBeNull();
   });
 });
