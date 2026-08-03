@@ -1,11 +1,11 @@
 ## 1. Shared search logic
 
-- [ ] 1.1 Extract `CompareModal.jsx`'s name/operator substring-match logic
+- [x] 1.1 Extract `CompareModal.jsx`'s name/operator substring-match logic
       (currently inline in its `searchResults` useMemo) into a shared
       helper, e.g. `frontend/src/utils/facilitySearch.js`
       (`searchFacilities(datacenters, query)`), matching its existing
       case-insensitive substring behavior exactly
-- [ ] 1.2 Update `CompareModal.jsx` to use the extracted helper instead of
+- [x] 1.2 Update `CompareModal.jsx` to use the extracted helper instead of
       its inline filter, confirming no behavior change
 
 ## 2. Search trigger + panel
@@ -39,7 +39,7 @@
 
 ## 4. Tests and verification
 
-- [ ] 4.1 Unit tests for the extracted `searchFacilities` helper
+- [x] 4.1 Unit tests for the extracted `searchFacilities` helper
       (case-insensitivity, name match, operator match, empty query
       returns all, no-match returns empty)
 - [ ] 4.2 Component test for `FacilitySearchPanel.jsx`: typing filters
