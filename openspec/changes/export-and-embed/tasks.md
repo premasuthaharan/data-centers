@@ -1,14 +1,14 @@
 ## 1. CSV export
 
-- [ ] 1.1 `App.jsx`: add "Export CSV" to the `app-action-btn` toolbar
-- [ ] 1.2 Build CSV generation from already-loaded `datacenters` state,
+- [x] 1.1 `App.jsx`: add "Export CSV" to the `app-action-btn` toolbar
+- [x] 1.2 Build CSV generation from already-loaded `datacenters` state,
       scoped to all facilities or the `focusedRegion` subset if one is
       active
-- [ ] 1.3 When `scenarioData` is active, export scenario-adjusted impact
+- [x] 1.3 When `scenarioData` is active, export scenario-adjusted impact
       figures rather than baseline
-- [ ] 1.4 Trigger a client-side download (Blob + anchor click, no backend
+- [x] 1.4 Trigger a client-side download (Blob + anchor click, no backend
       round-trip needed)
-- [ ] 1.5 Frontend tests: CSV content matches visible facility set and
+- [x] 1.5 Frontend tests: CSV content matches visible facility set and
       reflects active scenario/region-focus state correctly
 
 ## 2. Single-facility endpoint (for the embed view)

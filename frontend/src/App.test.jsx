@@ -437,3 +437,108 @@ describe("App combined scenario + facility share link", () => {
     );
   });
 });
+
+describe("App CSV export", () => {
+  const DATACENTERS = [
+    {
+      id: "dc-a",
+      name: "Facility A",
+      operator: "Amazon",
+      country: "United States",
+      address: "123 Main St",
+      power_mw: 100,
+      cost_usd_billions: 1.2,
+      impact: {
+        electricity: { homes_powered: 86_766, annual_kwh: 900_000_000, price_lift_pct: 5.5 },
+        water: { daily_withdrawal_mgd: 1.52, severity: "moderate" },
+        carbon: { annual_co2_tonnes: 300_000, cars_equivalent: 65_217, renewable_pct: 22 },
+      },
+    },
+    {
+      id: "dc-b",
+      name: "Facility B",
+      operator: "Google",
+      country: "Ireland",
+      address: "1 Dublin Rd",
+      power_mw: 50,
+      cost_usd_billions: 0.6,
+      impact: {
+        electricity: { homes_powered: 40_000, annual_kwh: 400_000_000, price_lift_pct: 3.1 },
+        water: { daily_withdrawal_mgd: 0.8, severity: "low" },
+        carbon: { annual_co2_tonnes: 120_000, cars_equivalent: 26_087, renewable_pct: 40 },
+      },
+    },
+  ];
+
+  let createObjectURLMock;
+  let clickMock;
+  let realCreateElement;
+
+  beforeEach(() => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({ data_centers: DATACENTERS, generated_at: "2026-01-01" }),
+        })
+      )
+    );
+    createObjectURLMock = vi.fn(() => "blob:mock-url");
+    URL.createObjectURL = createObjectURLMock;
+    URL.revokeObjectURL = vi.fn();
+    clickMock = vi.fn();
+    realCreateElement = document.createElement.bind(document);
+    vi.spyOn(document, "createElement").mockImplementation((tag) => {
+      const el = realCreateElement(tag);
+      if (tag === "a") el.click = clickMock;
+      return el;
+    });
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    delete URL.createObjectURL;
+    delete URL.revokeObjectURL;
+  });
+
+  function lastCSV() {
+    const blob = createObjectURLMock.mock.calls.at(-1)[0];
+    return blob.text();
+  }
+
+  it("exports all facilities with their impact figures when no region is focused", async () => {
+    render(<App />);
+    await waitFor(() => expect(screen.getByText(/2 data centers/)).toBeInTheDocument());
+
+    fireEvent.click(screen.getByText(/Export CSV/));
+
+    const csv = await lastCSV();
+    expect(csv).toContain("Facility A");
+    expect(csv).toContain("Facility B");
+    expect(csv).toContain("United States");
+    expect(csv).toContain("Ireland");
+    expect(csv.split("\n")).toHaveLength(3); // header + 2 rows
+  });
+
+  it("scopes the export to the scenario-adjusted figures when a scenario is active", async () => {
+    render(<App />);
+    await waitFor(() => expect(screen.getByText(/2 data centers/)).toBeInTheDocument());
+
+    fireEvent.click(screen.getByText(/Policy scenarios/));
+    window.__mockScenarioPayload = {
+      data_centers: [
+        { ...DATACENTERS[0], impact: { ...DATACENTERS[0].impact, carbon: { ...DATACENTERS[0].impact.carbon, annual_co2_tonnes: 30_000 } } },
+        { ...DATACENTERS[1], impact: { ...DATACENTERS[1].impact, carbon: { ...DATACENTERS[1].impact.carbon, annual_co2_tonnes: 12_000 } } },
+      ],
+      presetLabel: "Grid Decarbonization",
+    };
+    fireEvent.click(screen.getByText("apply mock scenario"));
+
+    fireEvent.click(screen.getByText(/Export CSV/));
+
+    const csv = await lastCSV();
+    expect(csv).toContain("30000");
+    expect(csv).toContain("12000");
+    expect(csv).not.toContain("300000");
+  });
+});
