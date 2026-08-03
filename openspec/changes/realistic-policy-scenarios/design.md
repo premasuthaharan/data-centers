@@ -24,7 +24,8 @@ legislative pattern rather than a single bill:
    halt on new large-facility approvals pending review. Seen in: New York
    Executive Order 62 (pauses discretionary environmental permits for
    facilities ≥50MW for up to a year), Michigan SB1018, Delaware SB353,
-   Pennsylvania SB1359/HB2496, federal HB9442.
+   Pennsylvania SB1359/HB2496, federal HB9442. **Implemented, then dropped**
+   during manual verification — see "Mechanic dropped" below.
 
 Existing environmental presets (renewable mandate, grid decarbonization, PUE
 standard, water recycling) were checked against the same bill set. No bill
@@ -51,13 +52,38 @@ dataset already carries:
   intensity), not per-facility, since no per-facility incentive data is
   sourceable from Epoch AI or trackpolicy.org today. Documented in
   SOURCES.md as an internal heuristic estimate.
-- **Hyperscale moratorium**: reuses existing `power_mw` and `data_status`
-  fields — no new data.
-
 ## API shape
 
-`ScenarioOverrides` gains three optional boolean-ish fields:
-`cost_allocation_reform: bool`, `tax_incentive_rollback: bool`,
-`hyperscale_moratorium_mw: float | None` (threshold in MW; presence enables
-the moratorium, matching the existing "presence enables" pattern used by the
-four numeric overrides rather than introducing a bool+float pair).
+`ScenarioOverrides` gains two optional boolean fields: `cost_allocation_reform`
+and `tax_incentive_rollback`.
+
+## Mechanic dropped: hyperscale moratorium
+
+Initially implemented as: facilities at `data_status` `announced`/`planned`/
+`under_construction` above a 50MW threshold (sourced from NY Executive Order
+62) get their impact zeroed out for the scenario.
+
+Manual verification against the real dataset (`backend/data/datacenters.json`)
+found this mechanic has **no observable effect on any current facility**: all
+16 `announced`-status facilities in the dataset — including the large
+pre-construction campuses a moratorium would realistically target, e.g.
+`meta-hyperion`, `openai-stargate-michigan` — already have `power_mw: 0.0`.
+`compute_impact()`'s existing model derives `annual_kwh`/carbon/water entirely
+from `power_mw`, so these facilities already contribute zero to every total at
+baseline, before any scenario is applied. Zeroing an already-zero value
+produces no visible before/after delta in the tool's totals, which is the
+entire point of the scenario UI (`baseline → scenario` deltas). A first
+attempted fix — treating "unknown power" as "counts toward the moratorium" —
+still produced no visible delta, because the *baseline* was already zero, not
+because the scenario logic failed to engage (confirmed correct via direct
+`compute_impact()` unit tests).
+
+The real effect of a moratorium bill is preventing future construction (i.e.
+these facilities never transition from `announced` to `confirmed`/get a real
+`power_mw`), which this tool has no time dimension to represent — it computes
+a single present-day snapshot, not a trajectory. Representing that correctly
+would require either (a) an estimated "if built" `power_mw` per announced
+facility to zero out, which isn't sourceable without speculation, or (b) a
+different UI concept entirely (e.g. "N facilities blocked" as a count rather
+than a totals delta) — both out of scope for this change. Dropped rather than
+shipped as a preset with no observable effect on the shipped dataset.

@@ -39,15 +39,6 @@ describe("encodeScenarioParams / decodeScenarioParams round-trip", () => {
     expect(params.get("renewable_pct")).toBe("50");
   });
 
-  it("round-trips the hyperscale moratorium threshold", () => {
-    const scenario = { hyperscale_moratorium_mw: 50 };
-    const params = encodeScenarioParams(null, scenario);
-    expect(params.get("hyperscale_moratorium_mw")).toBe("50");
-
-    const decoded = decodeScenarioParams(params);
-    expect(decoded).toEqual({ presetId: null, scenario });
-  });
-
   it("round-trips boolean overrides (cost allocation reform, tax incentive rollback)", () => {
     const scenario = { cost_allocation_reform: true, tax_incentive_rollback: true };
     const params = encodeScenarioParams(null, scenario);

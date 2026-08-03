@@ -51,7 +51,7 @@ PUE = 1.3
 
 # --- Policy scenario constants ---
 # See SOURCES.md ("Cost allocation reform markup", "Tax incentive rollback
-# rates", "Hyperscale moratorium threshold") for how these were derived.
+# rates") for how these were derived.
 COST_ALLOCATION_THRESHOLD_MW = 100
 COST_ALLOCATION_MARKUP_PCT = 15
 
@@ -69,8 +69,6 @@ TAX_INCENTIVE_RATES = {
 }
 DEFAULT_TAX_INCENTIVE_PCT = 0.08
 
-HYPERSCALE_MORATORIUM_DEFAULT_MW = 50
-
 
 def compute_impact(
     dc: dict,
@@ -80,15 +78,6 @@ def compute_impact(
 ) -> dict:
     overrides = overrides or {}
     power_mw = dc.get("power_mw") or 0
-
-    # --- Hyperscale moratorium: facility excluded from scenario impact ---
-    moratorium_mw = overrides.get("hyperscale_moratorium_mw")
-    if (
-        moratorium_mw is not None
-        and power_mw >= moratorium_mw
-        and dc.get("data_status") in ("announced", "planned", "under_construction")
-    ):
-        power_mw = 0
     # 450 gCO2/kWh default: conservative internal heuristic, higher than the
     # actual US grid average; see SOURCES.md ("Default carbon intensity")
     carbon = overrides.get("carbon_intensity_gco2_per_kwh") or dc.get("carbon_intensity_gco2_per_kwh") or 450

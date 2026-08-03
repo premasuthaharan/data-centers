@@ -40,7 +40,6 @@ describe("ScenarioPanel", () => {
     expect(screen.getByText("Water Recycling Requirement")).toBeInTheDocument();
     expect(screen.getByText("Ratepayer Cost Allocation")).toBeInTheDocument();
     expect(screen.getByText("Tax Incentive Rollback")).toBeInTheDocument();
-    expect(screen.getByText("Hyperscale Moratorium")).toBeInTheDocument();
     expect(screen.getByText("Aggressive Policy")).toBeInTheDocument();
     expect(screen.queryByText(/baseline → scenario/)).not.toBeInTheDocument();
   });
@@ -75,23 +74,6 @@ describe("ScenarioPanel", () => {
       expect.objectContaining({
         method: "POST",
         body: JSON.stringify({ scenario: { tax_incentive_rollback: true } }),
-      })
-    );
-  });
-
-  it("applies the hyperscale moratorium preset with the correct payload", async () => {
-    mockFetchOnce(SCENARIO_RESPONSE);
-
-    render(<ScenarioPanel onClose={() => {}} onScenarioChange={() => {}} />);
-    fireEvent.click(screen.getByText("Hyperscale Moratorium"));
-
-    await waitFor(() => expect(screen.getByText(/baseline → scenario/)).toBeInTheDocument());
-
-    expect(globalThis.fetch).toHaveBeenCalledWith(
-      expect.stringContaining("/api/scenario"),
-      expect.objectContaining({
-        method: "POST",
-        body: JSON.stringify({ scenario: { hyperscale_moratorium_mw: 50 } }),
       })
     );
   });

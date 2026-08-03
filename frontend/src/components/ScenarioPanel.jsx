@@ -44,13 +44,6 @@ export const PRESETS = [
     scenario: { tax_incentive_rollback: true },
   },
   {
-    id: "hyperscale-moratorium",
-    label: "Hyperscale Moratorium",
-    description:
-      "Announced and planned facilities at 50MW+ are paused pending review, mirroring New York's Executive Order 62.",
-    scenario: { hyperscale_moratorium_mw: 50 },
-  },
-  {
     id: "aggressive-policy",
     label: "Aggressive Policy",
     description: "All of the above, combined.",
@@ -61,7 +54,6 @@ export const PRESETS = [
       water_liters_per_kwh: 1.0,
       cost_allocation_reform: true,
       tax_incentive_rollback: true,
-      hyperscale_moratorium_mw: 50,
     },
   },
 ];

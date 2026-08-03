@@ -253,21 +253,6 @@ internal heuristic rather than implied to be industry fact.
   Treat this scenario's cost delta as illustrative of the *direction and
   rough scale* of a tax rollback, not a specific fiscal projection.
 
-### Hyperscale moratorium threshold = 50MW (UI default)
-- **Used in:** `hyperscale_moratorium_mw` scenario override — a facility at
-  or above this threshold with `data_status` of `announced`, `planned`, or
-  `under_construction` is excluded from scenario totals (`logic.py`,
-  `compute_impact`).
-- **Status:** Real source (specific bill), used directly.
-- **Source:** [New York Executive Order 62](https://trackpolicy.org/bills)
-  pauses discretionary state environmental permits specifically for data
-  centers of 50MW or greater, for up to one year. 50MW is used as-is from
-  that bill's own threshold, not an invented round number. Similar
-  moratorium bills (Michigan SB1018, Delaware SB353, Pennsylvania
-  SB1359/HB2496, federal HB9442) don't all specify the same MW threshold —
-  several are blanket moratoriums with no size gate — so 50MW is the most
-  concretely sourced threshold among them, used as the tool's default.
-
 ### Country land area (`COUNTRY_AREA_KM2` in `logic.py`)
 - **Used in:** `region_area_km2()`, which powers the "per km²" normalized
   view in the region scorecard (`GET /api/regions` → `area_km2`). Not used
@@ -407,4 +392,3 @@ Every numeric constant referenced in `compute_impact()` is covered above:
 - [x] 25% default renewable percentage
 - [x] Cost allocation reform markup (15% at ≥100MW)
 - [x] Tax incentive rollback rates (`TAX_INCENTIVE_RATES`)
-- [x] Hyperscale moratorium threshold (50MW)

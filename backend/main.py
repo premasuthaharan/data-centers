@@ -84,7 +84,6 @@ class ScenarioOverrides(BaseModel):
     pue: float | None = None
     cost_allocation_reform: bool | None = None
     tax_incentive_rollback: bool | None = None
-    hyperscale_moratorium_mw: float | None = None
 
 
 class ScenarioRequest(BaseModel):

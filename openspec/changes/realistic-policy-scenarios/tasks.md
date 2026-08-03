@@ -40,7 +40,7 @@
 - [x] 3.3 If a new mechanic needs an input control beyond the existing
       preset-button pattern (e.g. a toggle for cost-allocation on/off
       rather than a numeric target), design and add it consistent with
-      the panel's existing style (all three new mechanics fit as
+      the panel's existing style (both shipped mechanics fit as
       fixed-value preset buttons; no new control needed)
 
 ## 4. Tests and verification
@@ -48,5 +48,11 @@
 - [x] 4.1 `cd backend && python3 -m pytest` passes
 - [x] 4.2 `ScenarioPanel.test.jsx` covers new presets
 - [x] 4.3 `cd frontend && npm test` passes
-- [ ] 4.4 Manual: apply each new preset and confirm totals/detail-card
-      deltas reflect the intended policy mechanic correctly
+- [x] 4.4 Manual: apply each new preset and confirm totals/detail-card
+      deltas reflect the intended policy mechanic correctly (verified via
+      direct API calls against the running backend: cost allocation reform
+      and tax incentive rollback both raise `annual_cost_millions_usd`
+      while leaving CO2/water/kWh untouched, individually and combined in
+      "Aggressive Policy"; a third mechanic, hyperscale moratorium, was
+      dropped during this step — see design.md's "Mechanic dropped"
+      section for why)

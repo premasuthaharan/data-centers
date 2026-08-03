@@ -275,18 +275,6 @@ class TestScenario:
             > body["baseline_totals"]["annual_cost_millions_usd"]
         )
 
-    def test_hyperscale_moratorium_excludes_announced_facilities_above_threshold(self, client):
-        resp = client.post(
-            "/api/scenario",
-            json={"scenario": {"hyperscale_moratorium_mw": 10}},
-        )
-
-        assert resp.status_code == 200
-        body = resp.json()
-        # announced-dc has no power_mw so it's unaffected either way; but
-        # confirmed facilities are never excluded regardless of size.
-        assert body["scenario_totals"]["facility_count"] == body["baseline_totals"]["facility_count"]
-        assert body["scenario_totals"]["annual_kwh"] == body["baseline_totals"]["annual_kwh"]
 
 
 # --- CORS origin parsing ---

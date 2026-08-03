@@ -8,7 +8,6 @@ const NUMERIC_OVERRIDE_KEYS = [
   "carbon_intensity_gco2_per_kwh",
   "water_liters_per_kwh",
   "pue",
-  "hyperscale_moratorium_mw",
 ];
 const BOOLEAN_OVERRIDE_KEYS = ["cost_allocation_reform", "tax_incentive_rollback"];
 const OVERRIDE_KEYS = [...NUMERIC_OVERRIDE_KEYS, ...BOOLEAN_OVERRIDE_KEYS];
