@@ -62,3 +62,27 @@ export function hasCoordinates(dc) {
 export function isAnnounced(dc) {
   return (dc.data_status ?? dc.impact?.data_status) === "announced";
 }
+
+export function constructionStatus(dc) {
+  return dc.construction_status ?? dc.impact?.construction_status ?? "operational";
+}
+
+export function isPlanned(dc) {
+  return constructionStatus(dc) === "planned";
+}
+
+export function isUnderConstruction(dc) {
+  return constructionStatus(dc) === "under_construction";
+}
+
+// "planned" facilities have no real-world footprint yet, so their impact
+// figures are always suppressed. "under_construction" facilities are
+// suppressed too unless a confirmed power_mw exists — a site with a locked
+// design capacity is at least directionally meaningful, matching the
+// data_status precedent for capacity-unknown facilities.
+export function isNonOperational(dc) {
+  const status = constructionStatus(dc);
+  if (status === "planned") return true;
+  if (status === "under_construction") return !dc.power_mw;
+  return false;
+}

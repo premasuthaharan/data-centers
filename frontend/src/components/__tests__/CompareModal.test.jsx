@@ -214,3 +214,38 @@ describe("CompareModal", () => {
     }
   });
 });
+
+describe("CompareModal construction_status filtering", () => {
+  it("excludes planned facilities from the picker regardless of power_mw", () => {
+    const datacenters = [
+      ...DATACENTERS,
+      makeDc("planned-dc", "Planned Facility", { construction_status: "planned", power_mw: 200 }),
+    ];
+    render(<CompareModal datacenters={datacenters} onClose={() => {}} />);
+
+    focusSearch();
+    expect(screen.queryByText("Planned Facility")).not.toBeInTheDocument();
+  });
+
+  it("excludes under_construction facilities with no confirmed power_mw", () => {
+    const datacenters = [
+      ...DATACENTERS,
+      makeDc("uc-unconfirmed", "UC Unconfirmed", { construction_status: "under_construction", power_mw: null }),
+    ];
+    render(<CompareModal datacenters={datacenters} onClose={() => {}} />);
+
+    focusSearch();
+    expect(screen.queryByText("UC Unconfirmed")).not.toBeInTheDocument();
+  });
+
+  it("includes under_construction facilities that have a confirmed power_mw", () => {
+    const datacenters = [
+      ...DATACENTERS,
+      makeDc("uc-confirmed", "UC Confirmed", { construction_status: "under_construction", power_mw: 150 }),
+    ];
+    render(<CompareModal datacenters={datacenters} onClose={() => {}} />);
+
+    focusSearch();
+    expect(screen.getByText("UC Confirmed")).toBeInTheDocument();
+  });
+});

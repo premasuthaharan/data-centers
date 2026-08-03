@@ -163,6 +163,42 @@ describe("DataCenterCard", () => {
   });
 });
 
+describe("DataCenterCard construction status", () => {
+  it("shows no badge for operational (default) facilities", () => {
+    render(<DataCenterCard dc={makeDc()} onClose={() => {}} />);
+
+    expect(screen.queryByText("Planned")).not.toBeInTheDocument();
+    expect(screen.queryByText("Under construction")).not.toBeInTheDocument();
+  });
+
+  it("shows a Planned badge and suppresses impact for planned facilities", () => {
+    const dc = makeDc({ construction_status: "planned" });
+    render(<DataCenterCard dc={dc} onClose={() => {}} />);
+
+    expect(screen.getByText("Planned")).toBeInTheDocument();
+    expect(screen.getByText(/planned but not yet built/)).toBeInTheDocument();
+    expect(screen.queryByText("Households equivalent")).not.toBeInTheDocument();
+  });
+
+  it("shows an Under construction badge and suppresses impact when power_mw is unconfirmed", () => {
+    const dc = makeDc({ construction_status: "under_construction", power_mw: null });
+    render(<DataCenterCard dc={dc} onClose={() => {}} />);
+
+    expect(screen.getByText("Under construction")).toBeInTheDocument();
+    expect(screen.getByText(/under construction and not yet drawing power/)).toBeInTheDocument();
+    expect(screen.queryByText("Households equivalent")).not.toBeInTheDocument();
+  });
+
+  it("still renders impact for under_construction facilities with a confirmed power_mw", () => {
+    const dc = makeDc({ construction_status: "under_construction", power_mw: 150 });
+    render(<DataCenterCard dc={dc} onClose={() => {}} />);
+
+    expect(screen.getByText("Under construction")).toBeInTheDocument();
+    expect(screen.queryByText(/impact estimates below are not applicable/)).not.toBeInTheDocument();
+    expect(screen.getByText("Households equivalent")).toBeInTheDocument();
+  });
+});
+
 function makeScenarioDc(overrides = {}) {
   return makeDc({
     impact: {

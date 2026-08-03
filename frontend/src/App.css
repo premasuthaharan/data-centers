@@ -245,6 +245,12 @@
   flex-shrink: 0;
 }
 
+.legend-dot--hollow {
+  background: transparent !important;
+  border: 2px solid var(--legend-hollow-color, #64748b);
+  box-sizing: border-box;
+}
+
 .legend-divider {
   height: 1px;
   background: var(--bg-glass-hairline);
@@ -329,6 +335,27 @@
   color: #ffcc00;
   font-size: 13px;
   margin-top: 6px;
+}
+
+.dc-construction-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  vertical-align: middle;
+  border: 1px solid currentColor;
+}
+
+.dc-construction-badge--planned {
+  color: #a78bfa;
+  background: rgba(167, 139, 250, 0.12);
+}
+
+.dc-construction-badge--under_construction {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.12);
 }
 
 .dc-scenario-badge {

@@ -6,6 +6,10 @@ import {
   kmToGeoJSONCircle,
   hasCoordinates,
   isAnnounced,
+  constructionStatus,
+  isPlanned,
+  isUnderConstruction,
+  isNonOperational,
 } from "../mapHelpers";
 
 describe("operatorColor", () => {
@@ -131,5 +135,54 @@ describe("isAnnounced", () => {
 
   it("false when neither top-level nor impact status is set", () => {
     expect(isAnnounced({})).toBe(false);
+  });
+});
+
+describe("constructionStatus", () => {
+  it("reads top-level construction_status", () => {
+    expect(constructionStatus({ construction_status: "planned" })).toBe("planned");
+  });
+
+  it("falls back to impact.construction_status when top-level is absent", () => {
+    expect(constructionStatus({ impact: { construction_status: "under_construction" } })).toBe("under_construction");
+  });
+
+  it("defaults to operational when neither is set", () => {
+    expect(constructionStatus({})).toBe("operational");
+  });
+});
+
+describe("isPlanned / isUnderConstruction", () => {
+  it("isPlanned true only for planned status", () => {
+    expect(isPlanned({ construction_status: "planned" })).toBe(true);
+    expect(isPlanned({ construction_status: "under_construction" })).toBe(false);
+    expect(isPlanned({})).toBe(false);
+  });
+
+  it("isUnderConstruction true only for under_construction status", () => {
+    expect(isUnderConstruction({ construction_status: "under_construction" })).toBe(true);
+    expect(isUnderConstruction({ construction_status: "planned" })).toBe(false);
+    expect(isUnderConstruction({})).toBe(false);
+  });
+});
+
+describe("isNonOperational", () => {
+  it("true for planned regardless of power_mw", () => {
+    expect(isNonOperational({ construction_status: "planned" })).toBe(true);
+    expect(isNonOperational({ construction_status: "planned", power_mw: 100 })).toBe(true);
+  });
+
+  it("true for under_construction with no confirmed power_mw", () => {
+    expect(isNonOperational({ construction_status: "under_construction" })).toBe(true);
+    expect(isNonOperational({ construction_status: "under_construction", power_mw: 0 })).toBe(true);
+  });
+
+  it("false for under_construction with a confirmed power_mw", () => {
+    expect(isNonOperational({ construction_status: "under_construction", power_mw: 150 })).toBe(false);
+  });
+
+  it("false for operational (default) facilities", () => {
+    expect(isNonOperational({})).toBe(false);
+    expect(isNonOperational({ construction_status: "operational" })).toBe(false);
   });
 });

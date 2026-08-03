@@ -80,7 +80,19 @@ export default function CompareModal({ datacenters, onClose }) {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   const comparable = useMemo(
-    () => datacenters.filter((dc) => dc.impact && (dc.data_status ?? dc.impact.data_status) !== "announced"),
+    () =>
+      datacenters.filter((dc) => {
+        if (!dc.impact) return false;
+        if ((dc.data_status ?? dc.impact.data_status) === "announced") return false;
+        const constructionStatus = dc.construction_status ?? dc.impact.construction_status ?? "operational";
+        // "planned" facilities have no real-world footprint to compare;
+        // "under_construction" is excluded too unless a confirmed power_mw
+        // exists, since a comparison there is at least directionally
+        // meaningful — mirrors the "announced" (capacity-unknown) exclusion.
+        if (constructionStatus === "planned") return false;
+        if (constructionStatus === "under_construction" && !dc.power_mw) return false;
+        return true;
+      }),
     [datacenters]
   );
 

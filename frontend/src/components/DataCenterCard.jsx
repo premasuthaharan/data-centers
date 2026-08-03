@@ -16,6 +16,15 @@ const WATER_STRESS_LABELS = {
   high: "High baseline water stress",
   "extremely high": "Extremely high baseline water stress",
 };
+const CONSTRUCTION_STATUS_LABELS = {
+  operational: "Operational",
+  under_construction: "Under construction",
+  planned: "Planned",
+};
+const CONSTRUCTION_STATUS_NOTICES = {
+  planned: "This facility is planned but not yet built — impact estimates below are not applicable, not zero.",
+  under_construction: "This facility is under construction and not yet drawing power — impact estimates below are not applicable, not zero.",
+};
 
 function SectionHeader({ children }) {
   return <div className="dc-section-label">{children}</div>;
@@ -94,6 +103,15 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose,
   const priceLiftColor = severityColor(elec.price_lift_severity);
   const renewableColor = severityColor(carbon.renewable_severity);
   const precisionWarning = PRECISION_WARNINGS[dc.geocode_precision];
+  const constructionStatus = dc.construction_status ?? impact.construction_status ?? "operational";
+  // "planned" facilities have no real-world footprint yet, so impact is
+  // always suppressed. "under_construction" is suppressed too unless a
+  // confirmed power_mw exists — mirrors the isAnnounced (capacity-unknown)
+  // suppression precedent below.
+  const isNonOperational =
+    constructionStatus === "planned" ||
+    (constructionStatus === "under_construction" && !dc.power_mw);
+  const constructionNotice = CONSTRUCTION_STATUS_NOTICES[constructionStatus];
 
   const [copied, setCopied] = useState(false);
   const [embedCopied, setEmbedCopied] = useState(false);
@@ -133,6 +151,11 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose,
         <div className="dc-detail-name">{dc.name}</div>
         <div className="dc-detail-meta">
           {dc.operator} · {dc.country}
+          {constructionStatus !== "operational" && (
+            <span className={`dc-construction-badge dc-construction-badge--${constructionStatus}`}>
+              {CONSTRUCTION_STATUS_LABELS[constructionStatus]}
+            </span>
+          )}
           {dc.address && <><br /><span className="dc-address">{dc.address}</span></>}
         </div>
         {precisionWarning && <div className="dc-precision-warning">⚠ {precisionWarning}</div>}
@@ -174,7 +197,11 @@ export default function DataCenterCard({ dc, scenarioDc, scenarioLabel, onClose,
         </div>
       )}
 
-      {isAnnounced ? null : (
+      {!isAnnounced && isNonOperational && constructionNotice && (
+        <div className="dc-announced-notice">{constructionNotice}</div>
+      )}
+
+      {isAnnounced || isNonOperational ? null : (
       <div className="impact-blocks">
         <ImpactBlock title="Electricity" icon="⚡" color="#f59e0b">
           <StatRow label="Homes powered" value={elec.homes_powered} scenarioValue={sElec?.homes_powered} />
