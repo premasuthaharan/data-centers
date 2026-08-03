@@ -177,12 +177,40 @@ export default function App() {
     setFocusedRegion(region.region);
   }, []);
 
-  // "Current view" today is either all facilities or the focusedRegion
-  // subset (from the region scorecard) — there's no general filter system
-  // yet, so export scope mirrors exactly what the map is showing.
+  const selectedDC = datacenters.find((dc) => dc.id === selectedId) ?? null;
+  // The scenario-recomputed record for the selected facility, if a scenario
+  // is active and this facility is within its scope (POST /api/scenario's
+  // facility_ids, when used — currently always all facilities since
+  // ScenarioPanel doesn't scope by id). undefined when no scenario is
+  // active or the facility falls outside scope, which DataCenterCard treats
+  // as "render baseline only".
+  const scenarioDC = scenarioData?.data_centers.find((dc) => dc.id === selectedId);
+
+  // While a scenario is active, the map renders scenario-recomputed
+  // facilities colored by water severity instead of operator brand color,
+  // so applying a policy is visibly different from the baseline map.
+  const scopedDatacenters = useMemo(
+    () =>
+      categoryFilter === "all"
+        ? datacenters
+        : datacenters.filter((dc) => dc.category === categoryFilter),
+    [datacenters, categoryFilter]
+  );
+  const mapDatacenters = scenarioData
+    ? scenarioData.data_centers.filter(
+        (dc) => categoryFilter === "all" || dc.category === categoryFilter
+      )
+    : scopedDatacenters;
+  const colorMode = scenarioData ? "water" : "operator";
+
+  // "Current view" is mapDatacenters (category-filtered, and
+  // scenario-recomputed when a scenario is active), further narrowed by
+  // focusedRegion (from the region scorecard) — export scope mirrors
+  // exactly what the map is showing.
   const exportCSV = useCallback(() => {
-    const source = scenarioData ? scenarioData.data_centers : datacenters;
-    const rows = focusedRegion ? source.filter((dc) => dc.country === focusedRegion) : source;
+    const rows = focusedRegion
+      ? mapDatacenters.filter((dc) => dc.country === focusedRegion)
+      : mapDatacenters;
 
     const columns = [
       ["Name", (dc) => dc.name],
@@ -219,33 +247,7 @@ export default function App() {
     a.download = focusedRegion ? `data-centers-${focusedRegion}.csv` : "data-centers.csv";
     a.click();
     URL.revokeObjectURL(url);
-  }, [datacenters, scenarioData, focusedRegion]);
-
-  const selectedDC = datacenters.find((dc) => dc.id === selectedId) ?? null;
-  // The scenario-recomputed record for the selected facility, if a scenario
-  // is active and this facility is within its scope (POST /api/scenario's
-  // facility_ids, when used — currently always all facilities since
-  // ScenarioPanel doesn't scope by id). undefined when no scenario is
-  // active or the facility falls outside scope, which DataCenterCard treats
-  // as "render baseline only".
-  const scenarioDC = scenarioData?.data_centers.find((dc) => dc.id === selectedId);
-
-  // While a scenario is active, the map renders scenario-recomputed
-  // facilities colored by water severity instead of operator brand color,
-  // so applying a policy is visibly different from the baseline map.
-  const scopedDatacenters = useMemo(
-    () =>
-      categoryFilter === "all"
-        ? datacenters
-        : datacenters.filter((dc) => dc.category === categoryFilter),
-    [datacenters, categoryFilter]
-  );
-  const mapDatacenters = scenarioData
-    ? scenarioData.data_centers.filter(
-        (dc) => categoryFilter === "all" || dc.category === categoryFilter
-      )
-    : scopedDatacenters;
-  const colorMode = scenarioData ? "water" : "operator";
+  }, [mapDatacenters, focusedRegion]);
 
   const legendItems = useMemo(
     () =>
