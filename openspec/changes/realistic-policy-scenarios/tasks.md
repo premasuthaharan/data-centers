@@ -1,13 +1,13 @@
 ## 1. Research
 
-- [ ] 1.1 Fetch trackpolicy.org's bill-level content per category (Grid
+- [x] 1.1 Fetch trackpolicy.org's bill-level content per category (Grid
       Capacity, Water Consumption, Energy Rates, Tax Incentives,
       Renewable Energy, Job Creation, Local Control, Noise & Vibration) —
       the category names alone aren't enough to design scenario mechanics
-- [ ] 1.2 From that research, shortlist 3-5 concrete scenario mechanics
+- [x] 1.2 From that research, shortlist 3-5 concrete scenario mechanics
       that reflect real, currently-debated bill types (not hypothetical
       "nice round number" targets)
-- [ ] 1.3 For each shortlisted mechanic, identify what new schema field(s)
+- [x] 1.3 For each shortlisted mechanic, identify what new schema field(s)
       it requires and whether that data is obtainable (from
       trackpolicy.org, Epoch AI, or another concrete source) or would have
       to be a rough/flagged estimate
