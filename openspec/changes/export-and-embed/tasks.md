@@ -44,7 +44,7 @@
 
 - [x] 5.1 `cd backend && python3 -m pytest` passes
 - [x] 5.2 `cd frontend && npm test` passes
-- [ ] 5.3 Manual: export CSV with and without an active scenario/region
+- [x] 5.3 Manual: export CSV with and without an active scenario/region
       focus, confirm contents match what's on screen
-- [ ] 5.4 Manual: copy embed code, paste the iframe snippet into a plain
+- [x] 5.4 Manual: copy embed code, paste the iframe snippet into a plain
       HTML file, confirm it renders correctly framed
