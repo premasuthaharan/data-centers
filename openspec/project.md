@@ -4,9 +4,9 @@ A tool that visualizes data centers' estimated impact (electricity, water,
 carbon, land use) on their surrounding area.
 
 - **backend/**: FastAPI app. Serves a static dataset (`data/datacenters.json`,
-  43 entries sourced from Epoch AI + Nominatim geocoding + a per-country grid
-  table) and computes impact metrics in `logic.py` from `power_mw`,
-  `carbon_intensity_gco2_per_kwh`, and `renewable_pct`.
+  318 entries sourced from Epoch AI + trackpolicy.org + Nominatim geocoding +
+  a per-country grid table) and computes impact metrics in `logic.py` from
+  `power_mw`, `carbon_intensity_gco2_per_kwh`, and `renewable_pct`.
 - **frontend/**: React + Mapbox GL app. Renders the dataset on a map and
   shows per-facility impact cards. Does no calculation of its own.
 

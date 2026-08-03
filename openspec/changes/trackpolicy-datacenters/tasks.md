@@ -20,31 +20,31 @@
 
 ## 3. Add new entries
 
-- [ ] 3.1 For each new facility, geocode the address via `fetch_data.py`'s
+- [x] 3.1 For each new facility, geocode the address via `fetch_data.py`'s
       existing Nominatim flow to get `lat`/`lng`/`geocode_precision`
       consistent with current entries
-- [ ] 3.2 Fill `carbon_intensity_gco2_per_kwh`, `renewable_pct`,
+- [x] 3.2 Fill `carbon_intensity_gco2_per_kwh`, `renewable_pct`,
       `electricity_price_usd_per_kwh`, `water_liters_per_kwh` from
       `fetch_data.py`'s existing per-country `GRID_DATA` table
-- [ ] 3.3 Set `power_mw`/`cost_usd_billions` from trackpolicy.org where
+- [x] 3.3 Set `power_mw`/`cost_usd_billions` from trackpolicy.org where
       available; set `data_status: "announced"` (per existing convention)
       where `power_mw` is unknown
-- [ ] 3.4 Assign each new entry a stable `id` following the existing
+- [x] 3.4 Assign each new entry a stable `id` following the existing
       slug convention (see current entries like `colossus-2`)
-- [ ] 3.5 Merge new entries into `backend/data/datacenters.json`, leaving
+- [x] 3.5 Merge new entries into `backend/data/datacenters.json`, leaving
       all existing entries unmodified
 
 ## 4. Update docs
 
-- [ ] 4.1 Update `openspec/project.md`'s entry count and source
+- [x] 4.1 Update `openspec/project.md`'s entry count and source
       description to include trackpolicy.org and the new total
 
 ## 5. Verification
 
-- [ ] 5.1 `cd backend && python3 -m pytest` passes (existing tests read
+- [x] 5.1 `cd backend && python3 -m pytest` passes (existing tests read
       `datacenters.json` — confirm no schema assumptions break)
-- [ ] 5.2 `cd frontend && npm test` passes
-- [ ] 5.3 Manual: run the app, confirm new facilities render on the map
+- [x] 5.2 `cd frontend && npm test` passes
+- [x] 5.3 Manual: run the app, confirm new facilities render on the map
       and open correctly in the detail card with no missing-field errors
-- [ ] 5.4 Manual: spot-check a handful of new entries' coordinates land on
+- [x] 5.4 Manual: spot-check a handful of new entries' coordinates land on
       the correct real-world location
