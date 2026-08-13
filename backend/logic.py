@@ -47,8 +47,24 @@ def impact_radius_km(power_mw: float | None) -> float:
 # facility energy consumption; see SOURCES.md ("Utilization factor" and
 # "Power Usage Effectiveness (PUE)"). PUE is shared with waste_heat_mw below
 # so the two figures stay consistent with each other.
+#
+# Both are per-category (keyed by the `category` field): frontier-ai
+# campuses keep the optimistic, near-continuous-load values; general-purpose
+# facilities (colo, enterprise, regional cloud AZs) use the Uptime
+# Institute's broader survey-average PUE and a lower utilization figure.
+# Records missing `category` fall back to the frontier-ai values (today's
+# prior global constants), matching pre-migration behavior.
 UTILIZATION_FACTOR = 0.8
 PUE = 1.3
+
+UTILIZATION_FACTOR_BY_CATEGORY = {
+    "frontier-ai": 0.8,
+    "general-purpose": 0.65,
+}
+PUE_BY_CATEGORY = {
+    "frontier-ai": 1.3,
+    "general-purpose": 1.56,
+}
 
 # --- Policy scenario constants ---
 # See SOURCES.md ("Cost allocation reform markup", "Tax incentive rollback
@@ -74,11 +90,19 @@ DEFAULT_TAX_INCENTIVE_PCT = 0.08
 def compute_impact(
     dc: dict,
     overrides: dict | None = None,
-    pue: float = PUE,
-    utilization: float = UTILIZATION_FACTOR,
+    pue: float | None = None,
+    utilization: float | None = None,
 ) -> dict:
     overrides = overrides or {}
     power_mw = dc.get("power_mw") or 0
+    category = dc.get("category", "frontier-ai")
+    # Explicit pue/utilization args (used by the policy-scenario feature)
+    # win over the category default, which wins over the missing-category
+    # fallback to today's prior global constants.
+    if pue is None:
+        pue = PUE_BY_CATEGORY.get(category, PUE)
+    if utilization is None:
+        utilization = UTILIZATION_FACTOR_BY_CATEGORY.get(category, UTILIZATION_FACTOR)
     # 450 gCO2/kWh default: conservative internal heuristic, higher than the
     # actual US grid average; see SOURCES.md ("Default carbon intensity")
     carbon = overrides.get("carbon_intensity_gco2_per_kwh") or dc.get("carbon_intensity_gco2_per_kwh") or 450
@@ -95,8 +119,9 @@ def compute_impact(
     # using a logarithmic scale anchored at: 100MW = +2%, 1000MW = +8%
     elec_price_lift_pct = round(min(math.log1p(power_mw) * 1.2, 15), 1) if power_mw else 0
     # Thresholds tuned against the real price_lift_pct distribution for
-    # power_mw > 0 facilities (4.0-8.2%, not the formula's theoretical 0-15%
-    # range); see SOURCES.md ("Grid price lift severity thresholds").
+    # power_mw > 0 facilities, re-validated against the full 318-entry
+    # mixed-category dataset (2.2-11.2%, not the formula's theoretical
+    # 0-15% range); see SOURCES.md ("Grid price lift severity thresholds").
     # Facilities with no power_mw ("announced") always compute to 0%, which
     # isn't a meaningful "low" signal, so they get no severity at all.
     if not power_mw:
@@ -117,12 +142,13 @@ def compute_impact(
     water_liters_per_kwh = overrides.get("water_liters_per_kwh") or dc.get("water_liters_per_kwh") or 3.0
     water_mgd = round((annual_kwh * water_liters_per_kwh) / (3_785_411 * 365), 2)
     # Severity thresholds are an internal heuristic, not an EPA standard;
-    # see SOURCES.md ("Water severity thresholds")
+    # re-tuned against the full 318-entry mixed-category dataset; see
+    # SOURCES.md ("Water severity thresholds")
     if water_mgd < 1:
         water_severity = "low"
-    elif water_mgd < 5:
+    elif water_mgd < 2.5:
         water_severity = "moderate"
-    elif water_mgd < 15:
+    elif water_mgd < 5:
         water_severity = "high"
     else:
         water_severity = "critical"

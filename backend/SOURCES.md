@@ -7,36 +7,61 @@ internal heuristic rather than implied to be industry fact.
 
 ---
 
-### Utilization factor = 80% of nameplate power
+### Utilization factor = per-category (80% frontier-ai / 65% general-purpose)
 - **Used in:** `annual_kwh = power_mw * UTILIZATION_FACTOR * PUE * 1_000 * 8_760` (`logic.py`)
 - **Status:** Internal heuristic, not externally sourced.
 - **Context:** `power_mw` (Epoch AI's "Current power") is nameplate IT
   capacity; real facilities don't draw 100% of nameplate continuously.
   70-90% is a commonly cited range for average utilization in data center
   capacity planning; 80% is the midpoint, chosen as a single representative
-  planning estimate rather than a measured fleet average. This is applied
-  uniformly across all facilities — it does not model per-facility or
-  per-workload variation (e.g. AI training clusters may run closer to
-  continuous full load than typical enterprise deployments).
+  planning estimate. [[trackpolicy-datacenters]] added 236 general-purpose
+  facilities (colocation, enterprise, regional cloud AZs) alongside the
+  original 82 frontier-AI-lab campuses, via the `category` field. AI
+  training clusters run closer to continuous full load than typical
+  enterprise/colo deployments (higher, steadier batch/serving demand vs.
+  bursty enterprise traffic and multi-tenant colo space that's rarely
+  fully leased), so utilization is now split by `category`
+  (`UTILIZATION_FACTOR_BY_CATEGORY` in `logic.py`):
+  - `frontier-ai`: 80% — unchanged from the original single-value estimate.
+  - `general-purpose`: 65% — lowered from the 70-90% planning range to
+    reflect non-training workloads' more variable load and typical colo
+    occupancy (multi-tenant space is rarely 100% leased/active). Still an
+    internal planning estimate, not a measured fleet average.
+  - Records missing `category` (shouldn't occur post-migration) fall back
+    to 80%, i.e. today's prior global constant, via `UTILIZATION_FACTOR`.
 
-### PUE (Power Usage Effectiveness) = 1.3
+### PUE (Power Usage Effectiveness) = per-category (1.3 frontier-ai / 1.56 general-purpose)
 - **Used in:**
   - `annual_kwh = power_mw * UTILIZATION_FACTOR * PUE * 1_000 * 8_760` (`logic.py`) —
     total facility draw (IT load + cooling/other overhead), not just IT load.
   - `waste_heat_mw = power_mw * (PUE - 1)` (`logic.py`)
-  - Both read from the single `PUE` constant in `logic.py` so the electricity
-    total and the waste-heat estimate stay consistent with each other; prior
-    to this, `annual_kwh` ignored PUE entirely (treating `power_mw` as if it
-    were already total facility draw) while `waste_heat_mw` assumed it was
-    IT-only load — the two were internally contradictory.
+  - Both read the same resolved `pue` value within a single `compute_impact`
+    call so the electricity total and the waste-heat estimate stay
+    consistent with each other.
 - **Status:** Internal heuristic, not externally sourced.
 - **Context:** The most recent industry-wide figure is the
   [Uptime Institute Global Data Center Survey 2024](https://uptimeinstitute.com/uptime_assets/7425ec68d479c5d78a743df94a79b114ed9f9c73f13b6460949d2b8e73373209-GA-2024-07-uptime-institute-global-data-center-survey-results-2024.pdf),
   which reports an average PUE of **1.56** (1.47 when capacity-weighted
-  toward larger, newer facilities). Our 1.3 is more optimistic than the
-  reported average — it approximates a modern, efficient facility rather
-  than a typical one. Treat `waste_heat_mw` and the PUE-inflated portion of
-  `annual_kwh` as best-case estimates, not a fleet average.
+  toward larger, newer facilities). The original 1.3 constant was
+  calibrated against the dataset when every entry was a modern,
+  purpose-built frontier-AI campus — appropriate for that subset but too
+  optimistic once [[trackpolicy-datacenters]] added 236 general-purpose
+  facilities, including decades-old colocation carrier hotels and regional
+  cloud availability zones that look nothing like a new hyperscale
+  campus. PUE is now split by `category` (`PUE_BY_CATEGORY` in
+  `logic.py`):
+  - `frontier-ai`: 1.3 — unchanged; still more optimistic than the survey
+    average, approximating a modern, efficient purpose-built facility.
+  - `general-purpose`: 1.56 — the Uptime Institute's fleet-wide average,
+    used as-is (not the 1.47 capacity-weighted figure, since
+    general-purpose facilities skew toward smaller/older sites, not the
+    largest/newest ones the capacity-weighted figure emphasizes).
+  - Records missing `category` fall back to 1.3, i.e. today's prior global
+    constant, via `PUE`.
+  - Treat `waste_heat_mw` and the PUE-inflated portion of `annual_kwh` for
+    `frontier-ai` facilities as best-case estimates, not a fleet average;
+    `general-purpose` figures now track the broader survey average
+    directly.
 
 ### IT density = 10 kW/m² (`footprint_m2 = power_mw * 100`)
 - **Used in:** `footprint_m2` (`logic.py:66`)
@@ -93,8 +118,8 @@ internal heuristic rather than implied to be industry fact.
   Only covers states with facilities in the current dataset — states not
   listed return `None` (unavailable), not a default/estimated category.
 
-### Water severity thresholds (1 / 5 / 15 MGD → low/moderate/high/critical)
-- **Used in:** `water_severity` (`logic.py:51-58`)
+### Water severity thresholds (1 / 2.5 / 5 MGD → low/moderate/high/critical)
+- **Used in:** `water_severity` (`logic.py`)
 - **Status:** Internal heuristic, not externally sourced. **No EPA baseline
   for these specific thresholds was found.** The previous comment claiming
   "US EPA baseline thresholds" was inaccurate and has been removed.
@@ -103,31 +128,46 @@ internal heuristic rather than implied to be industry fact.
   regional water-stress indicators, but no EPA source ties specific
   facility withdrawal volumes (in MGD) to "low/moderate/high/critical"
   labels. These bucket boundaries were chosen internally to spread
-  observed data center withdrawal volumes (enterprise sites: ~0.3-0.5 MGD;
-  hyperscale sites: ~1-5 MGD, with some individual facilities reported
-  above 2-4 MGD) across a readable severity scale.
+  observed data center withdrawal volumes across a readable severity scale.
+  Originally tuned (1 / 5 / 15 MGD) against the 75-facility frontier-AI-only
+  dataset. [[trackpolicy-datacenters]]'s 236 general-purpose facilities plus
+  the per-category PUE/utilization split above (see "PUE" and "Utilization
+  factor") shifted the full 318-entry `water_mgd` distribution to 0.06-162.65
+  MGD (p25 1.13, median 2.31, p75 4.55) — with the old 1/5/15 buckets, 153 of
+  287 powered facilities (53%) landed in a single "moderate" bucket,
+  collapsing the distinction the scale exists to make. Re-tuned to 1 / 2.5 /
+  5 MGD, close to the actual quartile boundaries, giving a roughly even
+  split (68 / 86 / 67 / 66 across low/moderate/high/critical) that still
+  distinguishes small colo suites from the largest hyperscale/frontier
+  sites. A single global threshold set was kept rather than splitting by
+  category — `water_mgd` is driven primarily by `power_mw` scale, and the
+  re-tuned buckets already spread both categories' facilities without a
+  category-aware split.
 
 ### Grid price lift severity thresholds (5 / 6 / 7% → low/moderate/high/critical)
 - **Used in:** `price_lift_severity` (`logic.py`, `electricity` block)
-- **Status:** Internal heuristic, not externally sourced. Tuned against the
-  real distribution of `price_lift_pct` across the current 75-facility
-  dataset (`backend/data/datacenters.json`), not just the illustrative
-  numbers originally sketched in the proposal.
+- **Status:** Internal heuristic, not externally sourced. Originally tuned
+  against the 75-facility frontier-AI-only dataset; re-validated (values
+  unchanged) against the full 318-entry mixed-category dataset after
+  [[trackpolicy-datacenters]].
 - **Context:** `price_lift_pct` itself is `min(log1p(power_mw) * 1.2, 15)`
   (see the electricity price pressure comment in `logic.py`), anchored at
-  100MW≈+2%, 1000MW≈+8%, capped at 15%. But the current dataset's powered
-  facilities (`power_mw > 0`) range from 132MW to 946MW — well above the
-  formula's 100MW anchor — so in practice `price_lift_pct` only ever lands
-  between 4.0% and 8.2%, clustered around 5-7% (median 6.0%, p25 5.4%, p75
-  6.6%). The originally-sketched thresholds (low <2%, moderate 2-8%, high
-  8-12%, critical >12%) would put nearly the entire dataset in "moderate"
-  and never reach "critical," since no current facility exceeds 8.2%.
-  Thresholds were instead set to spread the *actual* distribution
-  meaningfully: low <5% (5 facilities), moderate 5-6% (20), high 6-7% (26),
-  critical ≥7% (8), using facilities with `power_mw > 0` only — announced
-  facilities (`power_mw` unset) always compute to a 0% lift, which isn't a
-  meaningful "low" severity signal, so they're excluded from severity
-  scoring the same way they're excluded from the compare picker.
+  100MW≈+2%, 1000MW≈+8%, capped at 15% — and is independent of the
+  per-category PUE/utilization split (see "PUE" above), since it's a
+  function of `power_mw` alone. The original 75-facility dataset's powered
+  facilities ranged 132-946MW, giving a 4.0-8.2% `price_lift_pct` range.
+  [[trackpolicy-datacenters]]'s general-purpose facilities widen the full
+  318-entry `power_mw` range to 5-11,000MW, which widens `price_lift_pct` to
+  2.2-11.2% (median 6.0%, p25 5.2%, p75 6.8%) — but because the formula is
+  logarithmic, the extra range mostly stretches the tails rather than
+  shifting the bulk of the distribution, which stays clustered around the
+  original 5-7% band. Re-checking the existing 5/6/7% thresholds against
+  this wider distribution: low <5% (61 of 287 powered facilities),
+  moderate 5-6% (70), high 6-7% (92), critical ≥7% (64) — still a
+  reasonably even spread, so the thresholds were kept as-is rather than
+  re-tuned. Facilities with no `power_mw` ("announced") always compute to a
+  0% lift, which isn't a meaningful "low" signal, so they're excluded from
+  severity scoring the same way they're excluded from the compare picker.
 
 ### Grid renewables severity thresholds (15 / 20 / 30% → critical/high/moderate/low, inverted scale)
 - **Used in:** `renewable_severity` (`logic.py`, `carbon` block)
@@ -407,12 +447,12 @@ internal heuristic rather than implied to be industry fact.
 
 Every numeric constant referenced in `compute_impact()` is covered above:
 
-- [x] 80% utilization factor
-- [x] PUE 1.3
+- [x] Utilization factor (80% frontier-ai / 65% general-purpose, per-category)
+- [x] PUE (1.3 frontier-ai / 1.56 general-purpose, per-category)
 - [x] 10 kW/m² IT density
 - [x] 3.0 L/kWh blended water estimate (global default)
 - [x] Per-country water intensity (`IMPACT_RATES`)
-- [x] Water severity thresholds (1 / 5 / 15 MGD)
+- [x] Water severity thresholds (1 / 2.5 / 5 MGD)
 - [x] $0.06/kWh electricity price (global default)
 - [x] Per-country electricity price (`IMPACT_RATES`)
 - [x] 10,500 kWh/home/year
