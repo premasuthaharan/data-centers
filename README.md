@@ -58,8 +58,8 @@ Two buttons at the top let you share what you're looking at:
 
 Click **📍 Show data centers near me** (bottom-right) to see the closest
 facilities to you, with distance and a quick summary of each one's impact.
-Your location is estimated roughly from your internet connection. The site
-won't ask for your precise location.
+Your browser will ask whether to share your location. If you say no, the site
+makes a rough guess from your internet connection instead.
 
 ![The four data centers closest to the viewer](docs/screenshots/near-me.jpg)
 
@@ -67,8 +67,9 @@ won't ask for your precise location.
 
 Click **⚖️ Compare facilities**, then search by name or operator and pick two
 or more. A table lines them up on power, electricity, price impact, CO₂,
-water and more. Green and red arrows show whether each one is better or worse
-than the first facility you picked.
+water and more. In each row, the best value is marked in green and the worst
+in red. Facilities that are only announced or planned can't be compared yet,
+because there's nothing built to measure.
 
 ![Comparing three facilities](docs/screenshots/compare.jpg)
 
@@ -109,14 +110,16 @@ switch between:
 - **Per facility**: the average impact of one data center there.
 - **Total**: everything added up.
 
+Click a country in the list to zoom the map to it.
+
 ![Countries ranked by CO₂ per square kilometer](docs/screenshots/region-scorecard.jpg)
 
 ## Download the data
 
 Click **⬇ Export CSV** to download a spreadsheet of whatever the map is
 currently showing: every facility's location, size, cost and impact
-estimates. If you've picked a scenario or filtered to Frontier-AI, the
-download reflects that.
+estimates. If you've picked a scenario, filtered to Frontier-AI, or clicked a
+country in the region scorecard, the download reflects that.
 
 ## Where the numbers come from
 
