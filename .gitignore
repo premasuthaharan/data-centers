@@ -4,6 +4,10 @@
 # Claude Code local settings
 .claude/
 
+# Vercel CLI project links and pulled env (contain a Vercel OIDC token)
+.vercel/
+backend/.env*
+
 # --- backend (Python) ---
 backend/__pycache__/
 backend/tests/__pycache__/
